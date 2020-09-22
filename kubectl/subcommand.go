@@ -49,3 +49,33 @@ const (
 	Node
 	ReplicaSet
 )
+
+func InspectSubcommand(command string) (Subcommand, bool) {
+	switch command {
+	case "get":
+		return Get, true
+	case "describe":
+		return Describe, true
+	case "top":
+		return Top, true
+
+	default:
+		return Subcommand(0), false
+	}
+}
+
+func InspectTarget(target string) (Target, bool) {
+	switch target {
+	case "po", "pod", "pods":
+		return Pod, true
+	case "no", "node", "nodes":
+		return Node, true
+	case "deploy", "deployment", "deployments":
+		return Deployment, true
+	case "rs", "replicaset", "replicasets":
+		return ReplicaSet, true
+	default:
+		return Target(0), false
+	}
+}
+
