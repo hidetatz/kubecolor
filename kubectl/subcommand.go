@@ -79,3 +79,50 @@ func InspectTarget(target string) (Target, bool) {
 	}
 }
 
+func CollectCommandlineOptions(args []string, info *SubcommandInfo) {
+	for i := range args {
+		if args[i] == "--output" {
+			if len(args)-1 > i {
+				formatOption := args[i+1]
+				switch formatOption {
+				case "json":
+					info.FormatOption = Json
+				case "yaml":
+					info.FormatOption = Yaml
+				case "wide":
+					info.FormatOption = Wide
+				default:
+					// custom-columns, go-template, etc are currently not supported
+				}
+			}
+		} else if strings.HasPrefix(args[i], "-o") {
+			switch args[i] {
+			// both '-ojson' and '-o=json' works
+			case "-ojson", "-o=json":
+				info.FormatOption = Json
+			case "-oyaml", "-o=yaml":
+				info.FormatOption = Yaml
+			case "-owide", "-o=wide":
+				info.FormatOption = Wide
+			default:
+				// otherwise, look for next arg because '-o json' also works
+				if len(args)-1 > i {
+					formatOption := args[i+1]
+					switch formatOption {
+					case "json":
+						info.FormatOption = Json
+					case "yaml":
+						info.FormatOption = Yaml
+					case "wide":
+						info.FormatOption = Wide
+					default:
+						// custom-columns, go-template, etc are currently not supported
+					}
+				}
+
+			}
+		} else if args[i] == "--no-headers" {
+			info.NoHeader = true
+		}
+	}
+}
