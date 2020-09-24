@@ -126,3 +126,37 @@ func CollectCommandlineOptions(args []string, info *SubcommandInfo) {
 		}
 	}
 }
+
+func InspectSubcommandInfo(args []string) (*SubcommandInfo, error) {
+	ret := &SubcommandInfo{}
+	CollectCommandlineOptions(args, ret)
+
+	fmt.Printf("%v\n", ret)
+
+	for i := range args {
+		cmd, ok := InspectSubcommand(args[i])
+		if !ok {
+			continue
+		}
+
+		ret.Subcommand = cmd
+
+		if len(args) <= i {
+			return ret, nil
+		}
+
+		// once we found subcommand, target will be after that
+		for j := i + 1; j < len(args); j++ {
+			tgt, ok := InspectTarget(args[j])
+			if !ok {
+				continue
+			}
+
+			ret.Target = tgt
+			return ret, nil
+		}
+
+	}
+
+	return nil, errors.New("could not inspect subcommand and target")
+}
