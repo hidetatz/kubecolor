@@ -27,3 +27,19 @@ const (
 	HiCyan
 	HiWhite
 )
+
+func Format(c Color) string {
+	return fmt.Sprintf("%s[%dm", escape, c.Sequence())
+}
+
+func Reset() string {
+	return Format(Color(0))
+}
+
+func (c Color) Sequence() int {
+	return int(c)
+}
+
+func Apply(val string, c Color) string {
+	return fmt.Sprintf("%s[%dm%s%s[0m", escape, c.Sequence(), val, escape)
+}
