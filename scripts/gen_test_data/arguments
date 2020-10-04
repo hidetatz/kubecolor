@@ -1,0 +1,25 @@
+get nodes
+get no
+get node
+get nodes -o json
+get nodes -o=json
+get nodes -ojson
+get nodes -o yaml
+get nodes -o=yaml
+get nodes -oyaml
+get nodes -o wide
+get nodes -o=wide
+get nodes -owide
+get nodes -o
+get deployments
+get replicaset
+get pods
+get
+-h
+--help
+get -h
+get --help
+top pods
+top node
+describe pod
+describe rs
