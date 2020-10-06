@@ -2,7 +2,6 @@ package formattedwriter
 
 import (
 	"io"
-	"os"
 
 	"github.com/liggitt/tabwriter"
 )
@@ -16,5 +15,5 @@ const (
 )
 
 func New(w io.Writer) *tabwriter.Writer {
-	return tabwriter.NewWriter(os.Stdout, tabwriterMinWidth, tabwriterWidth, tabwriterPadding, tabwriterPadChar, tabwriterFlags)
+	return tabwriter.NewWriter(w, tabwriterMinWidth, tabwriterWidth, tabwriterPadding, tabwriterPadChar, tabwriterFlags)
 }
