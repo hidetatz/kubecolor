@@ -1,16 +1,16 @@
 package kubectl
 
 import (
-	"errors"
-	"fmt"
 	"strings"
 )
 
 type SubcommandInfo struct {
-	Subcommand   Subcommand
-	Target       Target
+	Subcommand Subcommand
+	// Target       Target
 	FormatOption FormatOption
 	NoHeader     bool
+	Watch        bool
+	Help         bool
 }
 
 type FormatOption int
@@ -41,15 +41,6 @@ func (s Subcommand) String() string {
 	return ""
 }
 
-type Target int
-
-const (
-	Pod Target = iota + 1
-	Deployment
-	Node
-	ReplicaSet
-)
-
 func InspectSubcommand(command string) (Subcommand, bool) {
 	switch command {
 	case "get":
@@ -61,21 +52,6 @@ func InspectSubcommand(command string) (Subcommand, bool) {
 
 	default:
 		return Subcommand(0), false
-	}
-}
-
-func InspectTarget(target string) (Target, bool) {
-	switch target {
-	case "po", "pod", "pods":
-		return Pod, true
-	case "no", "node", "nodes":
-		return Node, true
-	case "deploy", "deployment", "deployments":
-		return Deployment, true
-	case "rs", "replicaset", "replicasets":
-		return ReplicaSet, true
-	default:
-		return Target(0), false
 	}
 }
 
@@ -123,15 +99,17 @@ func CollectCommandlineOptions(args []string, info *SubcommandInfo) {
 			}
 		} else if args[i] == "--no-headers" {
 			info.NoHeader = true
+		} else if args[i] == "-w" || args[i] == "--watch" {
+			info.Watch = true
+		} else if args[i] == "-h" || args[i] == "--help" {
+			info.Help = true
 		}
 	}
 }
 
-func InspectSubcommandInfo(args []string) (*SubcommandInfo, error) {
+func InspectSubcommandInfo(args []string) (*SubcommandInfo, bool) {
 	ret := &SubcommandInfo{}
 	CollectCommandlineOptions(args, ret)
-
-	fmt.Printf("%v\n", ret)
 
 	for i := range args {
 		cmd, ok := InspectSubcommand(args[i])
@@ -140,23 +118,8 @@ func InspectSubcommandInfo(args []string) (*SubcommandInfo, error) {
 		}
 
 		ret.Subcommand = cmd
-
-		if len(args) <= i {
-			return ret, nil
-		}
-
-		// once we found subcommand, target will be after that
-		for j := i + 1; j < len(args); j++ {
-			tgt, ok := InspectTarget(args[j])
-			if !ok {
-				continue
-			}
-
-			ret.Target = tgt
-			return ret, nil
-		}
-
+		return ret, true
 	}
 
-	return nil, errors.New("could not inspect subcommand and target")
+	return ret, false
 }
