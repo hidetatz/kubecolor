@@ -3,7 +3,9 @@ package printer
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/dty1er/kubecolor/color"
@@ -11,92 +13,84 @@ import (
 	"github.com/dty1er/kubecolor/kubectl"
 )
 
-var colorsGet = []color.Color{color.Blue, color.Magenta, color.Cyan}
+type GetPrinter struct {
+	Writer io.Writer
+	// Target     kubectl.Target
+	WithHeader bool
+	FormatOpt  kubectl.FormatOption
 
-func PrintGet(output []byte, target kubectl.Target, withHeader bool, formatOpt kubectl.FormatOption) {
-	if string(output) == "" {
-		return
-	}
-
-	if formatOpt == kubectl.Json {
-		err := printJson(os.Stdout, output)
-		if err != nil {
-			PrintPlain(output)
-		}
-		return
-	}
-
-	if formatOpt == kubectl.Yaml {
-		err := printYaml(os.Stdout, output)
-		if err != nil {
-			PrintPlain(output)
-		}
-		return
-	}
-
-	switch target {
-	case kubectl.Pod:
-		printGetPod(output, withHeader)
-	}
+	isFirstLine bool
 }
 
-func printGetPod(output []byte, withHeader bool) {
-	w := formattedwriter.New(os.Stdout)
-	scanner := bufio.NewScanner(strings.NewReader(string(output)))
+func (gp *GetPrinter) Print(outReader io.Reader) {
+	w := formattedwriter.New(gp.Writer)
 
-	index := 0
-	isHeader := func() bool { return withHeader && index == 0 }
-
+	gp.isFirstLine = true
+	scanner := bufio.NewScanner(outReader)
+	lines := []byte{}
 	for scanner.Scan() {
 		line := scanner.Text()
-		columns := tab.Split(line, -1)
 
+		if gp.FormatOpt == kubectl.Json || gp.FormatOpt == kubectl.Yaml {
+			// kubectl get can specify json or yaml. Json and Yaml Printers require complete Json or Yaml so
+			// make a buffer to store all the output
+			lines = append(lines, []byte(line+"\n")...)
+			// in this case, print will be done outside of scan
+			continue
+		}
+
+		columns := tab.Split(line, -1)
 		result := []string{}
 		for i, column := range columns {
-			// only header line
-			var c color.Color
-			if isHeader() {
-				c = HeaderColor
-			} else {
-				if i >= len(colorsGet) {
-					i = i % len(colorsGet)
-				}
-				c = colorsGet[i]
-			}
-
-			colorized := Colorize(column, c)
-			result = append(result, colorized)
+			c := DecideColor(column, i, gp.Palette(), gp.DecideColor)
+			result = append(result, color.Apply(column, c))
 		}
 
 		fmt.Fprintf(w, "%+v\n", strings.Join(result, "\t"))
-		index++
-	}
-	w.Flush()
-}
 
-func Colorize(msg string, defaultColor color.Color) string {
-	// for status of something
-	switch msg {
-	case "Running", "Succeeded", "Completed":
-		return color.Apply(msg, color.Green)
-	case "CrashLoopBackOff":
-		return color.Apply(msg, color.Red)
-
-		// more status?
-	}
-
-	// When Readiness is "n/n" then green
-	// When Readiness is "n/m" then yellow
-	if strings.Count(msg, "/") == 1 {
-		arr := strings.Split(msg, "/")
-		ready := arr[0]
-		total := arr[1]
-		if ready != total {
-			return color.Apply(msg, color.Yellow)
-		} else {
-			return color.Apply(msg, color.Green)
+		if gp.isFirstLine {
+			gp.isFirstLine = false
 		}
 	}
 
-	return color.Apply(msg, defaultColor)
+	switch gp.FormatOpt {
+	case kubectl.Json:
+		printJson(os.Stdout, lines)
+	case kubectl.Yaml:
+		printYaml(os.Stdout, lines)
+	default:
+		w.Flush()
+	}
+}
+
+func (gp *GetPrinter) isHeader() bool {
+	return gp.WithHeader && gp.isFirstLine
+}
+
+func (gp *GetPrinter) Palette() []color.Color {
+	return []color.Color{color.Cyan, color.Magenta, color.Green, color.White, color.Blue}
+}
+
+func (gp *GetPrinter) DecideColor(column string) (color.Color, bool) {
+	if gp.isHeader() {
+		return HeaderColor, true
+	}
+
+	if column == "CrashLoopBackOff" {
+		return color.Red, true
+	}
+
+	// When Readiness is "n/m" then yellow
+	if strings.Count(column, "/") == 1 {
+		if arr := strings.Split(column, "/"); arr[0] != arr[1] {
+			_, e1 := strconv.Atoi(arr[0])
+			_, e2 := strconv.Atoi(arr[1])
+			if e1 == nil && e2 == nil { // check both is number
+				return color.Yellow, true
+			}
+		}
+
+	}
+
+	return color.Color(0), false
 }
