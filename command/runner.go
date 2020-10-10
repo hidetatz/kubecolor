@@ -45,6 +45,11 @@ func Run(args []string) error {
 			func() { printer.PrintPlain(bufoutReader, os.Stdout) },
 			func() { printer.PrintPlain(buferrReader, os.Stderr) },
 		})
+	case subcommandInfo.Watch:
+		runAsync(wg, []func(){
+			func() { printer.PrintPlain(bufoutReader, os.Stdout) },
+			func() { printer.PrintPlain(buferrReader, os.Stderr) },
+		})
 	case subcommandInfo.Help:
 		runAsync(wg, []func(){
 			func() { printer.PrintWithColor(bufoutReader, os.Stdout, color.Yellow) },
