@@ -1,6 +1,7 @@
 package printer
 
 import (
+	"io"
 	"regexp"
 
 	"github.com/dty1er/kubecolor/color"
@@ -9,9 +10,9 @@ import (
 
 var (
 	KeyColor    = color.White
-	StringColor = color.Green
-	BoolColor   = color.Cyan
-	NumberColor = color.Blue
+	StringColor = color.Cyan
+	BoolColor   = color.Green
+	NumberColor = color.Magenta
 
 	// for json
 	NullColor = color.Yellow
@@ -26,26 +27,40 @@ var (
 
 var tab = regexp.MustCompile("\\s{2,}")
 
-func Print(output []byte, subcommandInfo *kubectl.SubcommandInfo) {
+func Print(outReader io.Reader, writer io.Writer, subcommandInfo *kubectl.SubcommandInfo) {
 	withHeader := !subcommandInfo.NoHeader
 	switch subcommandInfo.Subcommand.String() {
 	case "top":
 		// kubectl top supports only pod or node
-		if subcommandInfo.Target != kubectl.Pod && subcommandInfo.Target != kubectl.Node {
-			PrintPlain(output)
-			return
-		}
+		// if subcommandInfo.Target != kubectl.Pod && subcommandInfo.Target != kubectl.Node {
+		// 	PrintPlain(outReader, writer)
+		// 	return
+		// }
 
-		PrintTop(output, withHeader)
+		printer := &TopPrinter{Writer: writer, WithHeader: withHeader}
+		printer.Print(outReader)
 
 	case "get":
-		PrintGet(output, subcommandInfo.Target, withHeader, subcommandInfo.FormatOption)
+		printer := &GetPrinter{Writer: writer, WithHeader: withHeader, FormatOpt: subcommandInfo.FormatOption}
+		printer.Print(outReader)
 
 	case "describe":
-		// TODO implement
-		PrintPlain(output)
+		printer := &DescribePrinter{Writer: writer}
+		printer.Print(outReader)
 
 	default:
-		PrintPlain(output)
+		PrintPlain(outReader, writer)
 	}
+}
+
+func DecideColor(column string, i int, palette []color.Color, decider func(column string) (color.Color, bool)) color.Color {
+	if c, decided := decider(column); decided {
+		return c
+	}
+
+	if i >= len(palette) {
+		i = i % len(palette)
+	}
+
+	return palette[i]
 }
