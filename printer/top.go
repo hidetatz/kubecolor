@@ -3,48 +3,53 @@ package printer
 import (
 	"bufio"
 	"fmt"
-	"os"
+	"io"
 	"strings"
 
 	"github.com/dty1er/kubecolor/color"
 	"github.com/dty1er/kubecolor/formattedwriter"
 )
 
-var colorsTop = []color.Color{color.Green, color.Blue, color.Magenta, color.Cyan}
+type TopPrinter struct {
+	Writer     io.Writer
+	WithHeader bool
 
-// PrintTop prints the output of kubectl top command.
-func PrintTop(output []byte, withHeader bool) {
-	if string(output) == "" {
-		return
-	}
+	isFirstLine bool
+}
 
-	w := formattedwriter.New(os.Stdout)
-	scanner := bufio.NewScanner(strings.NewReader(string(output)))
-	index := 0
-	isHeader := func() bool { return index == 0 }
+func (tp *TopPrinter) Print(outReader io.Reader) {
+	scanner := bufio.NewScanner(outReader)
+	w := formattedwriter.New(tp.Writer)
+	tp.isFirstLine = true
 	for scanner.Scan() {
-		line := scanner.Text()
-		columns := tab.Split(line, -1)
-
+		columns := tab.Split(scanner.Text(), -1)
 		result := []string{}
-		for i, column := range columns {
-			// only header line
-			var c color.Color
-			if isHeader() {
-				c = HeaderColor
-			} else {
-				if i >= len(colorsTop) {
-					i = i % len(colorsTop)
-				}
-				c = colorsTop[i]
-			}
 
-			colorized := color.Apply(column, c)
-			result = append(result, colorized)
+		for i, column := range columns {
+			result = append(result, color.Apply(column, DecideColor(column, i, tp.Palette(), tp.DecideColor)))
 		}
 
 		fmt.Fprintf(w, "%+v\n", strings.Join(result, "\t"))
-		index++
+		if tp.isFirstLine {
+			tp.isFirstLine = false
+		}
 	}
+
 	w.Flush()
+}
+
+func (tp *TopPrinter) isHeader() bool {
+	return tp.WithHeader && tp.isFirstLine
+}
+
+func (tp *TopPrinter) DecideColor(msg string) (color.Color, bool) {
+	if tp.isHeader() {
+		return HeaderColor, true
+	}
+
+	return color.Color(0), false
+}
+
+func (tp *TopPrinter) Palette() []color.Color {
+	return []color.Color{color.Green, color.Magenta, color.Cyan, color.Blue, color.White, color.Yellow}
 }
