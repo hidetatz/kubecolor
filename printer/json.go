@@ -10,7 +10,6 @@ import (
 )
 
 func printJson(w io.Writer, output []byte) error {
-	// TODO Need to decide color policy
 	f := &prettyjson.Formatter{
 		KeyColor:        fcolor.New(fcolor.Attribute(KeyColor.Sequence())),
 		StringColor:     fcolor.New(fcolor.Attribute(StringColor.Sequence())),
@@ -27,6 +26,6 @@ func printJson(w io.Writer, output []byte) error {
 		return err
 	}
 
-	fmt.Fprintf(w, string(colorized))
+	fmt.Fprintf(w, string(colorized)+"\n") // go-prettyjson trims leading space
 	return nil
 }
