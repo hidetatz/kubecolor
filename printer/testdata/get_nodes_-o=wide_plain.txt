@@ -1,0 +1,2 @@
+NAME       STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE           KERNEL-VERSION     CONTAINER-RUNTIME
+minikube   Ready    master   18h   v1.19.2   172.17.0.3    <none>        Ubuntu 20.04 LTS   4.19.76-linuxkit   docker://19.3.8

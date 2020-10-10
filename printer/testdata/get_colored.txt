@@ -1,0 +1,5 @@
+[33mYou must specify the type of resource to get. Use "kubectl api-resources" for a complete list of supported resources.[0m
+[33m[0m
+[31merror: Required resource not specified.[0m
+[33mUse "kubectl explain <resource>" for a detailed description of that resource (e.g. kubectl explain pods).[0m
+[33mSee 'kubectl get -h' for help and examples[0m

@@ -1,0 +1,253 @@
+Name:           nginx-6799fc88d8-dnmv5
+Namespace:      default
+Priority:       0
+Node:           minikube/172.17.0.3
+Start Time:     Sat, 10 Oct 2020 14:07:14 +0900
+Labels:         app=nginx
+                pod-template-hash=6799fc88d8
+Annotations:    <none>
+Status:         Running
+IP:             172.18.0.5
+Controlled By:  ReplicaSet/nginx-6799fc88d8
+Containers:
+  nginx:
+    Container ID:   docker://98483161b34785bc9feb594f44593ed3695f9e032e95f6f1faf16535aeba9046
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sat, 10 Oct 2020 14:07:35 +0900
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-4vw2q:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-4vw2q
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:          <none>
+
+
+Name:           nginx-6799fc88d8-m8pbc
+Namespace:      default
+Priority:       0
+Node:           minikube/172.17.0.3
+Start Time:     Sat, 10 Oct 2020 14:07:14 +0900
+Labels:         app=nginx
+                pod-template-hash=6799fc88d8
+Annotations:    <none>
+Status:         Running
+IP:             172.18.0.4
+Controlled By:  ReplicaSet/nginx-6799fc88d8
+Containers:
+  nginx:
+    Container ID:   docker://c05c46e7567425712117344a7d2b6ac839495d207056add989458021ea46128a
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sat, 10 Oct 2020 14:07:32 +0900
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-4vw2q:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-4vw2q
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:          <none>
+
+
+Name:           nginx-6799fc88d8-qdf9b
+Namespace:      default
+Priority:       0
+Node:           minikube/172.17.0.3
+Start Time:     Sat, 10 Oct 2020 14:07:14 +0900
+Labels:         app=nginx
+                pod-template-hash=6799fc88d8
+Annotations:    <none>
+Status:         Running
+IP:             172.18.0.3
+Controlled By:  ReplicaSet/nginx-6799fc88d8
+Containers:
+  nginx:
+    Container ID:   docker://6c84bbd77bb1c5949f8b2c08f22724b8ea63ae6b45f45af5cbbe90ae0b475adc
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sat, 10 Oct 2020 14:07:29 +0900
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-4vw2q:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-4vw2q
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:          <none>
+
+
+Name:           nginx-8spn9
+Namespace:      default
+Priority:       0
+Node:           minikube/172.17.0.3
+Start Time:     Sat, 10 Oct 2020 14:07:17 +0900
+Labels:         app=nginx
+Annotations:    <none>
+Status:         Running
+IP:             172.18.0.8
+Controlled By:  ReplicaSet/nginx
+Containers:
+  nginx:
+    Container ID:   docker://dbbd7fe3a603688a6616492f9652380efb54debc1821ac629e9907837d8a2f93
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sat, 10 Oct 2020 14:07:41 +0900
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-4vw2q:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-4vw2q
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:          <none>
+
+
+Name:           nginx-dplns
+Namespace:      default
+Priority:       0
+Node:           minikube/172.17.0.3
+Start Time:     Sat, 10 Oct 2020 14:07:17 +0900
+Labels:         app=nginx
+Annotations:    <none>
+Status:         Running
+IP:             172.18.0.6
+Controlled By:  ReplicaSet/nginx
+Containers:
+  nginx:
+    Container ID:   docker://bf35f74540d5b4bef5febefec8a19bd65009cc65e2ab2953705ae6b57f11a961
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sat, 10 Oct 2020 14:07:38 +0900
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-4vw2q:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-4vw2q
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:          <none>
+
+
+Name:           nginx-lpv5x
+Namespace:      default
+Priority:       0
+Node:           minikube/172.17.0.3
+Start Time:     Sat, 10 Oct 2020 14:07:17 +0900
+Labels:         app=nginx
+Annotations:    <none>
+Status:         Running
+IP:             172.18.0.7
+Controlled By:  ReplicaSet/nginx
+Containers:
+  nginx:
+    Container ID:   docker://2885230a30908c8a6bda5a5366619c730b25b994eea61c931bba08ef4a8c8593
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sat, 10 Oct 2020 14:07:44 +0900
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-4vw2q:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-4vw2q
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:          <none>

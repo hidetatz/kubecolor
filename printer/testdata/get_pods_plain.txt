@@ -1,0 +1,7 @@
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-6799fc88d8-dnmv5   1/1     Running   0          7h14m
+nginx-6799fc88d8-m8pbc   1/1     Running   0          7h14m
+nginx-6799fc88d8-qdf9b   1/1     Running   0          7h14m
+nginx-8spn9              1/1     Running   0          7h14m
+nginx-dplns              1/1     Running   0          7h14m
+nginx-lpv5x              1/1     Running   0          7h14m

@@ -1,0 +1,253 @@
+[33mName[0m:           [36mnginx-6799fc88d8-dnmv5[0m
+[33mNamespace[0m:      [36mdefault[0m
+[33mPriority[0m:       [35m0[0m
+[33mNode[0m:           [36mminikube/172.17.0.3[0m
+[33mStart Time[0m:     [36mSat, 10 Oct 2020 14:07:14 +0900[0m
+[33mLabels[0m:         [36mapp=nginx[0m
+                [36mpod-template-hash=6799fc88d8[0m
+[33mAnnotations[0m:    [33m<none>[0m
+[33mStatus[0m:         [36mRunning[0m
+[33mIP[0m:             [36m172.18.0.5[0m
+[33mControlled By[0m:  [36mReplicaSet/nginx-6799fc88d8[0m
+[33mContainers[0m:
+  [34mnginx[0m:
+    [33mContainer ID[0m:   [36mdocker://98483161b34785bc9feb594f44593ed3695f9e032e95f6f1faf16535aeba9046[0m
+    [33mImage[0m:          [36mnginx[0m
+    [33mImage ID[0m:       [36mdocker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500[0m
+    [33mPort[0m:           [33m<none>[0m
+    [33mHost Port[0m:      [33m<none>[0m
+    [33mState[0m:          [36mRunning[0m
+      [34mStarted[0m:      [36mSat, 10 Oct 2020 14:07:35 +0900[0m
+    [33mReady[0m:          [36mTrue[0m
+    [33mRestart Count[0m:  [35m0[0m
+    [33mEnvironment[0m:    [33m<none>[0m
+    [33mMounts[0m:
+      [36m/var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)[0m
+[33mConditions[0m:
+  [36mType[0m              [36mStatus[0m
+  [36mInitialized[0m       [36mTrue [0m
+  [36mReady[0m             [36mTrue [0m
+  [36mContainersReady[0m   [36mTrue [0m
+  [36mPodScheduled[0m      [36mTrue [0m
+[33mVolumes[0m:
+  [34mdefault-token-4vw2q[0m:
+    [33mType[0m:        [36mSecret (a volume populated by a Secret)[0m
+    [33mSecretName[0m:  [36mdefault-token-4vw2q[0m
+    [33mOptional[0m:    [32mfalse[0m
+[33mQoS Class[0m:       [36mBestEffort[0m
+[33mNode-Selectors[0m:  [33m<none>[0m
+[33mTolerations[0m:     [36mnode.kubernetes.io/not-ready:NoExecute for 300s[0m
+                 [36mnode.kubernetes.io/unreachable:NoExecute for 300s[0m
+[33mEvents[0m:          [33m<none>[0m
+
+
+[33mName[0m:           [36mnginx-6799fc88d8-m8pbc[0m
+[33mNamespace[0m:      [36mdefault[0m
+[33mPriority[0m:       [35m0[0m
+[33mNode[0m:           [36mminikube/172.17.0.3[0m
+[33mStart Time[0m:     [36mSat, 10 Oct 2020 14:07:14 +0900[0m
+[33mLabels[0m:         [36mapp=nginx[0m
+                [36mpod-template-hash=6799fc88d8[0m
+[33mAnnotations[0m:    [33m<none>[0m
+[33mStatus[0m:         [36mRunning[0m
+[33mIP[0m:             [36m172.18.0.4[0m
+[33mControlled By[0m:  [36mReplicaSet/nginx-6799fc88d8[0m
+[33mContainers[0m:
+  [34mnginx[0m:
+    [33mContainer ID[0m:   [36mdocker://c05c46e7567425712117344a7d2b6ac839495d207056add989458021ea46128a[0m
+    [33mImage[0m:          [36mnginx[0m
+    [33mImage ID[0m:       [36mdocker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500[0m
+    [33mPort[0m:           [33m<none>[0m
+    [33mHost Port[0m:      [33m<none>[0m
+    [33mState[0m:          [36mRunning[0m
+      [34mStarted[0m:      [36mSat, 10 Oct 2020 14:07:32 +0900[0m
+    [33mReady[0m:          [36mTrue[0m
+    [33mRestart Count[0m:  [35m0[0m
+    [33mEnvironment[0m:    [33m<none>[0m
+    [33mMounts[0m:
+      [36m/var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)[0m
+[33mConditions[0m:
+  [36mType[0m              [36mStatus[0m
+  [36mInitialized[0m       [36mTrue [0m
+  [36mReady[0m             [36mTrue [0m
+  [36mContainersReady[0m   [36mTrue [0m
+  [36mPodScheduled[0m      [36mTrue [0m
+[33mVolumes[0m:
+  [34mdefault-token-4vw2q[0m:
+    [33mType[0m:        [36mSecret (a volume populated by a Secret)[0m
+    [33mSecretName[0m:  [36mdefault-token-4vw2q[0m
+    [33mOptional[0m:    [32mfalse[0m
+[33mQoS Class[0m:       [36mBestEffort[0m
+[33mNode-Selectors[0m:  [33m<none>[0m
+[33mTolerations[0m:     [36mnode.kubernetes.io/not-ready:NoExecute for 300s[0m
+                 [36mnode.kubernetes.io/unreachable:NoExecute for 300s[0m
+[33mEvents[0m:          [33m<none>[0m
+
+
+[33mName[0m:           [36mnginx-6799fc88d8-qdf9b[0m
+[33mNamespace[0m:      [36mdefault[0m
+[33mPriority[0m:       [35m0[0m
+[33mNode[0m:           [36mminikube/172.17.0.3[0m
+[33mStart Time[0m:     [36mSat, 10 Oct 2020 14:07:14 +0900[0m
+[33mLabels[0m:         [36mapp=nginx[0m
+                [36mpod-template-hash=6799fc88d8[0m
+[33mAnnotations[0m:    [33m<none>[0m
+[33mStatus[0m:         [36mRunning[0m
+[33mIP[0m:             [36m172.18.0.3[0m
+[33mControlled By[0m:  [36mReplicaSet/nginx-6799fc88d8[0m
+[33mContainers[0m:
+  [34mnginx[0m:
+    [33mContainer ID[0m:   [36mdocker://6c84bbd77bb1c5949f8b2c08f22724b8ea63ae6b45f45af5cbbe90ae0b475adc[0m
+    [33mImage[0m:          [36mnginx[0m
+    [33mImage ID[0m:       [36mdocker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500[0m
+    [33mPort[0m:           [33m<none>[0m
+    [33mHost Port[0m:      [33m<none>[0m
+    [33mState[0m:          [36mRunning[0m
+      [34mStarted[0m:      [36mSat, 10 Oct 2020 14:07:29 +0900[0m
+    [33mReady[0m:          [36mTrue[0m
+    [33mRestart Count[0m:  [35m0[0m
+    [33mEnvironment[0m:    [33m<none>[0m
+    [33mMounts[0m:
+      [36m/var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)[0m
+[33mConditions[0m:
+  [36mType[0m              [36mStatus[0m
+  [36mInitialized[0m       [36mTrue [0m
+  [36mReady[0m             [36mTrue [0m
+  [36mContainersReady[0m   [36mTrue [0m
+  [36mPodScheduled[0m      [36mTrue [0m
+[33mVolumes[0m:
+  [34mdefault-token-4vw2q[0m:
+    [33mType[0m:        [36mSecret (a volume populated by a Secret)[0m
+    [33mSecretName[0m:  [36mdefault-token-4vw2q[0m
+    [33mOptional[0m:    [32mfalse[0m
+[33mQoS Class[0m:       [36mBestEffort[0m
+[33mNode-Selectors[0m:  [33m<none>[0m
+[33mTolerations[0m:     [36mnode.kubernetes.io/not-ready:NoExecute for 300s[0m
+                 [36mnode.kubernetes.io/unreachable:NoExecute for 300s[0m
+[33mEvents[0m:          [33m<none>[0m
+
+
+[33mName[0m:           [36mnginx-8spn9[0m
+[33mNamespace[0m:      [36mdefault[0m
+[33mPriority[0m:       [35m0[0m
+[33mNode[0m:           [36mminikube/172.17.0.3[0m
+[33mStart Time[0m:     [36mSat, 10 Oct 2020 14:07:17 +0900[0m
+[33mLabels[0m:         [36mapp=nginx[0m
+[33mAnnotations[0m:    [33m<none>[0m
+[33mStatus[0m:         [36mRunning[0m
+[33mIP[0m:             [36m172.18.0.8[0m
+[33mControlled By[0m:  [36mReplicaSet/nginx[0m
+[33mContainers[0m:
+  [34mnginx[0m:
+    [33mContainer ID[0m:   [36mdocker://dbbd7fe3a603688a6616492f9652380efb54debc1821ac629e9907837d8a2f93[0m
+    [33mImage[0m:          [36mnginx[0m
+    [33mImage ID[0m:       [36mdocker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500[0m
+    [33mPort[0m:           [33m<none>[0m
+    [33mHost Port[0m:      [33m<none>[0m
+    [33mState[0m:          [36mRunning[0m
+      [34mStarted[0m:      [36mSat, 10 Oct 2020 14:07:41 +0900[0m
+    [33mReady[0m:          [36mTrue[0m
+    [33mRestart Count[0m:  [35m0[0m
+    [33mEnvironment[0m:    [33m<none>[0m
+    [33mMounts[0m:
+      [36m/var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)[0m
+[33mConditions[0m:
+  [36mType[0m              [36mStatus[0m
+  [36mInitialized[0m       [36mTrue [0m
+  [36mReady[0m             [36mTrue [0m
+  [36mContainersReady[0m   [36mTrue [0m
+  [36mPodScheduled[0m      [36mTrue [0m
+[33mVolumes[0m:
+  [34mdefault-token-4vw2q[0m:
+    [33mType[0m:        [36mSecret (a volume populated by a Secret)[0m
+    [33mSecretName[0m:  [36mdefault-token-4vw2q[0m
+    [33mOptional[0m:    [32mfalse[0m
+[33mQoS Class[0m:       [36mBestEffort[0m
+[33mNode-Selectors[0m:  [33m<none>[0m
+[33mTolerations[0m:     [36mnode.kubernetes.io/not-ready:NoExecute for 300s[0m
+                 [36mnode.kubernetes.io/unreachable:NoExecute for 300s[0m
+[33mEvents[0m:          [33m<none>[0m
+
+
+[33mName[0m:           [36mnginx-dplns[0m
+[33mNamespace[0m:      [36mdefault[0m
+[33mPriority[0m:       [35m0[0m
+[33mNode[0m:           [36mminikube/172.17.0.3[0m
+[33mStart Time[0m:     [36mSat, 10 Oct 2020 14:07:17 +0900[0m
+[33mLabels[0m:         [36mapp=nginx[0m
+[33mAnnotations[0m:    [33m<none>[0m
+[33mStatus[0m:         [36mRunning[0m
+[33mIP[0m:             [36m172.18.0.6[0m
+[33mControlled By[0m:  [36mReplicaSet/nginx[0m
+[33mContainers[0m:
+  [34mnginx[0m:
+    [33mContainer ID[0m:   [36mdocker://bf35f74540d5b4bef5febefec8a19bd65009cc65e2ab2953705ae6b57f11a961[0m
+    [33mImage[0m:          [36mnginx[0m
+    [33mImage ID[0m:       [36mdocker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500[0m
+    [33mPort[0m:           [33m<none>[0m
+    [33mHost Port[0m:      [33m<none>[0m
+    [33mState[0m:          [36mRunning[0m
+      [34mStarted[0m:      [36mSat, 10 Oct 2020 14:07:38 +0900[0m
+    [33mReady[0m:          [36mTrue[0m
+    [33mRestart Count[0m:  [35m0[0m
+    [33mEnvironment[0m:    [33m<none>[0m
+    [33mMounts[0m:
+      [36m/var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)[0m
+[33mConditions[0m:
+  [36mType[0m              [36mStatus[0m
+  [36mInitialized[0m       [36mTrue [0m
+  [36mReady[0m             [36mTrue [0m
+  [36mContainersReady[0m   [36mTrue [0m
+  [36mPodScheduled[0m      [36mTrue [0m
+[33mVolumes[0m:
+  [34mdefault-token-4vw2q[0m:
+    [33mType[0m:        [36mSecret (a volume populated by a Secret)[0m
+    [33mSecretName[0m:  [36mdefault-token-4vw2q[0m
+    [33mOptional[0m:    [32mfalse[0m
+[33mQoS Class[0m:       [36mBestEffort[0m
+[33mNode-Selectors[0m:  [33m<none>[0m
+[33mTolerations[0m:     [36mnode.kubernetes.io/not-ready:NoExecute for 300s[0m
+                 [36mnode.kubernetes.io/unreachable:NoExecute for 300s[0m
+[33mEvents[0m:          [33m<none>[0m
+
+
+[33mName[0m:           [36mnginx-lpv5x[0m
+[33mNamespace[0m:      [36mdefault[0m
+[33mPriority[0m:       [35m0[0m
+[33mNode[0m:           [36mminikube/172.17.0.3[0m
+[33mStart Time[0m:     [36mSat, 10 Oct 2020 14:07:17 +0900[0m
+[33mLabels[0m:         [36mapp=nginx[0m
+[33mAnnotations[0m:    [33m<none>[0m
+[33mStatus[0m:         [36mRunning[0m
+[33mIP[0m:             [36m172.18.0.7[0m
+[33mControlled By[0m:  [36mReplicaSet/nginx[0m
+[33mContainers[0m:
+  [34mnginx[0m:
+    [33mContainer ID[0m:   [36mdocker://2885230a30908c8a6bda5a5366619c730b25b994eea61c931bba08ef4a8c8593[0m
+    [33mImage[0m:          [36mnginx[0m
+    [33mImage ID[0m:       [36mdocker-pullable://nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500[0m
+    [33mPort[0m:           [33m<none>[0m
+    [33mHost Port[0m:      [33m<none>[0m
+    [33mState[0m:          [36mRunning[0m
+      [34mStarted[0m:      [36mSat, 10 Oct 2020 14:07:44 +0900[0m
+    [33mReady[0m:          [36mTrue[0m
+    [33mRestart Count[0m:  [35m0[0m
+    [33mEnvironment[0m:    [33m<none>[0m
+    [33mMounts[0m:
+      [36m/var/run/secrets/kubernetes.io/serviceaccount from default-token-4vw2q (ro)[0m
+[33mConditions[0m:
+  [36mType[0m              [36mStatus[0m
+  [36mInitialized[0m       [36mTrue [0m
+  [36mReady[0m             [36mTrue [0m
+  [36mContainersReady[0m   [36mTrue [0m
+  [36mPodScheduled[0m      [36mTrue [0m
+[33mVolumes[0m:
+  [34mdefault-token-4vw2q[0m:
+    [33mType[0m:        [36mSecret (a volume populated by a Secret)[0m
+    [33mSecretName[0m:  [36mdefault-token-4vw2q[0m
+    [33mOptional[0m:    [32mfalse[0m
+[33mQoS Class[0m:       [36mBestEffort[0m
+[33mNode-Selectors[0m:  [33m<none>[0m
+[33mTolerations[0m:     [36mnode.kubernetes.io/not-ready:NoExecute for 300s[0m
+                 [36mnode.kubernetes.io/unreachable:NoExecute for 300s[0m
+[33mEvents[0m:          [33m<none>[0m

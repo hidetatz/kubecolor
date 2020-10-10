@@ -1,0 +1,3 @@
+NAME               DESIRED   CURRENT   READY   AGE
+nginx              3         3         3       7h14m
+nginx-6799fc88d8   3         3         3       7h14m

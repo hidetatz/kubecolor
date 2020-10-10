@@ -1,0 +1,2 @@
+[37mNAME[0m    [37mREADY[0m   [37mUP-TO-DATE[0m   [37mAVAILABLE[0m   [37mAGE[0m
+[36mnginx[0m   [35m3/3[0m     [32m3[0m            [37m3[0m           [34m7h14m[0m

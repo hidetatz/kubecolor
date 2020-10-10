@@ -1,0 +1,265 @@
+[37mapiVersion[0m:[36m v1[0m
+[36m[0m[37mitems[0m:
+-[37m apiVersion[0m:[36m v1[0m
+[36m  [0m[37mkind[0m:[36m Node[0m
+[36m  [0m[37mmetadata[0m:[37m[0m
+[37m    annotations[0m:[37m[0m
+[37m      kubeadm.alpha.kubernetes.io/cri-socket[0m:[36m /var/run/dockershim.sock[0m
+[36m      [0m[37mnode.alpha.kubernetes.io/ttl[0m:[36m "0"[0m[37m[0m
+[37m      volumes.kubernetes.io/controller-managed-attach-detach[0m:[36m "true"[0m[37m[0m
+[37m    creationTimestamp[0m:[36m "2020-10-09T18:04:32Z"[0m[37m[0m
+[37m    labels[0m:[37m[0m
+[37m      beta.kubernetes.io/arch[0m:[36m amd64[0m
+[36m      [0m[37mbeta.kubernetes.io/os[0m:[36m linux[0m
+[36m      [0m[37mkubernetes.io/arch[0m:[36m amd64[0m
+[36m      [0m[37mkubernetes.io/hostname[0m:[36m minikube[0m
+[36m      [0m[37mkubernetes.io/os[0m:[36m linux[0m
+[36m      [0m[37mminikube.k8s.io/commit[0m:[36m 1fd1f67f338cbab4b3e5a6e4c71c551f522ca138[0m
+[36m      [0m[37mminikube.k8s.io/name[0m:[36m minikube[0m
+[36m      [0m[37mminikube.k8s.io/updated_at[0m:[36m 2020_10_10T03_04_35_0700[0m
+[36m      [0m[37mminikube.k8s.io/version[0m:[36m v1.13.1[0m
+[36m      [0m[37mnode-role.kubernetes.io/master[0m:[36m ""[0m[37m[0m
+[37m    managedFields[0m:
+    -[37m apiVersion[0m:[36m v1[0m
+[36m      [0m[37mfieldsType[0m:[36m FieldsV1[0m
+[36m      [0m[37mfieldsV1[0m:[37m[0m
+[37m        f:metadata[0m:[37m[0m
+[37m          f:annotations[0m:[37m[0m
+[37m            f:kubeadm.alpha.kubernetes.io/cri-socket[0m: {}[37m[0m
+[37m          f:labels[0m:[37m[0m
+[37m            f:node-role.kubernetes.io/master[0m: {}[37m[0m
+[37m      manager[0m:[36m kubeadm[0m
+[36m      [0m[37moperation[0m:[36m Update[0m
+[36m      [0m[37mtime[0m:[36m "2020-10-09T18:04:35Z"[0m
+    -[37m apiVersion[0m:[36m v1[0m
+[36m      [0m[37mfieldsType[0m:[36m FieldsV1[0m
+[36m      [0m[37mfieldsV1[0m:[37m[0m
+[37m        f:metadata[0m:[37m[0m
+[37m          f:labels[0m:[37m[0m
+[37m            f:minikube.k8s.io/commit[0m: {}[37m[0m
+[37m            f:minikube.k8s.io/name[0m: {}[37m[0m
+[37m            f:minikube.k8s.io/updated_at[0m: {}[37m[0m
+[37m            f:minikube.k8s.io/version[0m: {}[37m[0m
+[37m      manager[0m:[36m kubectl-label[0m
+[36m      [0m[37moperation[0m:[36m Update[0m
+[36m      [0m[37mtime[0m:[36m "2020-10-09T18:04:36Z"[0m
+    -[37m apiVersion[0m:[36m v1[0m
+[36m      [0m[37mfieldsType[0m:[36m FieldsV1[0m
+[36m      [0m[37mfieldsV1[0m:[37m[0m
+[37m        f:metadata[0m:[37m[0m
+[37m          f:annotations[0m:[37m[0m
+[37m            f:node.alpha.kubernetes.io/ttl[0m: {}[37m[0m
+[37m          f:labels[0m:[37m[0m
+[37m            f:beta.kubernetes.io/arch[0m: {}[37m[0m
+[37m            f:beta.kubernetes.io/os[0m: {}[37m[0m
+[37m      manager[0m:[36m kube-controller-manager[0m
+[36m      [0m[37moperation[0m:[36m Update[0m
+[36m      [0m[37mtime[0m:[36m "2020-10-09T18:04:46Z"[0m
+    -[37m apiVersion[0m:[36m v1[0m
+[36m      [0m[37mfieldsType[0m:[36m FieldsV1[0m
+[36m      [0m[37mfieldsV1[0m:[37m[0m
+[37m        f:metadata[0m:[37m[0m
+[37m          f:annotations[0m:[37m[0m
+[37m            .[0m: {}[37m[0m
+[37m            f:volumes.kubernetes.io/controller-managed-attach-detach[0m: {}[37m[0m
+[37m          f:labels[0m:[37m[0m
+[37m            .[0m: {}[37m[0m
+[37m            f:kubernetes.io/arch[0m: {}[37m[0m
+[37m            f:kubernetes.io/hostname[0m: {}[37m[0m
+[37m            f:kubernetes.io/os[0m: {}[37m[0m
+[37m        f:status[0m:[37m[0m
+[37m          f:addresses[0m:[37m[0m
+[37m            .[0m: {}[37m[0m
+[37m            k:{"type":"Hostname"}[0m:[37m[0m
+[37m              .[0m: {}[37m[0m
+[37m              f:address[0m: {}[37m[0m
+[37m              f:type[0m: {}[37m[0m
+[37m            k:{"type":"InternalIP"}[0m:[37m[0m
+[37m              .[0m: {}[37m[0m
+[37m              f:address[0m: {}[37m[0m
+[37m              f:type[0m: {}[37m[0m
+[37m          f:allocatable[0m:[37m[0m
+[37m            .[0m: {}[37m[0m
+[37m            f:cpu[0m: {}[37m[0m
+[37m            f:ephemeral-storage[0m: {}[37m[0m
+[37m            f:hugepages-1Gi[0m: {}[37m[0m
+[37m            f:hugepages-2Mi[0m: {}[37m[0m
+[37m            f:memory[0m: {}[37m[0m
+[37m            f:pods[0m: {}[37m[0m
+[37m          f:capacity[0m:[37m[0m
+[37m            .[0m: {}[37m[0m
+[37m            f:cpu[0m: {}[37m[0m
+[37m            f:ephemeral-storage[0m: {}[37m[0m
+[37m            f:hugepages-1Gi[0m: {}[37m[0m
+[37m            f:hugepages-2Mi[0m: {}[37m[0m
+[37m            f:memory[0m: {}[37m[0m
+[37m            f:pods[0m: {}[37m[0m
+[37m          f:conditions[0m:[37m[0m
+[37m            .[0m: {}[37m[0m
+[37m            k:{"type":"DiskPressure"}[0m:[37m[0m
+[37m              .[0m: {}[37m[0m
+[37m              f:lastHeartbeatTime[0m: {}[37m[0m
+[37m              f:lastTransitionTime[0m: {}[37m[0m
+[37m              f:message[0m: {}[37m[0m
+[37m              f:reason[0m: {}[37m[0m
+[37m              f:status[0m: {}[37m[0m
+[37m              f:type[0m: {}[37m[0m
+[37m            k:{"type":"MemoryPressure"}[0m:[37m[0m
+[37m              .[0m: {}[37m[0m
+[37m              f:lastHeartbeatTime[0m: {}[37m[0m
+[37m              f:lastTransitionTime[0m: {}[37m[0m
+[37m              f:message[0m: {}[37m[0m
+[37m              f:reason[0m: {}[37m[0m
+[37m              f:status[0m: {}[37m[0m
+[37m              f:type[0m: {}[37m[0m
+[37m            k:{"type":"PIDPressure"}[0m:[37m[0m
+[37m              .[0m: {}[37m[0m
+[37m              f:lastHeartbeatTime[0m: {}[37m[0m
+[37m              f:lastTransitionTime[0m: {}[37m[0m
+[37m              f:message[0m: {}[37m[0m
+[37m              f:reason[0m: {}[37m[0m
+[37m              f:status[0m: {}[37m[0m
+[37m              f:type[0m: {}[37m[0m
+[37m            k:{"type":"Ready"}[0m:[37m[0m
+[37m              .[0m: {}[37m[0m
+[37m              f:lastHeartbeatTime[0m: {}[37m[0m
+[37m              f:lastTransitionTime[0m: {}[37m[0m
+[37m              f:message[0m: {}[37m[0m
+[37m              f:reason[0m: {}[37m[0m
+[37m              f:status[0m: {}[37m[0m
+[37m              f:type[0m: {}[37m[0m
+[37m          f:daemonEndpoints[0m:[37m[0m
+[37m            f:kubeletEndpoint[0m:[37m[0m
+[37m              f:Port[0m: {}[37m[0m
+[37m          f:images[0m: {}[37m[0m
+[37m          f:nodeInfo[0m:[37m[0m
+[37m            f:architecture[0m: {}[37m[0m
+[37m            f:bootID[0m: {}[37m[0m
+[37m            f:containerRuntimeVersion[0m: {}[37m[0m
+[37m            f:kernelVersion[0m: {}[37m[0m
+[37m            f:kubeProxyVersion[0m: {}[37m[0m
+[37m            f:kubeletVersion[0m: {}[37m[0m
+[37m            f:machineID[0m: {}[37m[0m
+[37m            f:operatingSystem[0m: {}[37m[0m
+[37m            f:osImage[0m: {}[37m[0m
+[37m            f:systemUUID[0m: {}[37m[0m
+[37m      manager[0m:[36m kubelet[0m
+[36m      [0m[37moperation[0m:[36m Update[0m
+[36m      [0m[37mtime[0m:[36m "2020-10-10T12:16:56Z"[0m[37m[0m
+[37m    name[0m:[36m minikube[0m
+[36m    [0m[37mresourceVersion[0m:[36m "46706"[0m[37m[0m
+[37m    selfLink[0m:[36m /api/v1/nodes/minikube[0m
+[36m    [0m[37muid[0m:[36m fd733c55-9ab5-4dd3-83d3-a8405523526d[0m
+[36m  [0m[37mspec[0m: {}[37m[0m
+[37m  status[0m:[37m[0m
+[37m    addresses[0m:
+    -[37m address[0m:[36m 172.17.0.3[0m
+[36m      [0m[37mtype[0m:[36m InternalIP[0m
+[36m    [0m-[37m address[0m:[36m minikube[0m
+[36m      [0m[37mtype[0m:[36m Hostname[0m
+[36m    [0m[37mallocatable[0m:[37m[0m
+[37m      cpu[0m:[36m "6"[0m[37m[0m
+[37m      ephemeral-storage[0m:[36m 61255492Ki[0m
+[36m      [0m[37mhugepages-1Gi[0m:[36m "0"[0m[37m[0m
+[37m      hugepages-2Mi[0m:[36m "0"[0m[37m[0m
+[37m      memory[0m:[36m 2036900Ki[0m
+[36m      [0m[37mpods[0m:[36m "110"[0m[37m[0m
+[37m    capacity[0m:[37m[0m
+[37m      cpu[0m:[36m "6"[0m[37m[0m
+[37m      ephemeral-storage[0m:[36m 61255492Ki[0m
+[36m      [0m[37mhugepages-1Gi[0m:[36m "0"[0m[37m[0m
+[37m      hugepages-2Mi[0m:[36m "0"[0m[37m[0m
+[37m      memory[0m:[36m 2036900Ki[0m
+[36m      [0m[37mpods[0m:[36m "110"[0m[37m[0m
+[37m    conditions[0m:
+    -[37m lastHeartbeatTime[0m:[36m "2020-10-10T12:16:56Z"[0m[37m[0m
+[37m      lastTransitionTime[0m:[36m "2020-10-09T18:04:28Z"[0m[37m[0m
+[37m      message[0m:[36m kubelet has sufficient memory available[0m
+[36m      [0m[37mreason[0m:[36m KubeletHasSufficientMemory[0m
+[36m      [0m[37mstatus[0m:[36m "False"[0m[37m[0m
+[37m      type[0m:[36m MemoryPressure[0m
+[36m    [0m-[37m lastHeartbeatTime[0m:[36m "2020-10-10T12:16:56Z"[0m[37m[0m
+[37m      lastTransitionTime[0m:[36m "2020-10-09T18:04:28Z"[0m[37m[0m
+[37m      message[0m:[36m kubelet has no disk pressure[0m
+[36m      [0m[37mreason[0m:[36m KubeletHasNoDiskPressure[0m
+[36m      [0m[37mstatus[0m:[36m "False"[0m[37m[0m
+[37m      type[0m:[36m DiskPressure[0m
+[36m    [0m-[37m lastHeartbeatTime[0m:[36m "2020-10-10T12:16:56Z"[0m[37m[0m
+[37m      lastTransitionTime[0m:[36m "2020-10-09T18:04:28Z"[0m[37m[0m
+[37m      message[0m:[36m kubelet has sufficient PID available[0m
+[36m      [0m[37mreason[0m:[36m KubeletHasSufficientPID[0m
+[36m      [0m[37mstatus[0m:[36m "False"[0m[37m[0m
+[37m      type[0m:[36m PIDPressure[0m
+[36m    [0m-[37m lastHeartbeatTime[0m:[36m "2020-10-10T12:16:56Z"[0m[37m[0m
+[37m      lastTransitionTime[0m:[36m "2020-10-09T18:04:46Z"[0m[37m[0m
+[37m      message[0m:[36m kubelet is posting ready status[0m
+[36m      [0m[37mreason[0m:[36m KubeletReady[0m
+[36m      [0m[37mstatus[0m:[36m "True"[0m[37m[0m
+[37m      type[0m:[36m Ready[0m
+[36m    [0m[37mdaemonEndpoints[0m:[37m[0m
+[37m      kubeletEndpoint[0m:[37m[0m
+[37m        Port[0m:[35m 10250[0m
+[35m    [0m[37mimages[0m:
+    -[37m names[0m:
+      -[36m k8s.gcr.io/etcd@sha256:4ad90a11b55313b182afc186b9876c8e891531b8db4c9bf1541953021618d0e2[0m
+[36m      [0m-[36m k8s.gcr.io/etcd:3.4.13-0[0m
+[36m      [0m[37msizeBytes[0m:[35m 253392289[0m
+[35m    [0m-[37m names[0m:
+      -[36m kubernetesui/dashboard@sha256:45ef224759bc50c84445f233fffae4aa3bdaec705cb5ee4bfe36d183b270b45d[0m
+[36m      [0m-[36m kubernetesui/dashboard:v2.0.3[0m
+[36m      [0m[37msizeBytes[0m:[35m 224634157[0m
+[35m    [0m-[37m names[0m:
+      -[36m nginx@sha256:fc66cdef5ca33809823182c9c5d72ea86fd2cef7713cf3363e1a0b12a5d77500[0m
+[36m      [0m-[36m nginx:latest[0m
+[36m      [0m[37msizeBytes[0m:[35m 132861270[0m
+[35m    [0m-[37m names[0m:
+      -[36m k8s.gcr.io/kube-apiserver@sha256:fc905eab708c6abbdf0ef0d47667592b948fea3adf31d71b19b5205340d00011[0m
+[36m      [0m-[36m k8s.gcr.io/kube-apiserver:v1.19.2[0m
+[36m      [0m[37msizeBytes[0m:[35m 118778218[0m
+[35m    [0m-[37m names[0m:
+      -[36m k8s.gcr.io/kube-proxy@sha256:fa7c9d19680704e246873eb600c02fa95167d5c58e56d56ba9ed30b7c4150ac1[0m
+[36m      [0m-[36m k8s.gcr.io/kube-proxy:v1.19.2[0m
+[36m      [0m[37msizeBytes[0m:[35m 117686573[0m
+[35m    [0m-[37m names[0m:
+      -[36m k8s.gcr.io/kube-controller-manager@sha256:c94b98d9f79bdfe33010c313891d99ed50858d6f04ceef865e7904c338dad913[0m
+[36m      [0m-[36m k8s.gcr.io/kube-controller-manager:v1.19.2[0m
+[36m      [0m[37msizeBytes[0m:[35m 110778730[0m
+[35m    [0m-[37m names[0m:
+      -[36m k8s.gcr.io/metrics-server/metrics-server@sha256:eec279de92328954ec69e9c2ef920861de28d31bb14b5290b53b5ef3dfa96502[0m
+[36m      [0m-[36m k8s.gcr.io/metrics-server/metrics-server:v0.3.7[0m
+[36m      [0m[37msizeBytes[0m:[35m 55367782[0m
+[35m    [0m-[37m names[0m:
+      -[36m k8s.gcr.io/kube-scheduler@sha256:bb058c7394fad4d968d366b8b372698a1144a1c3c6de52cdf46ff050ccfd31ff[0m
+[36m      [0m-[36m k8s.gcr.io/kube-scheduler:v1.19.2[0m
+[36m      [0m[37msizeBytes[0m:[35m 45656426[0m
+[35m    [0m-[37m names[0m:
+      -[36m k8s.gcr.io/coredns@sha256:73ca82b4ce829766d4f1f10947c3a338888f876fbed0540dc849c89ff256e90c[0m
+[36m      [0m-[36m k8s.gcr.io/coredns:1.7.0[0m
+[36m      [0m[37msizeBytes[0m:[35m 45227747[0m
+[35m    [0m-[37m names[0m:
+      -[36m kubernetesui/metrics-scraper@sha256:555981a24f184420f3be0c79d4efb6c948a85cfce84034f85a563f4151a81cbf[0m
+[36m      [0m-[36m kubernetesui/metrics-scraper:v1.0.4[0m
+[36m      [0m[37msizeBytes[0m:[35m 36937728[0m
+[35m    [0m-[37m names[0m:
+      -[36m gcr.io/k8s-minikube/storage-provisioner@sha256:5d8c9e69200846ff740bca872d681d2a736014386e4006fd26c4bf24ef7813ec[0m
+[36m      [0m-[36m gcr.io/k8s-minikube/storage-provisioner:v3[0m
+[36m      [0m[37msizeBytes[0m:[35m 29667328[0m
+[35m    [0m-[37m names[0m:
+      -[36m k8s.gcr.io/pause@sha256:927d98197ec1141a368550822d18fa1c60bdae27b78b0c004f705f548c07814f[0m
+[36m      [0m-[36m k8s.gcr.io/pause:3.2[0m
+[36m      [0m[37msizeBytes[0m:[35m 682696[0m
+[35m    [0m[37mnodeInfo[0m:[37m[0m
+[37m      architecture[0m:[36m amd64[0m
+[36m      [0m[37mbootID[0m:[36m b6c44522-c4d5-443d-924b-b54d6831b5e8[0m
+[36m      [0m[37mcontainerRuntimeVersion[0m:[36m docker://19.3.8[0m
+[36m      [0m[37mkernelVersion[0m:[36m 4.19.76-linuxkit[0m
+[36m      [0m[37mkubeProxyVersion[0m:[36m v1.19.2[0m
+[36m      [0m[37mkubeletVersion[0m:[36m v1.19.2[0m
+[36m      [0m[37mmachineID[0m:[36m 55d2ccaefc9847c9a69356e7f3bd23f4[0m
+[36m      [0m[37moperatingSystem[0m:[36m linux[0m
+[36m      [0m[37mosImage[0m:[36m Ubuntu 20.04 LTS[0m
+[36m      [0m[37msystemUUID[0m:[36m fe312784-2364-4bba-a55e-f56051539c21[0m
+[36m[0m[37mkind[0m:[36m List[0m
+[36m[0m[37mmetadata[0m:[37m[0m
+[37m  resourceVersion[0m:[36m ""[0m[37m[0m
+[37m  selfLink[0m:[36m ""[0m
