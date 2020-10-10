@@ -3,6 +3,7 @@
 Colorize your kubectl output
 
 * get pods
+
 ![image](https://user-images.githubusercontent.com/60682957/95655156-43e7a880-0b40-11eb-9dde-f99f0b34e7a8.png)
 
 * describe pods
