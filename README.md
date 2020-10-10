@@ -35,6 +35,10 @@ Additionally, if `kubectl` resulted an error, kubecolor just shows the error mes
 
 ## Installation
 
+```sh
+go get -u github.com/dty1er/kubecolor/cmd/kubecolor
+```
+
 ## Usage
 
 kubecolor understands every subcommands and options which are available for `kubectl`. What you have to do is just using `kubecolor`
