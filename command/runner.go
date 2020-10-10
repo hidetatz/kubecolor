@@ -13,6 +13,8 @@ import (
 )
 
 func Run(args []string) error {
+	args, plainFlagFound := removePlaneFlagIfExists(args)
+
 	cmd := exec.Command("kubectl", args...)
 
 	outReader, err := cmd.StdoutPipe()
@@ -38,6 +40,11 @@ func Run(args []string) error {
 	wg := &sync.WaitGroup{}
 
 	switch {
+	case plainFlagFound: // --plain
+		runAsync(wg, []func(){
+			func() { printer.PrintPlain(bufoutReader, os.Stdout) },
+			func() { printer.PrintPlain(buferrReader, os.Stderr) },
+		})
 	case subcommandInfo.Help:
 		runAsync(wg, []func(){
 			func() { printer.PrintWithColor(bufoutReader, os.Stdout, color.Yellow) },
@@ -72,4 +79,14 @@ func runAsync(wg *sync.WaitGroup, tasks []func()) {
 			wg.Done()
 		}()
 	}
+}
+
+func removePlaneFlagIfExists(args []string) ([]string, bool) {
+	for i, arg := range args {
+		if arg == "--plain" {
+			return append(args[:i], args[i+1:]...), true
+		}
+	}
+
+	return args, false
 }
