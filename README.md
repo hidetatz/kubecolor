@@ -2,6 +2,17 @@
 
 Colorize your kubectl output
 
+* get pods
+![image](https://user-images.githubusercontent.com/60682957/95655156-43e7a880-0b40-11eb-9dde-f99f0b34e7a8.png)
+
+* describe pods
+
+![image](https://user-images.githubusercontent.com/60682957/95655177-71345680-0b40-11eb-9003-077e86d24ab1.png)
+
+* something wrong
+
+![image](https://user-images.githubusercontent.com/60682957/95655195-890bda80-0b40-11eb-8688-5d090ec95926.png)
+
 ## What's this?
 
 kubecolor colorizes your `kubectl` command output and does nothing else.
