@@ -3,6 +3,7 @@ package printer
 import (
 	"io"
 	"regexp"
+	"strings"
 
 	"github.com/dty1er/kubecolor/color"
 	"github.com/dty1er/kubecolor/kubectl"
@@ -39,4 +40,8 @@ func Print(r io.Reader, w io.Writer, subcommandInfo *kubectl.SubcommandInfo, dar
 	default:
 		PrintPlain(r, w)
 	}
+}
+
+func toSpaces(n int) string {
+	return strings.Repeat(" ", n)
 }
