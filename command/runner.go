@@ -5,14 +5,13 @@ import (
 	"os/exec"
 	"sync"
 
-	"github.com/mattn/go-isatty"
-
 	"github.com/dty1er/kubecolor/color"
 	"github.com/dty1er/kubecolor/kubectl"
 	"github.com/dty1er/kubecolor/printer"
+	"github.com/mattn/go-isatty"
 )
 
-func Run(args []string) error {
+func Run(args []string, kubeColorDebug bool) error {
 	args, plainFlagFound := removePlainFlagIfExists(args)
 
 	cmd := exec.Command("kubectl", args...)
@@ -28,7 +27,7 @@ func Run(args []string) error {
 	}
 
 	fd := os.Stdout.Fd()
-	colorize := isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd)
+	colorize := isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd) || kubeColorDebug
 
 	if !colorize {
 		cmd.Stdout = os.Stdout
