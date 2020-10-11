@@ -1,12 +1,11 @@
 package command
 
 import (
-	"bytes"
-	"github.com/mattn/go-isatty"
-	"io"
 	"os"
 	"os/exec"
 	"sync"
+
+	"github.com/mattn/go-isatty"
 
 	"github.com/dty1er/kubecolor/color"
 	"github.com/dty1er/kubecolor/kubectl"
@@ -31,16 +30,9 @@ func Run(args []string) error {
 	fd := os.Stdout.Fd()
 	colorize := isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd)
 
-	var bufout, buferr bytes.Buffer
-	var bufoutReader io.Reader
-	var buferrReader io.Reader
-
 	if !colorize {
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
-	} else {
-		bufoutReader = io.TeeReader(outReader, &bufout)
-		buferrReader = io.TeeReader(errReader, &buferr)
 	}
 
 	if err = cmd.Start(); err != nil {
@@ -53,36 +45,31 @@ func Run(args []string) error {
 	}
 
 	subcommandInfo, ok := kubectl.InspectSubcommandInfo(args)
-	
+
 	wg := &sync.WaitGroup{}
 
 	switch {
 	case plainFlagFound: // --plain
 		runAsync(wg, []func(){
-			func() { printer.PrintPlain(bufoutReader, os.Stdout) },
-			func() { printer.PrintPlain(buferrReader, os.Stderr) },
-		})
-	case subcommandInfo.Watch:
-		runAsync(wg, []func(){
-			func() { printer.PrintPlain(bufoutReader, os.Stdout) },
-			func() { printer.PrintPlain(buferrReader, os.Stderr) },
+			func() { printer.PrintPlain(outReader, os.Stdout) },
+			func() { printer.PrintPlain(errReader, os.Stderr) },
 		})
 	case subcommandInfo.Help:
 		runAsync(wg, []func(){
-			func() { printer.PrintWithColor(bufoutReader, os.Stdout, color.Yellow) },
-			func() { printer.PrintErrorOrWarning(buferrReader, os.Stderr) },
+			func() { printer.PrintWithColor(outReader, os.Stdout, color.Yellow) },
+			func() { printer.PrintErrorOrWarning(errReader, os.Stderr) },
 		})
 	case !ok:
 		// given subcommand is not supported to colorize
 		// so just print it in green
 		runAsync(wg, []func(){
-			func() { printer.PrintWithColor(bufoutReader, os.Stdout, color.Green) },
-			func() { printer.PrintErrorOrWarning(buferrReader, os.Stderr) },
+			func() { printer.PrintWithColor(outReader, os.Stdout, color.Green) },
+			func() { printer.PrintErrorOrWarning(errReader, os.Stderr) },
 		})
 	default:
 		runAsync(wg, []func(){
-			func() { printer.Print(bufoutReader, os.Stdout, subcommandInfo) },
-			func() { printer.PrintErrorOrWarning(buferrReader, os.Stderr) },
+			func() { printer.Print(outReader, os.Stdout, subcommandInfo) },
+			func() { printer.PrintErrorOrWarning(errReader, os.Stderr) },
 		})
 	}
 
