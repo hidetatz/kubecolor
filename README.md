@@ -63,7 +63,6 @@ alias kubectl = kubecolor
 kubectl provides [autocompletion feature](https://kubernetes.io/docs/tasks/tools/install-kubectl/#enable-kubectl-autocompletion). If you are
 already using it, you might have to configure it for kubecolor.
 
-While I recommend using alias `kubectl="kubecolor"` , if you don't want it, then add following line in your .bash_profile (this will work for zsh):
 Basically, configuring autocompletion for `kubecolor` requires adding following line in your shell config file.
 
 ```shell
@@ -77,7 +76,7 @@ If you are using an alias like `k="kubecolor"`, then just change above like:
 complete -o default -F __start_kubectl k
 ```
 
-Also refer to [official doc](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete).
+Please also refer to [kubectl official doc](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete).
 
 
 ## Supported commands
