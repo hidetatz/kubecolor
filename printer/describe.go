@@ -48,7 +48,6 @@ func (dp *DescribePrinter) Print(outReader io.Reader) {
 				continue
 			}
 
-			// spacesIndices[0] represents the position of indent spaces
 			indentPos := spacesIndices[0]
 			indent := indentPos[1] - indentPos[0]
 			fmt.Fprintf(w, "%s%s\n", dp.toSpaces(indent), dp.colorizeKeyOrValue(columns[0], indent))
