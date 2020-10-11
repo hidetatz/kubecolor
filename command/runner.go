@@ -2,6 +2,7 @@ package command
 
 import (
 	"bytes"
+	"github.com/mattn/go-isatty"
 	"io"
 	"os"
 	"os/exec"
@@ -27,16 +28,32 @@ func Run(args []string) error {
 		return err
 	}
 
+	fd := os.Stdout.Fd()
+	colorize := isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd)
+
 	var bufout, buferr bytes.Buffer
-	bufoutReader := io.TeeReader(outReader, &bufout)
-	buferrReader := io.TeeReader(errReader, &buferr)
+	var bufoutReader io.Reader
+	var buferrReader io.Reader
+
+	if !colorize {
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+	} else {
+		bufoutReader = io.TeeReader(outReader, &bufout)
+		buferrReader = io.TeeReader(errReader, &buferr)
+	}
 
 	if err = cmd.Start(); err != nil {
 		return err
 	}
 
-	subcommandInfo, ok := kubectl.InspectSubcommandInfo(args)
+	if !colorize {
+		cmd.Wait()
+		return nil
+	}
 
+	subcommandInfo, ok := kubectl.InspectSubcommandInfo(args)
+	
 	wg := &sync.WaitGroup{}
 
 	switch {
