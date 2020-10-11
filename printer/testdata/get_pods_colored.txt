@@ -1,7 +1,0 @@
-[37mNAME[0m                     [37mREADY[0m   [37mSTATUS[0m    [37mRESTARTS[0m   [37mAGE[0m
-[36mnginx-6799fc88d8-dnmv5[0m   [35m1/1[0m     [32mRunning[0m   [37m0[0m          [34m7h14m[0m
-[36mnginx-6799fc88d8-m8pbc[0m   [35m1/1[0m     [32mRunning[0m   [37m0[0m          [34m7h14m[0m
-[36mnginx-6799fc88d8-qdf9b[0m   [35m1/1[0m     [32mRunning[0m   [37m0[0m          [34m7h14m[0m
-[36mnginx-8spn9[0m              [35m1/1[0m     [32mRunning[0m   [37m0[0m          [34m7h14m[0m
-[36mnginx-dplns[0m              [35m1/1[0m     [32mRunning[0m   [37m0[0m          [34m7h14m[0m
-[36mnginx-lpv5x[0m              [35m1/1[0m     [32mRunning[0m   [37m0[0m          [34m7h14m[0m

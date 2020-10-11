@@ -1,2 +1,0 @@
-NAME       STATUS   ROLES    AGE   VERSION
-minikube   Ready    master   18h   v1.19.2

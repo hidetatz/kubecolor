@@ -1,2 +1,0 @@
-[37mNAME[0m       [37mSTATUS[0m   [37mROLES[0m    [37mAGE[0m   [37mVERSION[0m   [37mINTERNAL-IP[0m   [37mEXTERNAL-IP[0m   [37mOS-IMAGE[0m           [37mKERNEL-VERSION[0m     [37mCONTAINER-RUNTIME[0m
-[36mminikube[0m   [35mReady[0m    [32mmaster[0m   [37m18h[0m   [34mv1.19.2[0m   [36m172.17.0.3[0m    [35m<none>[0m        [32mUbuntu 20.04 LTS[0m   [37m4.19.76-linuxkit[0m   [34mdocker://19.3.8[0m

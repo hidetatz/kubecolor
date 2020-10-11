@@ -1,2 +1,0 @@
-[37mNAME[0m       [37mSTATUS[0m   [37mROLES[0m    [37mAGE[0m   [37mVERSION[0m
-[36mminikube[0m   [35mReady[0m    [32mmaster[0m   [37m18h[0m   [34mv1.19.2[0m

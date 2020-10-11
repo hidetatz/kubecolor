@@ -1,2 +1,0 @@
-W1010 21:22:11.451154   23513 top_pod.go:266] Metrics not available for pod default/nginx-6799fc88d8-dnmv5, age: 7h14m57.450658s
-error: Metrics not available for pod default/nginx-6799fc88d8-dnmv5, age: 7h14m57.450658s
