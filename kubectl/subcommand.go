@@ -29,18 +29,6 @@ const (
 	Describe
 )
 
-func (s Subcommand) String() string {
-	switch s {
-	case Get:
-		return "get"
-	case Describe:
-		return "describe"
-	case Top:
-		return "top"
-	}
-	return ""
-}
-
 func InspectSubcommand(command string) (Subcommand, bool) {
 	switch command {
 	case "get":
