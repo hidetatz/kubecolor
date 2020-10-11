@@ -9,8 +9,9 @@ import (
 )
 
 type TopPrinter struct {
-	Writer     io.Writer
-	WithHeader bool
+	Writer         io.Writer
+	WithHeader     bool
+	DarkBackground bool
 
 	isFirstLine bool
 }

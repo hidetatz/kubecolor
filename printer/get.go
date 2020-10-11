@@ -13,9 +13,10 @@ import (
 )
 
 type GetPrinter struct {
-	Writer     io.Writer
-	WithHeader bool
-	FormatOpt  kubectl.FormatOption
+	Writer         io.Writer
+	WithHeader     bool
+	FormatOpt      kubectl.FormatOption
+	DarkBackground bool
 
 	isFirstLine bool
 	inString    bool

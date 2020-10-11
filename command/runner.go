@@ -67,7 +67,7 @@ func Run(args []string, kubeColorDebug bool) error {
 		})
 	default:
 		runAsync(wg, []func(){
-			func() { printer.Print(outReader, os.Stdout, subcommandInfo) },
+			func() { printer.Print(outReader, os.Stdout, subcommandInfo, true) }, // TODO fix to enable configuration for light background
 			func() { printer.PrintErrorOrWarning(errReader, os.Stderr) },
 		})
 	}
