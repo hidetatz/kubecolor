@@ -5,8 +5,7 @@ import (
 )
 
 type SubcommandInfo struct {
-	Subcommand Subcommand
-	// Target       Target
+	Subcommand   Subcommand
 	FormatOption FormatOption
 	NoHeader     bool
 	Watch        bool

@@ -28,17 +28,9 @@ func PrintErrorOrWarning(r io.Reader, w io.Writer) {
 	for scanner.Scan() {
 		line := scanner.Text()
 		if strings.HasPrefix(strings.ToLower(line), "error") {
-			PrintError(line, w)
+			fmt.Fprintf(w, "%s\n", color.Apply(line, color.Red))
 		} else {
-			PrintWarn(line, w)
+			fmt.Fprintf(w, "%s\n", color.Apply(line, color.Yellow))
 		}
 	}
-}
-
-func PrintError(line string, w io.Writer) {
-	fmt.Fprintf(w, "%s\n", color.Apply(line, color.Red))
-}
-
-func PrintWarn(line string, w io.Writer) {
-	fmt.Fprintf(w, "%s\n", color.Apply(line, color.Yellow))
 }

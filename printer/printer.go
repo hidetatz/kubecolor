@@ -13,13 +13,7 @@ var (
 	StringColor = color.Cyan
 	BoolColor   = color.Green
 	NumberColor = color.Magenta
-
-	// for json
-	NullColor = color.Yellow
-
-	// for yaml
-	AnchorColor = color.Magenta
-	AliasColor  = color.Yellow
+	NullColor   = color.Yellow
 
 	// for plain table
 	HeaderColor = color.White
@@ -27,34 +21,22 @@ var (
 
 var tab = regexp.MustCompile("\\s{2,}")
 
-func Print(outReader io.Reader, writer io.Writer, subcommandInfo *kubectl.SubcommandInfo) {
+func Print(r io.Reader, w io.Writer, subcommandInfo *kubectl.SubcommandInfo) {
 	withHeader := !subcommandInfo.NoHeader
 	switch subcommandInfo.Subcommand {
 	case kubectl.Top:
-		printer := &TopPrinter{Writer: writer, WithHeader: withHeader}
-		printer.Print(outReader)
+		printer := &TopPrinter{Writer: w, WithHeader: withHeader}
+		printer.Print(r)
 
 	case kubectl.Get:
-		printer := &GetPrinter{Writer: writer, WithHeader: withHeader, FormatOpt: subcommandInfo.FormatOption}
-		printer.Print(outReader)
+		printer := &GetPrinter{Writer: w, WithHeader: withHeader, FormatOpt: subcommandInfo.FormatOption}
+		printer.Print(r)
 
 	case kubectl.Describe:
-		printer := &DescribePrinter{Writer: writer}
-		printer.Print(outReader)
+		printer := &DescribePrinter{Writer: w}
+		printer.Print(r)
 
 	default:
-		PrintPlain(outReader, writer)
+		PrintPlain(r, w)
 	}
-}
-
-func DecideColor(column string, i int, palette []color.Color, decider func(column string) (color.Color, bool)) color.Color {
-	if c, decided := decider(column); decided {
-		return c
-	}
-
-	if i >= len(palette) {
-		i = i % len(palette)
-	}
-
-	return palette[i]
 }

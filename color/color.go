@@ -17,23 +17,14 @@ const (
 	Magenta
 	Cyan
 	White
-
-	HiBlack Color = iota + 90
-	HiRed
-	HiGreen
-	HiYellow
-	HiBlue
-	HiMagenta
-	HiCyan
-	HiWhite
 )
 
-func Format(c Color) string {
-	return fmt.Sprintf("%s[%dm", escape, c.Sequence())
+func (c Color) sequence() int {
+	return int(c)
 }
 
-func Reset() string {
-	return Format(Color(0))
+func Apply(val string, c Color) string {
+	return fmt.Sprintf("%s[%dm%s%s[0m", escape, c.sequence(), val, escape)
 }
 
 func (c Color) Sequence() int {
