@@ -14,7 +14,7 @@ import (
 )
 
 func Run(args []string) error {
-	args, plainFlagFound := removePlaneFlagIfExists(args)
+	args, plainFlagFound := removePlainFlagIfExists(args)
 
 	cmd := exec.Command("kubectl", args...)
 
@@ -103,7 +103,7 @@ func runAsync(wg *sync.WaitGroup, tasks []func()) {
 	}
 }
 
-func removePlaneFlagIfExists(args []string) ([]string, bool) {
+func removePlainFlagIfExists(args []string) ([]string, bool) {
 	for i, arg := range args {
 		if arg == "--plain" {
 			return append(args[:i], args[i+1:]...), true
