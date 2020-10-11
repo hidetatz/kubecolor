@@ -39,38 +39,13 @@ func (gp *GetPrinter) Print(outReader io.Reader) {
 }
 
 func (gp *GetPrinter) PrintTable(line string) {
-	w := gp.Writer
-	columns := tab.Split(line, -1)
-	spacesIndices := tab.FindAllStringIndex(line, -1)
-
-	// The format of kubectl get is like
-	// NAME     READY  STATUS
-	// pod-a    1/1    Running
-	// pod-b-2  1/1    Running
-	// pod-c    1/1    Running
-	// Spaces must locate between each column, so we validate it by this check
-	if len(columns) == len(spacesIndices)-1 {
-		// It should not come here.
-		panic("unexpected format of get. this must be a bug of kubecolor")
-	}
-
-	for i, column := range columns {
-		c := gp.DecideColor(i, column)
-		// Write colored column
-		fmt.Fprintf(w, "%s", color.Apply(column, c))
-		// Write spaces based on actual output
-		// When writing the most left column, no extra spaces needed.
-		if i <= len(spacesIndices)-1 {
-			spacesIndex := spacesIndices[i]
-			fmt.Fprintf(w, "%s", gp.toSpaces(spacesIndex[1]-spacesIndex[0]))
-		}
-	}
-
-	fmt.Fprintf(w, "\n")
-
-	if gp.isFirstLine {
+	if gp.isHeader() {
+		fmt.Fprintf(gp.Writer, "%s\n", color.Apply(line, HeaderColor))
 		gp.isFirstLine = false
+		return
 	}
+
+	printLineAsTableFormat(gp.Writer, line, gp.DarkBackground, gp.DecideColor)
 }
 
 func (gp *GetPrinter) PrintJson(line string) {
@@ -288,13 +263,9 @@ func (gp *GetPrinter) Palette() []color.Color {
 	return []color.Color{color.Cyan, color.Magenta, color.Green, color.White, color.Blue}
 }
 
-func (gp *GetPrinter) DecideColor(index int, column string) color.Color {
-	if gp.isHeader() {
-		return HeaderColor
-	}
-
+func (gp *GetPrinter) DecideColor(_ int, column string) (color.Color, bool) {
 	if column == "CrashLoopBackOff" {
-		return color.Red
+		return color.Red, true
 	}
 
 	// When Readiness is "n/m" then yellow
@@ -303,18 +274,13 @@ func (gp *GetPrinter) DecideColor(index int, column string) color.Color {
 			_, e1 := strconv.Atoi(arr[0])
 			_, e2 := strconv.Atoi(arr[1])
 			if e1 == nil && e2 == nil { // check both is number
-				return color.Yellow
+				return color.Yellow, true
 			}
 		}
 
 	}
 
-	colors := gp.Palette()
-	if index >= len(colors) {
-		index = index % len(colors)
-	}
-
-	return colors[index]
+	return 0, false
 }
 
 func (gp *GetPrinter) colorByValue(val string) color.Color {
