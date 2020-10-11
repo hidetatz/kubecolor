@@ -4,10 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"strings"
 
 	"github.com/dty1er/kubecolor/color"
-	"github.com/dty1er/kubecolor/formattedwriter"
 )
 
 type TopPrinter struct {
@@ -18,38 +16,64 @@ type TopPrinter struct {
 }
 
 func (tp *TopPrinter) Print(outReader io.Reader) {
-	scanner := bufio.NewScanner(outReader)
-	w := formattedwriter.New(tp.Writer)
 	tp.isFirstLine = true
+	scanner := bufio.NewScanner(outReader)
+	w := tp.Writer
 	for scanner.Scan() {
-		columns := tab.Split(scanner.Text(), -1)
-		result := []string{}
+		line := scanner.Text()
+		columns := tab.Split(line, -1)
+		spacesIndices := tab.FindAllStringIndex(line, -1)
 
-		for i, column := range columns {
-			result = append(result, color.Apply(column, DecideColor(column, i, tp.Palette(), tp.DecideColor)))
+		if len(columns) == len(spacesIndices)-1 {
+			// It should not come here.
+			panic("unexpected format of get. this must be a bug of kubecolor")
 		}
 
-		fmt.Fprintf(w, "%+v\n", strings.Join(result, "\t"))
+		for i, column := range columns {
+			c := tp.DecideColor(i, column)
+			// Write colored column
+			fmt.Fprintf(w, "%s", color.Apply(column, c))
+			// Write spaces based on actual output
+			// When writing the most left column, no extra spaces needed.
+			if i <= len(spacesIndices)-1 {
+				spacesIndex := spacesIndices[i]
+				fmt.Fprintf(w, "%s", tp.toSpaces(spacesIndex[1]-spacesIndex[0]))
+			}
+		}
+
+		fmt.Fprintf(w, "\n")
+
 		if tp.isFirstLine {
 			tp.isFirstLine = false
 		}
 	}
-
-	w.Flush()
 }
 
 func (tp *TopPrinter) isHeader() bool {
 	return tp.WithHeader && tp.isFirstLine
 }
 
-func (tp *TopPrinter) DecideColor(msg string) (color.Color, bool) {
-	if tp.isHeader() {
-		return HeaderColor, true
+func (tp *TopPrinter) toSpaces(n int) string {
+	s := ""
+	for i := 0; i < n; i++ {
+		s += " "
 	}
-
-	return color.Color(0), false
+	return s
 }
 
 func (tp *TopPrinter) Palette() []color.Color {
-	return []color.Color{color.Green, color.Magenta, color.Cyan, color.Blue, color.White, color.Yellow}
+	return []color.Color{color.Cyan, color.Magenta, color.Green, color.White, color.Blue}
+}
+
+func (tp *TopPrinter) DecideColor(index int, column string) color.Color {
+	if tp.isHeader() {
+		return HeaderColor
+	}
+
+	colors := tp.Palette()
+	if index >= len(colors) {
+		index = index % len(colors)
+	}
+
+	return colors[index]
 }
