@@ -8,6 +8,25 @@ type Color int
 
 const escape = "\x1b"
 
+var (
+	colorsForDarkBackground = []Color{
+		Cyan,
+		Green,
+		Magenta,
+		White,
+		Yellow,
+	}
+
+	colorsForLightBackground = []Color{
+		Cyan,
+		Green,
+		Magenta,
+		Black,
+		Yellow,
+		Blue,
+	}
+)
+
 const (
 	Black Color = iota + 30
 	Red
@@ -27,10 +46,10 @@ func Apply(val string, c Color) string {
 	return fmt.Sprintf("%s[%dm%s%s[0m", escape, c.sequence(), val, escape)
 }
 
-func (c Color) Sequence() int {
-	return int(c)
-}
+func GetColors(dark bool) []Color {
+	if dark {
+		return colorsForDarkBackground
+	}
 
-func Apply(val string, c Color) string {
-	return fmt.Sprintf("%s[%dm%s%s[0m", escape, c.Sequence(), val, escape)
+	return colorsForLightBackground
 }
