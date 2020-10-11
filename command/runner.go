@@ -73,8 +73,8 @@ func Run(args []string) error {
 		})
 	}
 
-	cmd.Wait()
 	wg.Wait()
+	cmd.Wait()
 
 	return nil
 }
