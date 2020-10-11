@@ -19,7 +19,7 @@ var (
 	HeaderColor = color.White
 )
 
-var tab = regexp.MustCompile("\\s{2,}")
+var spaces = regexp.MustCompile("\\s{2,}")
 
 func Print(r io.Reader, w io.Writer, subcommandInfo *kubectl.SubcommandInfo, darkBackground bool) {
 	withHeader := !subcommandInfo.NoHeader

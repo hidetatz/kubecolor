@@ -25,7 +25,7 @@ func (dp *DescribePrinter) Print(outReader io.Reader) {
 			continue
 		}
 
-		columns := tab.Split(line, -1)
+		columns := spaces.Split(line, -1)
 		if len(columns) > 0 {
 			if columns[0] == "" {
 				columns = columns[1:]
@@ -38,7 +38,7 @@ func (dp *DescribePrinter) Print(outReader io.Reader) {
 			}
 		}
 
-		spacesIndices := tab.FindAllStringIndex(line, -1)
+		spacesIndices := spaces.FindAllStringIndex(line, -1)
 
 		if len(columns) == 1 {
 			// when coming here, the format is not "key: value" but only key: or only value
