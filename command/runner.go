@@ -31,9 +31,15 @@ func Run(args []string, kubeColorDebug bool) error {
 	fd := os.Stdout.Fd()
 	colorize := isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd) || kubeColorDebug
 
+	subcommandInfo, ok := kubectl.InspectSubcommandInfo(args)
+	if !ok {
+		colorize = false
+	}
+
 	if !colorize {
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
+		cmd.Stdin = os.Stdin
 	}
 
 	if err = cmd.Start(); err != nil {
@@ -44,8 +50,6 @@ func Run(args []string, kubeColorDebug bool) error {
 		cmd.Wait()
 		return nil
 	}
-
-	subcommandInfo, ok := kubectl.InspectSubcommandInfo(args)
 
 	wg := &sync.WaitGroup{}
 

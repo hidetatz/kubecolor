@@ -25,6 +25,7 @@ type Subcommand int
 const (
 	Get Subcommand = iota + 1
 	Top
+	Exec
 	Describe
 )
 
@@ -34,6 +35,8 @@ func InspectSubcommand(command string) (Subcommand, bool) {
 		return Get, true
 	case "describe":
 		return Describe, true
+	case "exec":
+		return Exec, false
 	case "top":
 		return Top, true
 
