@@ -101,18 +101,18 @@ Not in the list: Won't be supported because it's not READ operation
 - [x] json
 - [x] wide
 - [x] yaml
-- [ ] custom-columns
+- [x] custom-columns
 
 ## Other features which currently unsupported but will be done in the future
 
-- [ ] make it works with -w option
+- [x] make it works with -w option
 - [ ] Configuring custom colors
 - [ ] specifying multiple resources at once (e.g. `kubectl get pod,replicaset`)
   - This will actually work, but if you don't specify "--no-headers" it might look a bit strange.
 
 ## Known issues which will be fixed in the (near) future
 
-- [ ] It does not work with kubectl exec -t option (waiting for PR)
+- [ ] It does not work with kubectl exec -t option
 
 ## Contributions
 
