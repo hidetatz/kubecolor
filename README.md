@@ -25,7 +25,7 @@ kubecolor internally calls `kubectl` command and try to colorizes the output so
 you can use kubecolor as a complete alternative of kubectl. It means you can write this in your .bash_profile:
 
 ```sh
-alias kubectl = kubecolor
+alias kubectl="kubecolor"
 ```
 
 kubecolor is developed to colorize the output of only READ commands (get, describe...). 
@@ -55,7 +55,7 @@ kubecolor --context=your_context get pods -o json
 If you want to make the colorized kubectl default on your shell, just add this line into your shell configuration file:
 
 ```sh
-alias kubectl = kubecolor
+alias kubectl="kubecolor"
 ```
 
 ### Flags
