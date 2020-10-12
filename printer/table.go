@@ -58,7 +58,7 @@ func printLineAsTableFormat(w io.Writer, line string, dark bool, deciderFn func(
 }
 
 func decideColorForTable(index int, column string, dark bool) color.Color {
-	colors := color.GetColors(dark)
+	colors := getColorsByBackground(dark)
 	if index >= len(colors) {
 		index = index % len(colors)
 	}
