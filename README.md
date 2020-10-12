@@ -4,15 +4,19 @@ Colorize your kubectl output
 
 * get pods
 
-![image](https://user-images.githubusercontent.com/60682957/95655156-43e7a880-0b40-11eb-9dde-f99f0b34e7a8.png)
+![image](https://user-images.githubusercontent.com/60682957/95733375-04929680-0cbd-11eb-82f3-adbcfecf4a3e.png)
 
 * describe pods
 
-![image](https://user-images.githubusercontent.com/60682957/95655177-71345680-0b40-11eb-9003-077e86d24ab1.png)
+![image](https://user-images.githubusercontent.com/60682957/95733389-08beb400-0cbd-11eb-983b-cf5138277fe3.png)
 
 * something wrong
 
-![image](https://user-images.githubusercontent.com/60682957/95655195-890bda80-0b40-11eb-8688-5d090ec95926.png)
+![image](https://user-images.githubusercontent.com/60682957/95733397-0a887780-0cbd-11eb-8875-bb1000e0e597.png)
+
+* You can change color theme for light-backgrounded environment
+
+![image](https://user-images.githubusercontent.com/60682957/95733403-0c523b00-0cbd-11eb-9ff9-abc5469e97ca.png)
 
 ## What's this?
 
