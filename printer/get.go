@@ -65,7 +65,7 @@ func (gp *GetPrinter) PrintJson(line string) {
 		// ],
 		// note: it must not be "[" because it will be always after key
 		// in this case, just write it without color
-		fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 		fmt.Fprintf(w, "%s", trimmedLine)
 		fmt.Fprintf(w, "\n")
 		return
@@ -86,14 +86,14 @@ func (gp *GetPrinter) PrintJson(line string) {
 			if strings.HasPrefix(ss, `"`) && strings.HasSuffix(ss, `"`) {
 				ss = strings.TrimLeft(ss, `"`)
 				ss = strings.TrimRight(ss, `"`)
-				fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 				fmt.Fprintf(w, `"`)
 				fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByIndent(indentCnt)))
 				fmt.Fprintf(w, `",`)
 				fmt.Fprintf(w, "\n")
 			} else {
-				fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
-				fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByValue(ss)))
+				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
+				fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
 				fmt.Fprintf(w, "\n")
 			}
 		} else {
@@ -102,14 +102,14 @@ func (gp *GetPrinter) PrintJson(line string) {
 			if strings.HasPrefix(ss, `"`) && strings.HasSuffix(ss, `"`) {
 				ss = strings.TrimLeft(ss, `"`)
 				ss = strings.TrimRight(ss, `"`)
-				fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 				fmt.Fprintf(w, `"`)
 				fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByIndent(indentCnt)))
 				fmt.Fprintf(w, `"`)
 				fmt.Fprintf(w, "\n")
 			} else {
-				fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
-				fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByValue(ss)))
+				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
+				fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
 				fmt.Fprintf(w, "\n")
 			}
 		}
@@ -122,14 +122,14 @@ func (gp *GetPrinter) PrintJson(line string) {
 
 	if strings.HasSuffix(trimmedLine, "{") {
 		// trim double quotation and colon, bracket
-		fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 		fmt.Fprintf(w, `"`)
 		fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 		fmt.Fprintf(w, `": {`)
 		fmt.Fprintf(w, "\n")
 	} else if strings.HasSuffix(trimmedLine, "[") {
 		// trim double quotation and colon, bracket
-		fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 		fmt.Fprintf(w, `"`)
 		fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 		fmt.Fprintf(w, `": [`)
@@ -140,19 +140,19 @@ func (gp *GetPrinter) PrintJson(line string) {
 		if strings.HasPrefix(ss, `"`) && strings.HasSuffix(ss, `"`) {
 			ss = strings.TrimLeft(ss, `"`)
 			ss = strings.TrimRight(ss, `"`)
-			fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 			fmt.Fprintf(w, `": "`)
-			fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByValue(ss)))
+			fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
 			fmt.Fprintf(w, `",`)
 			fmt.Fprintf(w, "\n")
 		} else {
-			fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 			fmt.Fprintf(w, `": `)
-			fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByValue(ss)))
+			fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
 			fmt.Fprintf(w, `,`)
 			fmt.Fprintf(w, "\n")
 		}
@@ -162,19 +162,19 @@ func (gp *GetPrinter) PrintJson(line string) {
 		if strings.HasPrefix(ss, `"`) && strings.HasSuffix(ss, `"`) {
 			ss = strings.TrimLeft(ss, `"`)
 			ss = strings.TrimRight(ss, `"`)
-			fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 			fmt.Fprintf(w, `": "`)
-			fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByValue(ss)))
+			fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "\n")
 		} else {
-			fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 			fmt.Fprintf(w, `": `)
-			fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByValue(ss)))
+			fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
 			fmt.Fprintf(w, "\n")
 		}
 	}
@@ -192,17 +192,17 @@ func (gp *GetPrinter) PrintYaml(line string) {
 			// when coming here, it must be "- key: value"
 			ss := strings.SplitN(trimmed, ": ", 2) // assuming key must not contain ": " while value might do
 			k, v := ss[0], ss[1]
-			fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 			fmt.Fprintf(w, "- ")
 			fmt.Fprintf(w, "%s", color.Apply(k, gp.colorByIndent(indentCnt+2))) // add length of "- "
 			fmt.Fprintf(w, ": ")
-			fmt.Fprintf(w, "%s", color.Apply(v, gp.colorByValue(v)))
+			fmt.Fprintf(w, "%s", color.Apply(v, colorByValue(v, gp.DarkBackground)))
 			fmt.Fprintf(w, "\n")
 		} else {
 			// when coming here, it must be "- value"
-			fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 			fmt.Fprintf(w, "- ")
-			fmt.Fprintf(w, "%s", color.Apply(trimmed, gp.colorByValue(trimmed)))
+			fmt.Fprintf(w, "%s", color.Apply(trimmed, colorByValue(trimmed, gp.DarkBackground)))
 			fmt.Fprintf(w, "\n")
 		}
 		return
@@ -213,23 +213,23 @@ func (gp *GetPrinter) PrintYaml(line string) {
 		// when coming here, it must be "key: value"
 		ss := strings.SplitN(trimmedLine, ": ", 2) // assuming key must not contain ": " while value might do
 		k, v := ss[0], ss[1]
-		fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 		fmt.Fprintf(w, "%s", color.Apply(k, gp.colorByIndent(indentCnt)))
 		fmt.Fprintf(w, ": ")
-		fmt.Fprintf(w, "%s", color.Apply(v, gp.colorByValue(v)))
+		fmt.Fprintf(w, "%s", color.Apply(v, colorByValue(v, gp.DarkBackground)))
 		fmt.Fprintf(w, "\n")
 	} else if strings.HasSuffix(trimmedLine, ":") && unicode.IsLetter(rune(trimmedLine[0])) {
 		// when coming here, it must be "key:"
 		trimmed := strings.TrimRight(trimmedLine, ":")
-		fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
+		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 		fmt.Fprintf(w, "%s", color.Apply(trimmed, gp.colorByIndent(indentCnt)))
 		fmt.Fprintf(w, ":")
 		fmt.Fprintf(w, "\n")
 	} else {
 		// when coming here, it must be just a "value"
 		// when a string was too long, the line can be broken and come here
-		fmt.Fprintf(w, "%s", gp.toSpaces(indentCnt))
-		fmt.Fprintf(w, "%s", color.Apply(trimmedLine, gp.colorByValue(trimmedLine)))
+		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
+		fmt.Fprintf(w, "%s", color.Apply(trimmedLine, colorByValue(trimmedLine, gp.DarkBackground)))
 		fmt.Fprintf(w, "\n")
 	}
 }
@@ -247,20 +247,8 @@ func (gp *GetPrinter) findIndent(line string) int {
 	return len(line) - len(strings.TrimLeft(line, " "))
 }
 
-func (gp *GetPrinter) toSpaces(n int) string {
-	s := ""
-	for i := 0; i < n; i++ {
-		s += " "
-	}
-	return s
-}
-
 func (gp *GetPrinter) isHeader() bool {
 	return gp.WithHeader && gp.isFirstLine
-}
-
-func (gp *GetPrinter) Palette() []color.Color {
-	return []color.Color{color.Cyan, color.Magenta, color.Green, color.White, color.Blue}
 }
 
 func (gp *GetPrinter) DecideColor(_ int, column string) (color.Color, bool) {
@@ -281,20 +269,4 @@ func (gp *GetPrinter) DecideColor(_ int, column string) (color.Color, bool) {
 	}
 
 	return 0, false
-}
-
-func (gp *GetPrinter) colorByValue(val string) color.Color {
-	if val == "null" {
-		return NullColor
-	}
-
-	if val == "true" || val == "false" {
-		return BoolColor
-	}
-
-	if _, err := strconv.Atoi(val); err == nil {
-		return NumberColor
-	}
-
-	return StringColor
 }

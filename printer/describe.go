@@ -50,7 +50,7 @@ func (dp *DescribePrinter) Print(outReader io.Reader) {
 
 			indentPos := spacesIndices[0]
 			indent := indentPos[1] - indentPos[0]
-			fmt.Fprintf(w, "%s%s\n", dp.toSpaces(indent), dp.colorizeKeyOrValue(columns[0], indent))
+			fmt.Fprintf(w, "%s%s\n", toSpaces(indent), dp.colorizeKeyOrValue(columns[0], indent))
 			continue
 		}
 
@@ -69,7 +69,7 @@ func (dp *DescribePrinter) Print(outReader io.Reader) {
 				spacesPos := spacesIndices[i-1]
 				spaceCnt := spacesPos[1] - spacesPos[0]
 				c := dp.colorByValue(column)
-				fmt.Fprintf(w, "%s%s", dp.toSpaces(spaceCnt), color.Apply(column, c))
+				fmt.Fprintf(w, "%s%s", toSpaces(spaceCnt), color.Apply(column, c))
 			}
 
 			fmt.Fprintf(w, "\n")
@@ -80,7 +80,7 @@ func (dp *DescribePrinter) Print(outReader io.Reader) {
 		// First, write key
 		indentPos := spacesIndices[0]
 		indent := indentPos[1] - indentPos[0]
-		fmt.Fprintf(w, "%s%s", dp.toSpaces(indent), dp.colorizeKeyOrValue(columns[0], indent))
+		fmt.Fprintf(w, "%s%s", toSpaces(indent), dp.colorizeKeyOrValue(columns[0], indent))
 		// Then, write values
 		for i, column := range columns {
 			if i == 0 {
@@ -90,7 +90,7 @@ func (dp *DescribePrinter) Print(outReader io.Reader) {
 			spacesPos := spacesIndices[i]
 			spacesCnt := spacesPos[1] - spacesPos[0]
 			c := dp.colorByValue(column)
-			fmt.Fprintf(w, "%s%s", dp.toSpaces(spacesCnt), color.Apply(column, c))
+			fmt.Fprintf(w, "%s%s", toSpaces(spacesCnt), color.Apply(column, c))
 		}
 
 		fmt.Fprint(w, "\n")
@@ -104,14 +104,6 @@ func (dp *DescribePrinter) colorizeKeyOrValue(s string, indent int) string {
 	}
 
 	return color.Apply(s, dp.colorByValue(s))
-}
-
-func (dp *DescribePrinter) toSpaces(n int) string {
-	s := ""
-	for i := 0; i < n; i++ {
-		s += " "
-	}
-	return s
 }
 
 func (dp *DescribePrinter) colorByIndent(indent int) color.Color {

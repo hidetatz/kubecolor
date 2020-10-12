@@ -3,6 +3,7 @@ package printer
 import (
 	"io"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/dty1er/kubecolor/color"
@@ -44,4 +45,20 @@ func Print(r io.Reader, w io.Writer, subcommandInfo *kubectl.SubcommandInfo, dar
 
 func toSpaces(n int) string {
 	return strings.Repeat(" ", n)
+}
+
+func colorByValue(val string, dark bool) color.Color {
+	if val == "null" || val == "<none>" || val == "<unknown>" {
+		return NullColor
+	}
+
+	if val == "true" || val == "false" {
+		return BoolColor
+	}
+
+	if _, err := strconv.Atoi(val); err == nil {
+		return NumberColor
+	}
+
+	return StringColor
 }
