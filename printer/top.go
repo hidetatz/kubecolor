@@ -22,7 +22,7 @@ func (tp *TopPrinter) Print(outReader io.Reader) {
 	for scanner.Scan() {
 		line := scanner.Text()
 		if tp.isHeader() {
-			fmt.Fprintf(tp.Writer, "%s\n", color.Apply(line, HeaderColor))
+			fmt.Fprintf(tp.Writer, "%s\n", color.Apply(line, getHeaderColorByBackground(tp.DarkBackground)))
 			tp.isFirstLine = false
 			continue
 		}

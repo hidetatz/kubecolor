@@ -40,7 +40,7 @@ func (gp *GetPrinter) Print(outReader io.Reader) {
 
 func (gp *GetPrinter) PrintTable(line string) {
 	if gp.isHeader() {
-		fmt.Fprintf(gp.Writer, "%s\n", color.Apply(line, HeaderColor))
+		fmt.Fprintf(gp.Writer, "%s\n", color.Apply(line, getHeaderColorByBackground(gp.DarkBackground)))
 		gp.isFirstLine = false
 		return
 	}
@@ -93,7 +93,7 @@ func (gp *GetPrinter) PrintJson(line string) {
 				fmt.Fprintf(w, "\n")
 			} else {
 				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-				fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
+				fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
 				fmt.Fprintf(w, "\n")
 			}
 		} else {
@@ -109,7 +109,7 @@ func (gp *GetPrinter) PrintJson(line string) {
 				fmt.Fprintf(w, "\n")
 			} else {
 				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-				fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
+				fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
 				fmt.Fprintf(w, "\n")
 			}
 		}
@@ -144,7 +144,7 @@ func (gp *GetPrinter) PrintJson(line string) {
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 			fmt.Fprintf(w, `": "`)
-			fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
+			fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
 			fmt.Fprintf(w, `",`)
 			fmt.Fprintf(w, "\n")
 		} else {
@@ -152,7 +152,7 @@ func (gp *GetPrinter) PrintJson(line string) {
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 			fmt.Fprintf(w, `": `)
-			fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
+			fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
 			fmt.Fprintf(w, `,`)
 			fmt.Fprintf(w, "\n")
 		}
@@ -166,7 +166,7 @@ func (gp *GetPrinter) PrintJson(line string) {
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 			fmt.Fprintf(w, `": "`)
-			fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
+			fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "\n")
 		} else {
@@ -174,7 +174,7 @@ func (gp *GetPrinter) PrintJson(line string) {
 			fmt.Fprintf(w, `"`)
 			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
 			fmt.Fprintf(w, `": `)
-			fmt.Fprintf(w, "%s", color.Apply(ss, colorByValue(ss, gp.DarkBackground)))
+			fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
 			fmt.Fprintf(w, "\n")
 		}
 	}
@@ -196,13 +196,13 @@ func (gp *GetPrinter) PrintYaml(line string) {
 			fmt.Fprintf(w, "- ")
 			fmt.Fprintf(w, "%s", color.Apply(k, gp.colorByIndent(indentCnt+2))) // add length of "- "
 			fmt.Fprintf(w, ": ")
-			fmt.Fprintf(w, "%s", color.Apply(v, colorByValue(v, gp.DarkBackground)))
+			fmt.Fprintf(w, "%s", color.Apply(v, getColorByValueType(v, gp.DarkBackground)))
 			fmt.Fprintf(w, "\n")
 		} else {
 			// when coming here, it must be "- value"
 			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 			fmt.Fprintf(w, "- ")
-			fmt.Fprintf(w, "%s", color.Apply(trimmed, colorByValue(trimmed, gp.DarkBackground)))
+			fmt.Fprintf(w, "%s", color.Apply(trimmed, getColorByValueType(trimmed, gp.DarkBackground)))
 			fmt.Fprintf(w, "\n")
 		}
 		return
@@ -216,7 +216,7 @@ func (gp *GetPrinter) PrintYaml(line string) {
 		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
 		fmt.Fprintf(w, "%s", color.Apply(k, gp.colorByIndent(indentCnt)))
 		fmt.Fprintf(w, ": ")
-		fmt.Fprintf(w, "%s", color.Apply(v, colorByValue(v, gp.DarkBackground)))
+		fmt.Fprintf(w, "%s", color.Apply(v, getColorByValueType(v, gp.DarkBackground)))
 		fmt.Fprintf(w, "\n")
 	} else if strings.HasSuffix(trimmedLine, ":") && unicode.IsLetter(rune(trimmedLine[0])) {
 		// when coming here, it must be "key:"
@@ -229,7 +229,7 @@ func (gp *GetPrinter) PrintYaml(line string) {
 		// when coming here, it must be just a "value"
 		// when a string was too long, the line can be broken and come here
 		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-		fmt.Fprintf(w, "%s", color.Apply(trimmedLine, colorByValue(trimmedLine, gp.DarkBackground)))
+		fmt.Fprintf(w, "%s", color.Apply(trimmedLine, getColorByValueType(trimmedLine, gp.DarkBackground)))
 		fmt.Fprintf(w, "\n")
 	}
 }
