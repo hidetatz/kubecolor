@@ -11,7 +11,8 @@ import (
 )
 
 type DescribePrinter struct {
-	Writer io.Writer
+	Writer         io.Writer
+	DarkBackground bool
 }
 
 func (dp *DescribePrinter) Print(outReader io.Reader) {

@@ -64,7 +64,7 @@ func Print(r io.Reader, w io.Writer, subcommandInfo *kubectl.SubcommandInfo, dar
 		printer.Print(r)
 
 	case kubectl.Describe:
-		printer := &DescribePrinter{Writer: w}
+		printer := &DescribePrinter{Writer: w, DarkBackground: darkBackground}
 		printer.Print(r)
 
 	default:

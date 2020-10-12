@@ -13,6 +13,8 @@ import (
 
 func Run(args []string, kubeColorDebug bool) error {
 	args, plainFlagFound := removePlainFlagIfExists(args)
+	args, lightBackgroundFlagFound := removeLightBackgroundFlagIfExists(args)
+	darkBackground := !lightBackgroundFlagFound
 
 	cmd := exec.Command("kubectl", args...)
 
@@ -67,7 +69,7 @@ func Run(args []string, kubeColorDebug bool) error {
 		})
 	default:
 		runAsync(wg, []func(){
-			func() { printer.Print(outReader, os.Stdout, subcommandInfo, true) }, // TODO fix to enable configuration for light background
+			func() { printer.Print(outReader, os.Stdout, subcommandInfo, darkBackground) }, // TODO fix to enable configuration for light background
 			func() { printer.PrintErrorOrWarning(errReader, os.Stderr) },
 		})
 	}
@@ -92,6 +94,16 @@ func runAsync(wg *sync.WaitGroup, tasks []func()) {
 func removePlainFlagIfExists(args []string) ([]string, bool) {
 	for i, arg := range args {
 		if arg == "--plain" {
+			return append(args[:i], args[i+1:]...), true
+		}
+	}
+
+	return args, false
+}
+
+func removeLightBackgroundFlagIfExists(args []string) ([]string, bool) {
+	for i, arg := range args {
+		if arg == "--light-background" {
 			return append(args[:i], args[i+1:]...), true
 		}
 	}
