@@ -45,6 +45,10 @@ var testArguments = []string{
 // The idea is inspired by fatih/color
 // https://github.com/fatih/color/blob/master/color_test.go#L160
 func TestVisual(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping e2etest")
+	}
+
 	for _, arg := range testArguments {
 		fmt.Println("--------------------")
 		run(arg)
