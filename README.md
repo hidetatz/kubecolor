@@ -48,15 +48,24 @@ instead of `kubectl` like:
 kubecolor --context=your_context get pods -o json
 ```
 
-When you don't want to colorize output, you can specify `--plain`. Kubecolor underntands this option and
-outputs the result without colorizing. Of course, given `--plain` will never be passed to `kubectl`.
-This option will help you when you want to save the output onto a file and edit them by editors.
-
 If you want to make the colorized kubectl default on your shell, just add this line into your shell configuration file:
 
 ```sh
 alias kubectl = kubecolor
 ```
+
+### Flags
+
+* `--plain`
+
+When you don't want to colorize output, you can specify `--plain`. Kubecolor underntands this option and
+outputs the result without colorizing. Of course, given `--plain` will never be passed to `kubectl`.
+This option will help you when you want to save the output onto a file and edit them by editors.
+
+* `--light-background`
+
+When your terminal's background color is something light (e.g white), default color preset might look too bright and not readable.
+If so, specify `--light-background` as a command line argument. kubecolor will use a color preset for light-backgrounded environment.
 
 ### Autocompletion
 
