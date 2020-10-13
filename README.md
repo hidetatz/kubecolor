@@ -105,7 +105,7 @@ Not in the list: Won't be supported because it's not READ operation
 - [x] kubectl describe
 - [ ] kubectl explain
 - [ ] kubectl logs
-- [ ] kubectl api-rsources
+- [x] kubectl api-rsources
 - [ ] kubectl api-versions
 - [ ] kubectl version
 
