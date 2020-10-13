@@ -45,12 +45,62 @@ func (gp *GetPrinter) PrintTable(line string) {
 		return
 	}
 
-	printLineAsTableFormat(gp.Writer, line, gp.DarkBackground, gp.DecideColor)
+	printLineAsTableFormat(gp.Writer, line, getColorsByBackground(gp.DarkBackground), gp.DecideColor)
+}
+
+// toColorizedJsonKey returns colored json key
+func (gp *GetPrinter) toColorizedJsonKey(key string, indentCnt, basicWidth int) string {
+	hasColon := strings.HasSuffix(key, ":")
+	// remove comma and double quotations although they might not exist actually
+	key = strings.TrimRight(key, ":")
+	doubleQuoteTrimmed := strings.TrimRight(strings.TrimLeft(key, `"`), `"`)
+
+	format := `"%s"`
+	if hasColon {
+		format += ":"
+	}
+
+	return fmt.Sprintf(format, color.Apply(doubleQuoteTrimmed, getColorByKeyIndent(indentCnt, basicWidth, gp.DarkBackground)))
+}
+
+// toColorizedJsonValue returns colored json value.
+// This function checks it trailing comma and double quotation exist
+// then colorize the given value considering them.
+func (gp *GetPrinter) toColorizedJsonValue(value string) string {
+	if value == "{" {
+		return "{"
+	}
+
+	if value == "[" {
+		return "["
+	}
+
+	hasComma := strings.HasSuffix(value, ",")
+	// remove comma and double quotations although they might not exist actually
+	value = strings.TrimRight(value, ",")
+
+	isString := strings.HasPrefix(value, `"`) && strings.HasSuffix(value, `"`)
+	doubleQuoteTrimmedValue := strings.TrimRight(strings.TrimLeft(value, `"`), `"`)
+
+	var format string
+	switch {
+	case hasComma && isString:
+		format = `"%s",`
+	case hasComma:
+		format = `%s,`
+	case isString:
+		format = `"%s"`
+	default:
+		format = `%s`
+	}
+
+	return fmt.Sprintf(format, color.Apply(doubleQuoteTrimmedValue, getColorByValueType(value, gp.DarkBackground)))
 }
 
 func (gp *GetPrinter) PrintJson(line string) {
 	w := gp.Writer
 	indentCnt := gp.findIndent(line)
+	indent := toSpaces(indentCnt)
 	trimmedLine := strings.TrimLeft(line, " ")
 
 	if strings.HasPrefix(trimmedLine, "{") ||
@@ -65,119 +115,31 @@ func (gp *GetPrinter) PrintJson(line string) {
 		// ],
 		// note: it must not be "[" because it will be always after key
 		// in this case, just write it without color
-		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-		fmt.Fprintf(w, "%s", trimmedLine)
+		// fmt.Fprintf(w, "%s", toSpaces(indentCnt))
+		fmt.Fprintf(w, "%s%s", indent, trimmedLine)
 		fmt.Fprintf(w, "\n")
 		return
 	}
 
-	// when coming here:
+	// when coming here, the line must be one of:
 	// "key": {
 	// "key": [
 	// "key": value
 	// "key": value,
+	// value,
+	// value
 	trimmed := strings.SplitN(trimmedLine, ": ", 2) // if key contains ": " this works in a wrong way but it's unlikely to happen
 
 	if len(trimmed) == 1 {
 		// when coming here, it will be a value in an array
-		if strings.HasSuffix(trimmed[0], ",") {
-			// when coming here, it must be `value,`
-			ss := strings.TrimRight(trimmed[0], ",") // this is a value; it might be double-quoted or not
-			if strings.HasPrefix(ss, `"`) && strings.HasSuffix(ss, `"`) {
-				ss = strings.TrimLeft(ss, `"`)
-				ss = strings.TrimRight(ss, `"`)
-				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-				fmt.Fprintf(w, `"`)
-				fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByIndent(indentCnt)))
-				fmt.Fprintf(w, `",`)
-				fmt.Fprintf(w, "\n")
-			} else {
-				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-				fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
-				fmt.Fprintf(w, "\n")
-			}
-		} else {
-			ss := trimmed[0]
-			// when coming here, it must be `value`
-			if strings.HasPrefix(ss, `"`) && strings.HasSuffix(ss, `"`) {
-				ss = strings.TrimLeft(ss, `"`)
-				ss = strings.TrimRight(ss, `"`)
-				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-				fmt.Fprintf(w, `"`)
-				fmt.Fprintf(w, "%s", color.Apply(ss, gp.colorByIndent(indentCnt)))
-				fmt.Fprintf(w, `"`)
-				fmt.Fprintf(w, "\n")
-			} else {
-				fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-				fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
-				fmt.Fprintf(w, "\n")
-			}
-		}
+		fmt.Fprintf(w, "%s%s\n", indent, gp.toColorizedJsonValue(trimmed[0]))
 		return
 	}
 
 	key := trimmed[0]
-	key = strings.TrimLeft(key, `"`)
-	key = strings.TrimRight(key, `"`)
+	val := trimmed[1]
 
-	if strings.HasSuffix(trimmedLine, "{") {
-		// trim double quotation and colon, bracket
-		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-		fmt.Fprintf(w, `"`)
-		fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
-		fmt.Fprintf(w, `": {`)
-		fmt.Fprintf(w, "\n")
-	} else if strings.HasSuffix(trimmedLine, "[") {
-		// trim double quotation and colon, bracket
-		fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-		fmt.Fprintf(w, `"`)
-		fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
-		fmt.Fprintf(w, `": [`)
-		fmt.Fprintf(w, "\n")
-	} else if strings.HasSuffix(trimmed[1], ",") {
-		// when coming here, it must be `"key": value,`
-		ss := strings.TrimRight(trimmed[1], ",") // this is a value; it might be double-quoted or not
-		if strings.HasPrefix(ss, `"`) && strings.HasSuffix(ss, `"`) {
-			ss = strings.TrimLeft(ss, `"`)
-			ss = strings.TrimRight(ss, `"`)
-			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-			fmt.Fprintf(w, `"`)
-			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
-			fmt.Fprintf(w, `": "`)
-			fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
-			fmt.Fprintf(w, `",`)
-			fmt.Fprintf(w, "\n")
-		} else {
-			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-			fmt.Fprintf(w, `"`)
-			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
-			fmt.Fprintf(w, `": `)
-			fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
-			fmt.Fprintf(w, `,`)
-			fmt.Fprintf(w, "\n")
-		}
-	} else {
-		// when coming here, it must be `"key": value`
-		ss := trimmed[1]
-		if strings.HasPrefix(ss, `"`) && strings.HasSuffix(ss, `"`) {
-			ss = strings.TrimLeft(ss, `"`)
-			ss = strings.TrimRight(ss, `"`)
-			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-			fmt.Fprintf(w, `"`)
-			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
-			fmt.Fprintf(w, `": "`)
-			fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
-			fmt.Fprintf(w, `"`)
-			fmt.Fprintf(w, "\n")
-		} else {
-			fmt.Fprintf(w, "%s", toSpaces(indentCnt))
-			fmt.Fprintf(w, `"`)
-			fmt.Fprintf(w, "%s", color.Apply(key, gp.colorByIndent(indentCnt)))
-			fmt.Fprintf(w, `": `)
-			fmt.Fprintf(w, "%s", color.Apply(ss, getColorByValueType(ss, gp.DarkBackground)))
-			fmt.Fprintf(w, "\n")
-		}
-	}
+	fmt.Fprintf(w, "%s%s: %s\n", indent, gp.toColorizedJsonKey(key, indentCnt, 4), gp.toColorizedJsonValue(val))
 }
 
 func (gp *GetPrinter) PrintYaml(line string) {
