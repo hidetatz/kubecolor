@@ -84,7 +84,7 @@ func getKubecolorOutput(args []string) string {
 	os.Stdout = w
 	os.Stderr = w
 
-	err = command.Run(args, false)
+	err = command.Run(args)
 	if err != nil {
 		panic(err)
 	}
