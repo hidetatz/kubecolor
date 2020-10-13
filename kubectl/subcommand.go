@@ -15,7 +15,8 @@ type SubcommandInfo struct {
 type FormatOption int
 
 const (
-	Wide FormatOption = iota + 1
+	None FormatOption = iota
+	Wide
 	Json
 	Yaml
 )

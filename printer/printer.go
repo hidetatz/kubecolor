@@ -67,8 +67,14 @@ func Print(r io.Reader, w io.Writer, subcommandInfo *kubectl.SubcommandInfo, dar
 		printer.Print(r)
 
 	case kubectl.Get:
-		printer := &GetPrinter{Writer: w, WithHeader: withHeader, FormatOpt: subcommandInfo.FormatOption, DarkBackground: darkBackground}
-		printer.Print(r)
+		switch {
+		case subcommandInfo.FormatOption == kubectl.None:
+			printer := &TablePrinter{Writer: w, WithHeader: withHeader, DarkBackground: darkBackground}
+			printer.Print(r)
+		default:
+			printer := &GetPrinter{Writer: w, WithHeader: withHeader, FormatOpt: subcommandInfo.FormatOption, DarkBackground: darkBackground}
+			printer.Print(r)
+		}
 
 	case kubectl.Describe:
 		printer := &DescribePrinter{Writer: w, DarkBackground: darkBackground}
