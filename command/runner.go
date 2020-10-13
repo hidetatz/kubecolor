@@ -1,17 +1,21 @@
 package command
 
 import (
-	"os"
 	"os/exec"
 	"sync"
 
 	"github.com/dty1er/kubecolor/color"
 	"github.com/dty1er/kubecolor/kubectl"
 	"github.com/dty1er/kubecolor/printer"
-	"github.com/mattn/go-isatty"
+	"github.com/mattn/go-colorable"
 )
 
-func Run(args []string, kubeColorDebug bool) error {
+var (
+	stdout = colorable.NewColorableStdout()
+	stderr = colorable.NewColorableStderr()
+)
+
+func Run(args []string) error {
 	args, plainFlagFound := removePlainFlagIfExists(args)
 	args, lightBackgroundFlagFound := removeLightBackgroundFlagIfExists(args)
 	darkBackground := !lightBackgroundFlagFound
@@ -28,19 +32,17 @@ func Run(args []string, kubeColorDebug bool) error {
 		return err
 	}
 
-	fd := os.Stdout.Fd()
-	colorize := isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd) || kubeColorDebug
-
-	if !colorize {
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
+	// --plain
+	if plainFlagFound {
+		cmd.Stdout = stdout
+		cmd.Stderr = stderr
 	}
 
 	if err = cmd.Start(); err != nil {
 		return err
 	}
 
-	if !colorize {
+	if plainFlagFound {
 		cmd.Wait()
 		return nil
 	}
@@ -50,27 +52,22 @@ func Run(args []string, kubeColorDebug bool) error {
 	wg := &sync.WaitGroup{}
 
 	switch {
-	case plainFlagFound: // --plain
-		runAsync(wg, []func(){
-			func() { printer.PrintPlain(outReader, os.Stdout) },
-			func() { printer.PrintPlain(errReader, os.Stderr) },
-		})
 	case subcommandInfo.Help:
 		runAsync(wg, []func(){
-			func() { printer.PrintWithColor(outReader, os.Stdout, color.Yellow) },
-			func() { printer.PrintErrorOrWarning(errReader, os.Stderr) },
+			func() { printer.PrintWithColor(outReader, stdout, color.Yellow) },
+			func() { printer.PrintErrorOrWarning(errReader, stderr) },
 		})
 	case !ok:
 		// given subcommand is not supported to colorize
 		// so just print it in green
 		runAsync(wg, []func(){
-			func() { printer.PrintWithColor(outReader, os.Stdout, color.Green) },
-			func() { printer.PrintErrorOrWarning(errReader, os.Stderr) },
+			func() { printer.PrintWithColor(outReader, stdout, color.Green) },
+			func() { printer.PrintErrorOrWarning(errReader, stderr) },
 		})
 	default:
 		runAsync(wg, []func(){
-			func() { printer.Print(outReader, os.Stdout, subcommandInfo, darkBackground) }, // TODO fix to enable configuration for light background
-			func() { printer.PrintErrorOrWarning(errReader, os.Stderr) },
+			func() { printer.Print(outReader, stdout, subcommandInfo, darkBackground) }, // TODO fix to enable configuration for light background
+			func() { printer.PrintErrorOrWarning(errReader, stderr) },
 		})
 	}
 
