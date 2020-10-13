@@ -15,7 +15,7 @@ var (
 	stderr = colorable.NewColorableStderr()
 )
 
-func Run(args []string, disableColor bool) error {
+func Run(args []string) error {
 	args, plainFlagFound := removePlainFlagIfExists(args)
 	args, lightBackgroundFlagFound := removeLightBackgroundFlagIfExists(args)
 	darkBackground := !lightBackgroundFlagFound
@@ -32,7 +32,8 @@ func Run(args []string, disableColor bool) error {
 		return err
 	}
 
-	if disableColor {
+	// --plain
+	if plainFlagFound {
 		cmd.Stdout = stdout
 		cmd.Stderr = stderr
 	}
@@ -41,7 +42,7 @@ func Run(args []string, disableColor bool) error {
 		return err
 	}
 
-	if disableColor {
+	if plainFlagFound {
 		cmd.Wait()
 		return nil
 	}
@@ -51,11 +52,6 @@ func Run(args []string, disableColor bool) error {
 	wg := &sync.WaitGroup{}
 
 	switch {
-	case plainFlagFound: // --plain
-		runAsync(wg, []func(){
-			func() { printer.PrintPlain(outReader, stdout) },
-			func() { printer.PrintPlain(errReader, stderr) },
-		})
 	case subcommandInfo.Help:
 		runAsync(wg, []func(){
 			func() { printer.PrintWithColor(outReader, stdout, color.Yellow) },
