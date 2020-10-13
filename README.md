@@ -99,8 +99,8 @@ Please also refer to [kubectl official doc](https://kubernetes.io/docs/reference
 
 ## Supported commands
 
-Checked: Supported and works in current latest version
-Unchecked: Will be supported but it's still under development
+Checked: Supported and works in current latest version\
+Unchecked: Will be supported but it's still under development\
 Not in the list: Won't be supported because it's not READ operation
 
 ### kubectl commands
