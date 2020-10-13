@@ -62,8 +62,8 @@ var spaces = regexp.MustCompile("\\s{2,}")
 func Print(r io.Reader, w io.Writer, subcommandInfo *kubectl.SubcommandInfo, darkBackground bool) {
 	withHeader := !subcommandInfo.NoHeader
 	switch subcommandInfo.Subcommand {
-	case kubectl.Top:
-		printer := &TopPrinter{Writer: w, WithHeader: withHeader, DarkBackground: darkBackground}
+	case kubectl.Top, kubectl.APIResources:
+		printer := &TablePrinter{Writer: w, WithHeader: withHeader, DarkBackground: darkBackground}
 		printer.Print(r)
 
 	case kubectl.Get:

@@ -26,6 +26,7 @@ const (
 	Get Subcommand = iota + 1
 	Top
 	Describe
+	APIResources
 )
 
 func InspectSubcommand(command string) (Subcommand, bool) {
@@ -36,6 +37,8 @@ func InspectSubcommand(command string) (Subcommand, bool) {
 		return Describe, true
 	case "top":
 		return Top, true
+	case "api-resources":
+		return APIResources, true
 
 	default:
 		return Subcommand(0), false

@@ -1,11 +1,39 @@
 package printer
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 
 	"github.com/dty1er/kubecolor/color"
 )
+
+type TablePrinter struct {
+	Writer         io.Writer
+	WithHeader     bool
+	DarkBackground bool
+
+	isFirstLine bool
+}
+
+func (tp *TablePrinter) Print(r io.Reader) {
+	tp.isFirstLine = true
+	scanner := bufio.NewScanner(r)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if tp.isHeader() {
+			fmt.Fprintf(tp.Writer, "%s\n", color.Apply(line, getHeaderColorByBackground(tp.DarkBackground)))
+			tp.isFirstLine = false
+			continue
+		}
+
+		printLineAsTableFormat(tp.Writer, line, getColorsByBackground(tp.DarkBackground), nil)
+	}
+}
+
+func (tp *TablePrinter) isHeader() bool {
+	return tp.WithHeader && tp.isFirstLine
+}
 
 // printTableFormat prints a line to w in kubectl "table" Format.
 // Table format is something like:
@@ -28,7 +56,7 @@ import (
 // If the function returned ok=true, then returned color will be used for the column.
 // If it returned ok=false, then default configurated color will be used.
 // If deciderFn is null, then this function uses the default configurated color.
-func printLineAsTableFormat(w io.Writer, line string, dark bool, deciderFn func(index int, column string) (color.Color, bool)) {
+func printLineAsTableFormat(w io.Writer, line string, colorsPreset []color.Color, deciderFn func(index int, column string) (color.Color, bool)) {
 	columns := spaces.Split(line, -1)
 	spacesIndices := spaces.FindAllStringIndex(line, -1)
 
@@ -38,7 +66,12 @@ func printLineAsTableFormat(w io.Writer, line string, dark bool, deciderFn func(
 	}
 
 	for i, column := range columns {
-		c := decideColorForTable(i, column, dark)
+		index := 0
+		if i != 0 {
+			index = spacesIndices[i-1][1] + 1
+		}
+
+		c := decideColorForTable(index, colorsPreset)
 		if deciderFn != nil {
 			if cc, ok := deciderFn(i, column); ok {
 				c = cc // prior injected deciderFn result
@@ -57,11 +90,22 @@ func printLineAsTableFormat(w io.Writer, line string, dark bool, deciderFn func(
 	fmt.Fprintf(w, "\n")
 }
 
-func decideColorForTable(index int, column string, dark bool) color.Color {
-	colors := getColorsByBackground(dark)
-	if index >= len(colors) {
-		index = index % len(colors)
+var indexColorMap = map[int]color.Color{}
+var tempColors = []color.Color{}
+
+func decideColorForTable(index int, colors []color.Color) color.Color {
+	if len(tempColors) == 0 {
+		tempColors = make([]color.Color, len(colors))
+		copy(tempColors, colors)
 	}
 
-	return colors[index]
+	if c, ok := indexColorMap[index]; ok {
+		return c
+	}
+
+	c := tempColors[0]
+	indexColorMap[index] = c
+	tempColors = tempColors[1:]
+
+	return c
 }
