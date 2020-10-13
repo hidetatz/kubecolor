@@ -1,5 +1,7 @@
 # kubecolor
 
+![test](https://github.com/dty1er/kubecolor/workflows/test/badge.svg?branch=main)
+
 Colorize your kubectl output
 
 * get pods
