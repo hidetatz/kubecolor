@@ -15,7 +15,7 @@ var (
 	stderr = colorable.NewColorableStderr()
 )
 
-func Run(args []string, kubeColorDebug bool) error {
+func Run(args []string, disableColor bool) error {
 	args, plainFlagFound := removePlainFlagIfExists(args)
 	args, lightBackgroundFlagFound := removeLightBackgroundFlagIfExists(args)
 	darkBackground := !lightBackgroundFlagFound
@@ -32,9 +32,7 @@ func Run(args []string, kubeColorDebug bool) error {
 		return err
 	}
 
-	colorize := kubeColorDebug
-
-	if !colorize {
+	if disableColor {
 		cmd.Stdout = stdout
 		cmd.Stderr = stderr
 	}
@@ -43,7 +41,7 @@ func Run(args []string, kubeColorDebug bool) error {
 		return err
 	}
 
-	if !colorize {
+	if disableColor {
 		cmd.Wait()
 		return nil
 	}
