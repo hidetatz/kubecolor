@@ -1,6 +1,8 @@
 package printer
 
 import (
+	"bufio"
+	"fmt"
 	"io"
 	"regexp"
 	"strconv"
@@ -74,6 +76,36 @@ func Print(r io.Reader, w io.Writer, subcommandInfo *kubectl.SubcommandInfo, dar
 
 	default:
 		PrintPlain(r, w)
+	}
+}
+
+// PrintPlaing reads r then writes it to w without any decorations.
+func PrintPlain(r io.Reader, w io.Writer) {
+	scanner := bufio.NewScanner(r)
+	for scanner.Scan() {
+		fmt.Fprintf(w, "%s\n", scanner.Text())
+	}
+}
+
+// PrintWithColor reads r then writes it to w in given color.
+func PrintWithColor(r io.Reader, w io.Writer, c color.Color) {
+	scanner := bufio.NewScanner(r)
+	for scanner.Scan() {
+		fmt.Fprintf(w, "%s\n", color.Apply(scanner.Text(), c))
+	}
+}
+
+// PrintErrorOrWarning reads r then writes it to w in error or warning color.
+// if the line has "error" prefix, it will be error color, otherwise it will be printed in warning color.
+func PrintErrorOrWarning(r io.Reader, w io.Writer) {
+	scanner := bufio.NewScanner(r)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.HasPrefix(strings.ToLower(line), "error") {
+			fmt.Fprintf(w, "%s\n", color.Apply(line, color.Red))
+		} else {
+			fmt.Fprintf(w, "%s\n", color.Apply(line, color.Yellow))
+		}
 	}
 }
 
