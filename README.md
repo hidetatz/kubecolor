@@ -28,7 +28,7 @@ you can use kubecolor as a complete alternative of kubectl. It means you can wri
 alias kubectl="kubecolor"
 ```
 
-kubecolor is developed to colorize the output of only READ commands (get, describe...). 
+kubecolor is developed to colorize the output of only READ commands (get, describe...).
 So if the given subcommand was for WRITE operations (apply, edit...), it doesn't give great decorations on it.
 
 For now, not all subcommands are supported and will be done in the future. What is supported can be found below.
@@ -71,6 +71,11 @@ This option will help you when you want to save the output onto a file and edit 
 When your terminal's background color is something light (e.g white), default color preset might look too bright and not readable.
 If so, specify `--light-background` as a command line argument. kubecolor will use a color preset for light-backgrounded environment.
 
+* `--force-colors`
+
+Forces colored output highlighting even if stdout is not a TTY.
+When you want to have colors, for example on `kubecolor get pod | grep Running`, you can force it via `--force-colors` flag: `kubecolor --force-colors get pod | grep Running`
+
 ### Autocompletion
 
 kubectl provides [autocompletion feature](https://kubernetes.io/docs/tasks/tools/install-kubectl/#enable-kubectl-autocompletion). If you are
@@ -94,8 +99,8 @@ Please also refer to [kubectl official doc](https://kubernetes.io/docs/reference
 
 ## Supported commands
 
-Checked: Supported and works in current latest version  
-Unchecked: Will be supported but it's still under development  
+Checked: Supported and works in current latest version
+Unchecked: Will be supported but it's still under development
 Not in the list: Won't be supported because it's not READ operation
 
 ### kubectl commands

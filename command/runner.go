@@ -12,8 +12,9 @@ import (
 )
 
 func Run(args []string, kubeColorDebug bool) error {
-	args, plainFlagFound := removePlainFlagIfExists(args)
-	args, lightBackgroundFlagFound := removeLightBackgroundFlagIfExists(args)
+	args, plainFlagFound := removeBoolFlagIfExists("--plain", args)
+	args, lightBackgroundFlagFound := removeBoolFlagIfExists("--light-background", args)
+	args, forceColorsFlagFound := removeBoolFlagIfExists("--force-colors", args)
 	darkBackground := !lightBackgroundFlagFound
 
 	cmd := exec.Command("kubectl", args...)
@@ -29,7 +30,7 @@ func Run(args []string, kubeColorDebug bool) error {
 	}
 
 	fd := os.Stdout.Fd()
-	colorize := isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd) || kubeColorDebug
+	colorize := isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd) || kubeColorDebug || forceColorsFlagFound
 
 	if !colorize {
 		cmd.Stdout = os.Stdout
@@ -91,19 +92,9 @@ func runAsync(wg *sync.WaitGroup, tasks []func()) {
 	}
 }
 
-func removePlainFlagIfExists(args []string) ([]string, bool) {
+func removeBoolFlagIfExists(flag string, args []string) ([]string, bool) {
 	for i, arg := range args {
-		if arg == "--plain" {
-			return append(args[:i], args[i+1:]...), true
-		}
-	}
-
-	return args, false
-}
-
-func removeLightBackgroundFlagIfExists(args []string) ([]string, bool) {
-	for i, arg := range args {
-		if arg == "--light-background" {
+		if arg == flag {
 			return append(args[:i], args[i+1:]...), true
 		}
 	}
