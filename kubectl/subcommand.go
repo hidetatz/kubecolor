@@ -28,6 +28,7 @@ const (
 	Top
 	Describe
 	APIResources
+	Exec
 )
 
 func InspectSubcommand(command string) (Subcommand, bool) {
@@ -40,6 +41,8 @@ func InspectSubcommand(command string) (Subcommand, bool) {
 		return Top, true
 	case "api-resources":
 		return APIResources, true
+	case "exec":
+		return Exec, true
 
 	default:
 		return Subcommand(0), false

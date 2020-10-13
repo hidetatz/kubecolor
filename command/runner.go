@@ -1,6 +1,8 @@
 package command
 
 import (
+	"io"
+	"os"
 	"os/exec"
 	"sync"
 
@@ -32,6 +34,8 @@ func Run(args []string) error {
 		return err
 	}
 
+	cmd.Stdin = os.Stdin
+
 	// --plain
 	if plainFlagFound {
 		cmd.Stdout = stdout
@@ -62,6 +66,11 @@ func Run(args []string) error {
 		// so just print it in green
 		runAsync(wg, []func(){
 			func() { printer.PrintWithColor(outReader, stdout, color.Green) },
+			func() { printer.PrintErrorOrWarning(errReader, stderr) },
+		})
+	case subcommandInfo.Subcommand == kubectl.Exec:
+		runAsync(wg, []func(){
+			func() { io.Copy(stdout, outReader) },
 			func() { printer.PrintErrorOrWarning(errReader, stderr) },
 		})
 	default:
