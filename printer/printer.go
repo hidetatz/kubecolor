@@ -81,7 +81,7 @@ func Print(r io.Reader, w io.Writer, subcommandInfo *kubectl.SubcommandInfo, dar
 		printer.Print(r)
 
 	default:
-		PrintPlain(r, w)
+		PrintWithColor(r, w, color.Green)
 	}
 }
 
