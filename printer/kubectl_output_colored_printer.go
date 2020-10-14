@@ -7,11 +7,15 @@ import (
 	"github.com/dty1er/kubecolor/kubectl"
 )
 
+// KubectlOutputColoredPrinter is a printer to print data depending on
+// which kubectl subcommand is executed.
 type KubectlOutputColoredPrinter struct {
 	SubcommandInfo *kubectl.SubcommandInfo
 	DarkBackground bool
 }
 
+// Print reads r then write it to w, its format is based on kubectl subcommand.
+// If given subcommand is not supported by the printer, it prints data in Green.
 func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 	withHeader := !kp.SubcommandInfo.NoHeader
 
