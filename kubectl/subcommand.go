@@ -24,29 +24,97 @@ const (
 type Subcommand int
 
 const (
-	Get Subcommand = iota + 1
+	Create Subcommand = iota + 1
+	Expose
+	Run
+	Set
+	Explain
+	Get
+	Edit
+	Delete
+	Rollout
+	Scale
+	Autoscale
+	Certificate
+	ClusterInfo
 	Top
+	Cordon
+	Uncordon
+	Drain
+	Taint
 	Describe
-	APIResources
+	Logs
+	Attach
 	Exec
+	PortForward
+	Proxy
+	Cp
+	Auth
+	Diff
+	Apply
+	Patch
+	Replace
+	Wait
+	Convert
+	Kustomize
+	Label
+	Annotate
+	Completion
+	APIResources
+	APIVersions
+	Config
+	Plugin
+	Version
 )
 
-func InspectSubcommand(command string) (Subcommand, bool) {
-	switch command {
-	case "get":
-		return Get, true
-	case "describe":
-		return Describe, true
-	case "top":
-		return Top, true
-	case "api-resources":
-		return APIResources, true
-	case "exec":
-		return Exec, true
+var strToSubcommand = map[string]Subcommand{
+	"create":        Create,
+	"expose":        Expose,
+	"run":           Run,
+	"set":           Set,
+	"explain":       Explain,
+	"get":           Get,
+	"edit":          Edit,
+	"delete":        Delete,
+	"rollout":       Rollout,
+	"scale":         Scale,
+	"autoscale":     Autoscale,
+	"certificate":   Certificate,
+	"cluster-info":  ClusterInfo,
+	"top":           Top,
+	"cordon":        Cordon,
+	"uncordon":      Uncordon,
+	"drain":         Drain,
+	"taint":         Taint,
+	"describe":      Describe,
+	"logs":          Logs,
+	"attach":        Attach,
+	"exec":          Exec,
+	"port-forward":  PortForward,
+	"proxy":         Proxy,
+	"cp":            Cp,
+	"auth":          Auth,
+	"diff":          Diff,
+	"apply":         Apply,
+	"patch":         Patch,
+	"replace":       Replace,
+	"wait":          Wait,
+	"convert":       Convert,
+	"kustomize":     Kustomize,
+	"label":         Label,
+	"annotate":      Annotate,
+	"completion":    Completion,
+	"api-resources": APIResources,
+	"api-versions":  APIVersions,
+	"config":        Config,
+	"plugin":        Plugin,
+	"version":       Version,
+}
 
-	default:
-		return Subcommand(0), false
-	}
+func InspectSubcommand(command string) (Subcommand, bool) {
+	sc, ok := strToSubcommand[command]
+
+	return sc, ok
 }
 
 func CollectCommandlineOptions(args []string, info *SubcommandInfo) {
