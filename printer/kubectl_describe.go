@@ -10,14 +10,12 @@ import (
 )
 
 type DescribePrinter struct {
-	Writer         io.Writer
 	DarkBackground bool
 }
 
-func (dp *DescribePrinter) Print(outReader io.Reader) {
-	w := dp.Writer
+func (dp *DescribePrinter) Print(r io.Reader, w io.Writer) {
 	basicIndentWidth := 2 // according to kubectl describe format
-	scanner := bufio.NewScanner(outReader)
+	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		line := scanner.Text()
 
