@@ -33,7 +33,11 @@ func Run(args []string) error {
 		shouldColorize = true
 	}
 
-	cmd := exec.Command("kubectl", args...)
+	kubectlCmd := "kubectl"
+	if kc := os.Getenv("KUBECTL_COMMAND"); kc != "" {
+		kubectlCmd = kc
+	}
+	cmd := exec.Command(kubectlCmd, args...)
 	cmd.Stdin = os.Stdin
 
 	var outReader, errReader io.Reader

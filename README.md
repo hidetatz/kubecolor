@@ -93,6 +93,16 @@ complete -o default -F __start_kubectl k
 
 Please also refer to [kubectl official doc](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete).
 
+### Specify what command to execute as kubectl
+
+Sometimes, you may want to specify what to command to use as `kubectl`. For example,
+when you want to use a versioned-kubectl `kubectl.1.17`, you can do that by an environment variable:
+
+```shell
+KUBECTL_COMMAND="kubectl.1.17" kubecolor get po
+```
+
+When you don't set `KUBECTL_COMMAND`, then `kubectl` is used by default.
 
 ## Supported commands
 
