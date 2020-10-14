@@ -40,8 +40,9 @@ func TestInspectSubcommandInfo(t *testing.T) {
 		{"top pod", &SubcommandInfo{Subcommand: Top}, true},
 		{"top pods", &SubcommandInfo{Subcommand: Top}, true},
 
+		{"apply", &SubcommandInfo{Subcommand: Apply}, true},
+
 		{"", &SubcommandInfo{}, false},
-		{"apply", &SubcommandInfo{}, false},
 	}
 	for _, tt := range tests {
 		tt := tt
