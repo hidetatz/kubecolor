@@ -125,10 +125,6 @@ Not in the list: Won't be supported because it's not READ operation
 - [ ] specifying multiple resources at once (e.g. `kubectl get pod,replicaset`)
   - This will actually work, but if you don't specify "--no-headers" it might look a bit strange.
 
-## Known issues which will be fixed in the (near) future
-
-- [ ] It does not work with kubectl exec -t option
-
 ## Contributions
 
 Always welcome. Just opening an issue should be also greatful.
