@@ -13,7 +13,6 @@ import (
 )
 
 type GetPrinter struct {
-	Writer         io.Writer
 	WithHeader     bool
 	FormatOpt      kubectl.FormatOption
 	DarkBackground bool
@@ -22,30 +21,30 @@ type GetPrinter struct {
 	inString    bool
 }
 
-func (gp *GetPrinter) Print(outReader io.Reader) {
+func (gp *GetPrinter) Print(r io.Reader, w io.Writer) {
 	gp.isFirstLine = true
-	scanner := bufio.NewScanner(outReader)
+	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		line := scanner.Text()
 		switch gp.FormatOpt {
 		case kubectl.Json:
-			gp.PrintJson(line)
+			gp.PrintJson(line, w)
 		case kubectl.Yaml:
-			gp.PrintYaml(line)
+			gp.PrintYaml(line, w)
 		default:
-			gp.PrintTable(line)
+			gp.PrintTable(line, w)
 		}
 	}
 }
 
-func (gp *GetPrinter) PrintTable(line string) {
+func (gp *GetPrinter) PrintTable(line string, w io.Writer) {
 	if gp.isHeader() {
-		fmt.Fprintf(gp.Writer, "%s\n", color.Apply(line, getHeaderColorByBackground(gp.DarkBackground)))
+		fmt.Fprintf(w, "%s\n", color.Apply(line, getHeaderColorByBackground(gp.DarkBackground)))
 		gp.isFirstLine = false
 		return
 	}
 
-	printLineAsTableFormat(gp.Writer, line, getColorsByBackground(gp.DarkBackground), gp.DecideColor)
+	printLineAsTableFormat(w, line, getColorsByBackground(gp.DarkBackground), gp.DecideColor)
 }
 
 // toColorizedJsonKey returns colored json key
@@ -97,8 +96,7 @@ func (gp *GetPrinter) toColorizedJsonValue(value string) string {
 	return fmt.Sprintf(format, color.Apply(doubleQuoteTrimmedValue, getColorByValueType(value, gp.DarkBackground)))
 }
 
-func (gp *GetPrinter) PrintJson(line string) {
-	w := gp.Writer
+func (gp *GetPrinter) PrintJson(line string, w io.Writer) {
 	indentCnt := gp.findIndent(line)
 	indent := toSpaces(indentCnt)
 	trimmedLine := strings.TrimLeft(line, " ")
@@ -142,8 +140,7 @@ func (gp *GetPrinter) PrintJson(line string) {
 	fmt.Fprintf(w, "%s%s: %s\n", indent, gp.toColorizedJsonKey(key, indentCnt, 4), gp.toColorizedJsonValue(val))
 }
 
-func (gp *GetPrinter) PrintYaml(line string) {
-	w := gp.Writer
+func (gp *GetPrinter) PrintYaml(line string, w io.Writer) {
 	indentCnt := gp.findIndent(line)
 	trimmedLine := strings.TrimLeft(line, " ")
 

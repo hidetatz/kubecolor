@@ -4,6 +4,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"strings"
 	"sync"
 
 	"github.com/dty1er/kubecolor/color"
@@ -16,6 +17,34 @@ var (
 	stdout = colorable.NewColorableStdout()
 	stderr = colorable.NewColorableStderr()
 )
+
+type Printers struct {
+	HelpPrinter        printer.Printer
+	FullColoredPrinter printer.Printer
+	ErrorPrinter       printer.Printer
+}
+
+// This is defined here to be replaced in test
+var getPrinters = func(subcommandInfo *kubectl.SubcommandInfo, darkBackground bool) *Printers {
+	return &Printers{
+		HelpPrinter: &printer.SingleColoredPrinter{
+			Color: color.Yellow,
+		},
+		FullColoredPrinter: &printer.KubectlOutputColoredPrinter{
+			SubcommandInfo: subcommandInfo,
+			DarkBackground: darkBackground,
+		},
+		ErrorPrinter: &printer.WithFuncPrinter{
+			Fn: func(line string) color.Color {
+				if strings.HasPrefix(strings.ToLower(line), "error") {
+					return color.Red
+				}
+
+				return color.Yellow
+			},
+		},
+	}
+}
 
 func Run(args []string) error {
 	args, plainFlagFound := removePlainFlagIfExists(args)
@@ -69,18 +98,20 @@ func Run(args []string) error {
 		return nil
 	}
 
+	printers := getPrinters(subcommandInfo, darkBackground)
+
 	wg := &sync.WaitGroup{}
 
 	if subcommandInfo.Help {
 		runAsync(wg, []func(){
-			func() { printer.PrintWithColor(outReader, stdout, color.Yellow) },
-			func() { printer.PrintErrorOrWarning(errReader, stderr) },
+			func() { printers.HelpPrinter.Print(outReader, stdout) },
+			func() { printers.ErrorPrinter.Print(errReader, stderr) },
 		})
 
 	} else {
 		runAsync(wg, []func(){
-			func() { printer.Print(outReader, stdout, subcommandInfo, darkBackground) },
-			func() { printer.PrintErrorOrWarning(errReader, stderr) },
+			func() { printers.FullColoredPrinter.Print(outReader, stdout) },
+			func() { printers.ErrorPrinter.Print(errReader, stderr) },
 		})
 	}
 

@@ -9,25 +9,24 @@ import (
 )
 
 type TablePrinter struct {
-	Writer         io.Writer
 	WithHeader     bool
 	DarkBackground bool
 
 	isFirstLine bool
 }
 
-func (tp *TablePrinter) Print(r io.Reader) {
+func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
 	tp.isFirstLine = true
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		line := scanner.Text()
 		if tp.isHeader() {
-			fmt.Fprintf(tp.Writer, "%s\n", color.Apply(line, getHeaderColorByBackground(tp.DarkBackground)))
+			fmt.Fprintf(w, "%s\n", color.Apply(line, getHeaderColorByBackground(tp.DarkBackground)))
 			tp.isFirstLine = false
 			continue
 		}
 
-		printLineAsTableFormat(tp.Writer, line, getColorsByBackground(tp.DarkBackground), nil)
+		printLineAsTableFormat(w, line, getColorsByBackground(tp.DarkBackground), nil)
 	}
 }
 
