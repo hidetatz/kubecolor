@@ -28,6 +28,11 @@ func Run(args []string) error {
 	// when the given subcommand is supported AND --plain is NOT specified, then we colorize it
 	shouldColorize := subcommandFound && isColoringSupported(subcommandInfo.Subcommand) && !plainFlagFound
 
+	// when it is for Help, we exceptionally colorize it in Help color
+	if subcommandInfo.Help {
+		shouldColorize = true
+	}
+
 	cmd := exec.Command("kubectl", args...)
 	cmd.Stdin = os.Stdin
 
