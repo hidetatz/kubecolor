@@ -11,6 +11,7 @@ import (
 type TablePrinter struct {
 	WithHeader     bool
 	DarkBackground bool
+	ColorDeciderFn func(index int, column string) (color.Color, bool)
 
 	isFirstLine bool
 }
@@ -26,7 +27,7 @@ func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
 			continue
 		}
 
-		printLineAsTableFormat(w, line, getColorsByBackground(tp.DarkBackground), nil)
+		printLineAsTableFormat(w, line, getColorsByBackground(tp.DarkBackground), tp.ColorDeciderFn)
 	}
 }
 
