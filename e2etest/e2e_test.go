@@ -78,11 +78,11 @@ func getKubecolorOutput(args []string) string {
 		panic(err)
 	}
 
-	stdout := os.Stdout
-	stderr := os.Stderr
+	stdout := command.Stdout
+	stderr := command.Stderr
 	// use fake stdout/err
-	os.Stdout = w
-	os.Stderr = w
+	command.Stdout = w
+	command.Stderr = w
 
 	err = command.Run(args)
 	if err != nil {
@@ -90,8 +90,8 @@ func getKubecolorOutput(args []string) string {
 	}
 
 	// recover to original stdout/err
-	os.Stdout = stdout
-	os.Stderr = stderr
+	command.Stdout = stdout
+	command.Stderr = stderr
 	w.Close()
 
 	var buff bytes.Buffer
