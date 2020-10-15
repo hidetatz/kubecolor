@@ -60,9 +60,12 @@ func (dp *DescribePrinter) Print(r io.Reader, w io.Writer) {
 
 		// First, write the first value assuming it's a key
 		keyColor := getColorByKeyIndent(indentCnt, basicIndentWidth, dp.DarkBackground)
+		valColor := getColorByValueType(columns[0], dp.DarkBackground)
 		if strings.HasSuffix(columns[0], ":") {
 			// trailing ":" should not be colorized
 			fmt.Fprintf(w, "%s%s:", indent, color.Apply(strings.TrimRight(columns[0], ":"), keyColor))
+		} else if len(columns) == 1 {
+			fmt.Fprintf(w, "%s%s", indent, color.Apply(columns[0], valColor))
 		} else {
 			fmt.Fprintf(w, "%s%s", indent, color.Apply(columns[0], keyColor))
 		}
