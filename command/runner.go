@@ -14,8 +14,8 @@ import (
 )
 
 var (
-	stdout = colorable.NewColorableStdout()
-	stderr = colorable.NewColorableStderr()
+	Stdout = colorable.NewColorableStdout()
+	Stderr = colorable.NewColorableStderr()
 )
 
 type Printers struct {
@@ -85,8 +85,8 @@ func Run(args []string) error {
 	} else {
 		// when we don't colorize the output,
 		// we don't need to capthre it so just set stdout/err here
-		cmd.Stdout = stdout
-		cmd.Stderr = stderr
+		cmd.Stdout = Stdout
+		cmd.Stderr = Stderr
 	}
 
 	if err = cmd.Start(); err != nil {
@@ -104,14 +104,14 @@ func Run(args []string) error {
 
 	if subcommandInfo.Help {
 		runAsync(wg, []func(){
-			func() { printers.HelpPrinter.Print(outReader, stdout) },
-			func() { printers.ErrorPrinter.Print(errReader, stderr) },
+			func() { printers.HelpPrinter.Print(outReader, Stdout) },
+			func() { printers.ErrorPrinter.Print(errReader, Stderr) },
 		})
 
 	} else {
 		runAsync(wg, []func(){
-			func() { printers.FullColoredPrinter.Print(outReader, stdout) },
-			func() { printers.ErrorPrinter.Print(errReader, stderr) },
+			func() { printers.FullColoredPrinter.Print(outReader, Stdout) },
+			func() { printers.ErrorPrinter.Print(errReader, Stderr) },
 		})
 	}
 

@@ -2,6 +2,8 @@ package printer
 
 import (
 	"io"
+	"strconv"
+	"strings"
 
 	"github.com/dty1er/kubecolor/color"
 	"github.com/dty1er/kubecolor/kubectl"
@@ -27,10 +29,34 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 
 	case kubectl.Get:
 		switch {
-		case kp.SubcommandInfo.FormatOption == kubectl.None:
-			printer = &TablePrinter{WithHeader: withHeader, DarkBackground: kp.DarkBackground}
-		default:
-			printer = &GetPrinter{WithHeader: withHeader, FormatOpt: kp.SubcommandInfo.FormatOption, DarkBackground: kp.DarkBackground}
+		case kp.SubcommandInfo.FormatOption == kubectl.None, kp.SubcommandInfo.FormatOption == kubectl.Wide:
+			printer = &TablePrinter{
+				WithHeader:     withHeader,
+				DarkBackground: kp.DarkBackground,
+				ColorDeciderFn: func(_ int, column string) (color.Color, bool) {
+					if column == "CrashLoopBackOff" {
+						return color.Red, true
+					}
+
+					// When Readiness is "n/m" then yellow
+					if strings.Count(column, "/") == 1 {
+						if arr := strings.Split(column, "/"); arr[0] != arr[1] {
+							_, e1 := strconv.Atoi(arr[0])
+							_, e2 := strconv.Atoi(arr[1])
+							if e1 == nil && e2 == nil { // check both is number
+								return color.Yellow, true
+							}
+						}
+
+					}
+
+					return 0, false
+				},
+			}
+		case kp.SubcommandInfo.FormatOption == kubectl.Json:
+			printer = &JsonPrinter{DarkBackground: kp.DarkBackground}
+		case kp.SubcommandInfo.FormatOption == kubectl.Yaml:
+			printer = &YamlPrinter{DarkBackground: kp.DarkBackground}
 		}
 
 	case kubectl.Describe:
