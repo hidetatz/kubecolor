@@ -9,6 +9,7 @@ import (
 	"github.com/dty1er/kubecolor/color"
 )
 
+// DescribePrinter is a specific printer to print kubectl describe format.
 type DescribePrinter struct {
 	DarkBackground bool
 }
