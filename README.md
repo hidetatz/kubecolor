@@ -64,7 +64,7 @@ alias kubectl="kubecolor"
 
 * `--plain`
 
-When you don't want to colorize output, you can specify `--plain`. Kubecolor underntands this option and
+When you don't want to colorize output, you can specify `--plain`. Kubecolor understands this option and
 outputs the result without colorizing. Of course, given `--plain` will never be passed to `kubectl`.
 This option will help you when you want to save the output onto a file and edit them by editors.
 
