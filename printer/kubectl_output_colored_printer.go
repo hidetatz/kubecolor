@@ -25,15 +25,15 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 
 	switch kp.SubcommandInfo.Subcommand {
 	case kubectl.Top, kubectl.APIResources:
-		printer = &TablePrinter{WithHeader: withHeader, DarkBackground: kp.DarkBackground}
+		printer = NewTablePrinter(withHeader, kp.DarkBackground, nil)
 
 	case kubectl.Get:
 		switch {
 		case kp.SubcommandInfo.FormatOption == kubectl.None, kp.SubcommandInfo.FormatOption == kubectl.Wide:
-			printer = &TablePrinter{
-				WithHeader:     withHeader,
-				DarkBackground: kp.DarkBackground,
-				ColorDeciderFn: func(_ int, column string) (color.Color, bool) {
+			printer = NewTablePrinter(
+				withHeader,
+				kp.DarkBackground,
+				func(_ int, column string) (color.Color, bool) {
 					if column == "CrashLoopBackOff" {
 						return color.Red, true
 					}
@@ -52,7 +52,7 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 
 					return 0, false
 				},
-			}
+			)
 		case kp.SubcommandInfo.FormatOption == kubectl.Json:
 			printer = &JsonPrinter{DarkBackground: kp.DarkBackground}
 		case kp.SubcommandInfo.FormatOption == kubectl.Yaml:
