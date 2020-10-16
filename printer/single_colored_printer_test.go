@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/dty1er/kubecolor/color"
-	"github.com/dty1er/kubecolor/output"
 	"github.com/dty1er/kubecolor/testutil"
 )
 
@@ -20,11 +19,11 @@ func Test_SingleColoredPrinter_Print(t *testing.T) {
 		{
 			name:  "colored in white",
 			color: color.White,
-			input: output.New(`
+			input: testutil.NewHereDoc(`
 				test
 				test2
 				test3`),
-			expected: output.Newf(`
+			expected: testutil.NewHereDocf(`
 				%s
 				%s
 				%s
@@ -33,11 +32,11 @@ func Test_SingleColoredPrinter_Print(t *testing.T) {
 		{
 			name:  "colored in red",
 			color: color.Red,
-			input: output.New(`
+			input: testutil.NewHereDoc(`
 				test
 				test2
 				test3`),
-			expected: output.Newf(`
+			expected: testutil.NewHereDocf(`
 				%s
 				%s
 				%s

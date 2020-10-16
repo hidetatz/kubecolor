@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/dty1er/kubecolor/color"
-	"github.com/dty1er/kubecolor/output"
 	"github.com/dty1er/kubecolor/testutil"
 )
 
@@ -22,11 +21,11 @@ func Test_WithFuncPrinter_Print(t *testing.T) {
 			fn: func(_ string) color.Color {
 				return color.White
 			},
-			input: output.New(`
+			input: testutil.NewHereDoc(`
 				test
 				test2
 				test3`),
-			expected: output.Newf(`
+			expected: testutil.NewHereDocf(`
 				%s
 				%s
 				%s
@@ -40,11 +39,11 @@ func Test_WithFuncPrinter_Print(t *testing.T) {
 				}
 				return color.White
 			},
-			input: output.New(`
+			input: testutil.NewHereDoc(`
 				test
 				test2
 				test3`),
-			expected: output.Newf(`
+			expected: testutil.NewHereDocf(`
 				%s
 				%s
 				%s
