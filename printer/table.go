@@ -13,7 +13,19 @@ type TablePrinter struct {
 	DarkBackground bool
 	ColorDeciderFn func(index int, column string) (color.Color, bool)
 
-	isFirstLine bool
+	isFirstLine   bool
+	indexColorMap map[int]color.Color
+	tempColors    []color.Color
+}
+
+func NewTablePrinter(withHeader, darkBackground bool, colorDeciderFn func(index int, column string) (color.Color, bool)) *TablePrinter {
+	return &TablePrinter{
+		WithHeader:     withHeader,
+		DarkBackground: darkBackground,
+		ColorDeciderFn: colorDeciderFn,
+		indexColorMap:  map[int]color.Color{},
+		tempColors:     []color.Color{},
+	}
 }
 
 func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
@@ -27,7 +39,7 @@ func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
 			continue
 		}
 
-		printLineAsTableFormat(w, line, getColorsByBackground(tp.DarkBackground), tp.ColorDeciderFn)
+		tp.printLineAsTableFormat(w, line, getColorsByBackground(tp.DarkBackground), tp.ColorDeciderFn)
 	}
 }
 
@@ -56,7 +68,7 @@ func (tp *TablePrinter) isHeader() bool {
 // If the function returned ok=true, then returned color will be used for the column.
 // If it returned ok=false, then default configurated color will be used.
 // If deciderFn is null, then this function uses the default configurated color.
-func printLineAsTableFormat(w io.Writer, line string, colorsPreset []color.Color, deciderFn func(index int, column string) (color.Color, bool)) {
+func (tp *TablePrinter) printLineAsTableFormat(w io.Writer, line string, colorsPreset []color.Color, deciderFn func(index int, column string) (color.Color, bool)) {
 	columns := spaces.Split(line, -1)
 	spacesIndices := spaces.FindAllStringIndex(line, -1)
 
@@ -71,7 +83,7 @@ func printLineAsTableFormat(w io.Writer, line string, colorsPreset []color.Color
 			index = spacesIndices[i-1][1] + 1
 		}
 
-		c := decideColorForTable(index, colorsPreset)
+		c := tp.decideColorForTable(index, colorsPreset)
 		if deciderFn != nil {
 			if cc, ok := deciderFn(i, column); ok {
 				c = cc // prior injected deciderFn result
@@ -90,22 +102,19 @@ func printLineAsTableFormat(w io.Writer, line string, colorsPreset []color.Color
 	fmt.Fprintf(w, "\n")
 }
 
-var indexColorMap = map[int]color.Color{}
-var tempColors = []color.Color{}
-
-func decideColorForTable(index int, colors []color.Color) color.Color {
-	if len(tempColors) == 0 {
-		tempColors = make([]color.Color, len(colors))
-		copy(tempColors, colors)
+func (tp *TablePrinter) decideColorForTable(index int, colors []color.Color) color.Color {
+	if len(tp.tempColors) == 0 {
+		tp.tempColors = make([]color.Color, len(colors))
+		copy(tp.tempColors, colors)
 	}
 
-	if c, ok := indexColorMap[index]; ok {
+	if c, ok := tp.indexColorMap[index]; ok {
 		return c
 	}
 
-	c := tempColors[0]
-	indexColorMap[index] = c
-	tempColors = tempColors[1:]
+	c := tp.tempColors[0]
+	tp.indexColorMap[index] = c
+	tp.tempColors = tp.tempColors[1:]
 
 	return c
 }

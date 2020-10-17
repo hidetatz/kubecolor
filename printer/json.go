@@ -11,8 +11,6 @@ import (
 
 type JsonPrinter struct {
 	DarkBackground bool
-
-	// inString bool
 }
 
 func (jp *JsonPrinter) Print(r io.Reader, w io.Writer) {
@@ -53,16 +51,16 @@ func printLineAsJsonFormat(line string, w io.Writer, dark bool) {
 	// "key": value,
 	// value,
 	// value
-	trimmed := strings.SplitN(trimmedLine, ": ", 2) // if key contains ": " this works in a wrong way but it's unlikely to happen
+	splitted := strings.SplitN(trimmedLine, ": ", 2) // if key contains ": " this works in a wrong way but it's unlikely to happen
 
-	if len(trimmed) == 1 {
+	if len(splitted) == 1 {
 		// when coming here, it will be a value in an array
-		fmt.Fprintf(w, "%s%s\n", indent, toColorizedJsonValue(trimmed[0], dark))
+		fmt.Fprintf(w, "%s%s\n", indent, toColorizedJsonValue(splitted[0], dark))
 		return
 	}
 
-	key := trimmed[0]
-	val := trimmed[1]
+	key := splitted[0]
+	val := splitted[1]
 
 	fmt.Fprintf(w, "%s%s: %s\n", indent, toColorizedJsonKey(key, indentCnt, 4, dark), toColorizedJsonValue(val, dark))
 }
@@ -70,7 +68,7 @@ func printLineAsJsonFormat(line string, w io.Writer, dark bool) {
 // toColorizedJsonKey returns colored json key
 func toColorizedJsonKey(key string, indentCnt, basicWidth int, dark bool) string {
 	hasColon := strings.HasSuffix(key, ":")
-	// remove comma and double quotations although they might not exist actually
+	// remove colon and double quotations although they might not exist actually
 	key = strings.TrimRight(key, ":")
 	doubleQuoteTrimmed := strings.TrimRight(strings.TrimLeft(key, `"`), `"`)
 
@@ -92,6 +90,14 @@ func toColorizedJsonValue(value string, dark bool) string {
 
 	if value == "[" {
 		return "["
+	}
+
+	if value == "{}," {
+		return "{},"
+	}
+
+	if value == "{}" {
+		return "{}"
 	}
 
 	hasComma := strings.HasSuffix(value, ",")
