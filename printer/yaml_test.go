@@ -2,7 +2,6 @@ package printer
 
 import (
 	"bytes"
-	"fmt"
 	"strings"
 	"testing"
 
@@ -23,11 +22,15 @@ func Test_YamlPrinter_Print(t *testing.T) {
 				apiVersion: v1
 				kind: "Pod"
 				num: 415
+				unknown: <unknown>
+				none: <none>
 				bool: true`),
 			expected: testutil.NewHereDoc(`
 				[33mapiVersion[0m: [36mv1[0m
 				[33mkind[0m: "[36mPod[0m"
 				[33mnum[0m: [35m415[0m
+				[33munknown[0m: [33m<unknown>[0m
+				[33mnone[0m: [33m<none>[0m
 				[33mbool[0m: [32mtrue[0m
 			`),
 		},
@@ -111,8 +114,6 @@ func Test_YamlPrinter_Print(t *testing.T) {
 			var w bytes.Buffer
 			printer := YamlPrinter{DarkBackground: tt.darkBackground}
 			printer.Print(r, &w)
-			fmt.Println(tt.expected)
-			fmt.Println(w.String())
 			testutil.MustEqual(t, tt.expected, w.String())
 		})
 	}
