@@ -11,8 +11,6 @@ import (
 
 type JsonPrinter struct {
 	DarkBackground bool
-
-	// inString bool
 }
 
 func (jp *JsonPrinter) Print(r io.Reader, w io.Writer) {
@@ -92,6 +90,14 @@ func toColorizedJsonValue(value string, dark bool) string {
 
 	if value == "[" {
 		return "["
+	}
+
+	if value == "{}," {
+		return "{},"
+	}
+
+	if value == "{}" {
+		return "{}"
 	}
 
 	hasComma := strings.HasSuffix(value, ",")
