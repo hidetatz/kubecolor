@@ -34,7 +34,7 @@ func Test_TablePrinter_Print(t *testing.T) {
 				[36mnginx-dnmv5[0m   [32m1/1[0m     [35mRunning[0m   [37m0[0m          [33m6d6h[0m
 				[36mnginx-m8pbc[0m   [32m1/1[0m     [35mRunning[0m   [37m0[0m          [33m6d6h[0m
 				[36mnginx-qdf9b[0m   [32m1/1[0m     [35mRunning[0m   [37m0[0m          [33m6d6h[0m
-				`),
+			`),
 		},
 		{
 			name:           "withheader=false, 1st line is not colored in header color but colored as a content of table",
@@ -66,7 +66,7 @@ func Test_TablePrinter_Print(t *testing.T) {
 				[36mnginx-dnmv5[0m   [32m1/1[0m     [35mRunning[0m   [30m0[0m          [33m6d6h[0m
 				[36mnginx-m8pbc[0m   [32m1/1[0m     [35mRunning[0m   [30m0[0m          [33m6d6h[0m
 				[36mnginx-qdf9b[0m   [32m1/1[0m     [35mRunning[0m   [30m0[0m          [33m6d6h[0m
-				`),
+			`),
 		},
 		{
 			name: "colorDeciderFn works",
@@ -102,7 +102,7 @@ func Test_TablePrinter_Print(t *testing.T) {
 				[36mnginx-dnmv5[0m   [32m1/1[0m     [31mCrashLoopBackOff[0m   [37m0[0m          [33m6d6h[0m
 				[36mnginx-m8pbc[0m   [32m1/1[0m     [35mRunning[0m            [37m0[0m          [33m6d6h[0m
 				[36mnginx-qdf9b[0m   [33m0/1[0m     [35mRunning[0m            [37m0[0m          [33m6d6h[0m
-				`),
+			`),
 		},
 		{
 			name:           "a table whose some parts are missing can be handled",
@@ -144,7 +144,7 @@ func Test_TablePrinter_Print(t *testing.T) {
 				[36mdaemonsets[0m                        [37mds[0m           [33mapps[0m                           [32mtrue[0m         [35mDaemonSet[0m
 				[36mstatefulsets[0m                      [37msts[0m          [33mapps[0m                           [32mtrue[0m         [35mStatefulSet[0m
 				[36mtokenreviews[0m                                   [33mauthentication.k8s.io[0m          [32mfalse[0m        [35mTokenReview[0m
-				`),
+			`),
 		},
 	}
 	for _, tt := range tests {
