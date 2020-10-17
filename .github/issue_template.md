@@ -1,4 +1,4 @@
-<!--  Thanks for sending a pull request!
+<!--  Thanks for submitting an issue!
 Before submit, please be aware of below things:
 
 * kubecolor is still being actively developed. Your issue might be fixed in the latest version kubecolor. Before submitting the issue, run `$ go get -u github.com/dty1er/kubecolor/cmd/kubecolor` to update kubecolor and make sure the issue can be reproduced even if you are using the latest one.
