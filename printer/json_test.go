@@ -23,14 +23,16 @@ func Test_JsonPrinter_Print(t *testing.T) {
 				    "apiVersion": "v1",
 				    "kind": "Pod",
 				    "num": 598,
-				    "bool": true
+				    "bool": true,
+				    "null": null
 				}`),
 			expected: testutil.NewHereDoc(`
 				{
 				    "[37mapiVersion[0m": "[36mv1[0m",
 				    "[37mkind[0m": "[36mPod[0m",
 				    "[37mnum[0m": [35m598[0m,
-				    "[37mbool[0m": [32mtrue[0m
+				    "[37mbool[0m": [32mtrue[0m,
+				    "[37mnull[0m": [33mnull[0m
 				}
 			`),
 		},
