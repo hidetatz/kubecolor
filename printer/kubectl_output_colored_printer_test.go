@@ -265,6 +265,50 @@ func Test_KubectlOutputColoredPrinter_Print(t *testing.T) {
 				[33mAnnotations[0m:  [33m<none>[0m
 			`),
 		},
+		{
+			name:           "kubectl api-versions",
+			darkBackground: true,
+			subcommandInfo: &kubectl.SubcommandInfo{
+				Subcommand: kubectl.APIVersions,
+			},
+			input: testutil.NewHereDoc(`
+				acme.cert-manager.io/v1alpha2
+				admissionregistration.k8s.io/v1beta1
+				apiextensions.k8s.io/v1beta1
+				apiregistration.k8s.io/v1
+				apiregistration.k8s.io/v1beta1
+				apps/v1
+				apps/v1beta1
+				apps/v1beta2
+				authentication.k8s.io/v1
+				authentication.k8s.io/v1beta1
+				authorization.k8s.io/v1
+				authorization.k8s.io/v1beta1
+				autoscaling/v1
+				autoscaling/v2beta1
+				autoscaling/v2beta2
+				batch/v1
+				batch/v1beta1`),
+			expected: testutil.NewHereDoc(`
+				[36macme.cert-manager.io/v1alpha2[0m
+				[36madmissionregistration.k8s.io/v1beta1[0m
+				[36mapiextensions.k8s.io/v1beta1[0m
+				[36mapiregistration.k8s.io/v1[0m
+				[36mapiregistration.k8s.io/v1beta1[0m
+				[36mapps/v1[0m
+				[36mapps/v1beta1[0m
+				[36mapps/v1beta2[0m
+				[36mauthentication.k8s.io/v1[0m
+				[36mauthentication.k8s.io/v1beta1[0m
+				[36mauthorization.k8s.io/v1[0m
+				[36mauthorization.k8s.io/v1beta1[0m
+				[36mautoscaling/v1[0m
+				[36mautoscaling/v2beta1[0m
+				[36mautoscaling/v2beta2[0m
+				[36mbatch/v1[0m
+				[36mbatch/v1beta1[0m
+			`),
+		},
 	}
 	for _, tt := range tests {
 		tt := tt
