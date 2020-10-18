@@ -118,7 +118,7 @@ Not in the list: Won't be supported because it's not READ operation
 - [ ] kubectl explain
 - [ ] kubectl logs
 - [x] kubectl api-rsources
-- [ ] kubectl api-versions
+- [x] kubectl api-versions
 - [ ] kubectl version
 
 ### format options

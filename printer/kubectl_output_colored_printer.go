@@ -27,6 +27,9 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 	case kubectl.Top, kubectl.APIResources:
 		printer = NewTablePrinter(withHeader, kp.DarkBackground, nil)
 
+	case kubectl.APIVersions:
+		printer = NewTablePrinter(false, kp.DarkBackground, nil) // api-versions always doesn't have header
+
 	case kubectl.Get:
 		switch {
 		case kp.SubcommandInfo.FormatOption == kubectl.None, kp.SubcommandInfo.FormatOption == kubectl.Wide:
