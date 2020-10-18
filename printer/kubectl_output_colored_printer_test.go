@@ -156,6 +156,24 @@ func Test_KubectlOutputColoredPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
+			name:           "kubectl get pod",
+			darkBackground: true,
+			subcommandInfo: &kubectl.SubcommandInfo{
+				Subcommand: kubectl.Get,
+			},
+			input: testutil.NewHereDoc(`
+				NAME          READY   STATUS             RESTARTS   AGE
+				nginx-dnmv5   1/1     CrashLoopBackOff   0          6d6h
+				nginx-m8pbc   1/1     Running            0          6d6h
+				nginx-qdf9b   0/1     Running            0          6d6h`),
+			expected: testutil.NewHereDoc(`
+				[37mNAME          READY   STATUS             RESTARTS   AGE[0m
+				[36mnginx-dnmv5[0m   [32m1/1[0m     [31mCrashLoopBackOff[0m   [37m0[0m          [33m6d6h[0m
+				[36mnginx-m8pbc[0m   [32m1/1[0m     [35mRunning[0m            [37m0[0m          [33m6d6h[0m
+				[36mnginx-qdf9b[0m   [33m0/1[0m     [35mRunning[0m            [37m0[0m          [33m6d6h[0m
+			`),
+		},
+		{
 			name:           "kubectl get pod --no-headers",
 			darkBackground: true,
 			subcommandInfo: &kubectl.SubcommandInfo{
@@ -307,6 +325,43 @@ func Test_KubectlOutputColoredPrinter_Print(t *testing.T) {
 				[36mautoscaling/v2beta2[0m
 				[36mbatch/v1[0m
 				[36mbatch/v1beta1[0m
+			`),
+		},
+		{
+			name:           "kubectl explain",
+			darkBackground: true,
+			subcommandInfo: &kubectl.SubcommandInfo{
+				Subcommand: kubectl.Explain,
+			},
+			input: testutil.NewHereDoc(`
+				KIND:     Node
+				VERSION:  v1
+				
+				DESCRIPTION:
+				     Node is a worker node in Kubernetes. Each node will have a unique
+				     identifier in the cache (i.e. in etcd).
+				
+				FIELDS:
+				   apiVersion	<string>
+				     APIVersion defines the versioned schema of this representation of an
+				     object. Servers should convert recognized schemas to the latest internal
+				     value, and may reject unrecognized values. More info:
+				     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+				`),
+			expected: testutil.NewHereDoc(`
+				[33mKIND[0m:     [36mNode[0m
+				[33mVERSION[0m:  [36mv1[0m
+				
+				[33mDESCRIPTION[0m:
+				     [36mNode is a worker node in Kubernetes. Each node will have a unique[0m
+				     [36midentifier in the cache (i.e. in etcd).[0m
+				
+				[33mFIELDS[0m:
+				   [37mapiVersion[0m	<[36mstring[0m>
+				     [36mAPIVersion defines the versioned schema of this representation of an[0m
+				     [36mobject. Servers should convert recognized schemas to the latest internal[0m
+				     [36mvalue, and may reject unrecognized values. More info:[0m
+				     [36mhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources[0m
 			`),
 		},
 	}
