@@ -5,6 +5,7 @@ import (
 	"regexp"
 )
 
+var singleOrMultipleSpaces = regexp.MustCompile("\\s{1,}")
 var spaces = regexp.MustCompile("\\s{2,}")
 
 // Printer can print something.

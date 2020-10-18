@@ -33,6 +33,7 @@ var getPrinters = func(subcommandInfo *kubectl.SubcommandInfo, darkBackground bo
 		FullColoredPrinter: &printer.KubectlOutputColoredPrinter{
 			SubcommandInfo: subcommandInfo,
 			DarkBackground: darkBackground,
+			Recursive:      subcommandInfo.Recursive,
 		},
 		ErrorPrinter: &printer.WithFuncPrinter{
 			Fn: func(line string) color.Color {
