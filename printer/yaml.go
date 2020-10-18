@@ -56,20 +56,6 @@ func (yp *YamlPrinter) printLineAsYamlFormat(line string, w io.Writer, dark bool
 	fmt.Fprintf(w, "%s%s\n", indent, yp.toColorizedYamlValue(splitted[0], dark))
 }
 
-func (yp *YamlPrinter) isValYamlKey(s string) bool {
-	// key must end with :
-	if !strings.HasSuffix(s, ":") {
-		return false
-	}
-
-	// even if it ends with :, if it's in a string value, it's not a key
-	if yp.inString {
-		return false
-	}
-
-	return true
-}
-
 func (yp *YamlPrinter) toColorizedYamlKey(key string, indentCnt, basicWidth int, dark bool) string {
 	hasColon := strings.HasSuffix(key, ":")
 	hasLeadingDash := strings.HasPrefix(key, "- ")
