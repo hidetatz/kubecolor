@@ -60,7 +60,10 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 		}
 
 	case kubectl.Describe:
-		printer = &DescribePrinter{DarkBackground: kp.DarkBackground}
+		printer = &DescribePrinter{
+			DarkBackground: kp.DarkBackground,
+			TablePrinter:   NewTablePrinter(false, kp.DarkBackground, nil),
+		}
 	}
 
 	printer.Print(r, w)

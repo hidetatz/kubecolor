@@ -12,12 +12,14 @@ func Test_DescribePrinter_Print(t *testing.T) {
 	tests := []struct {
 		name           string
 		darkBackground bool
+		tablePrinter   *TablePrinter
 		input          string
 		expected       string
 	}{
 		{
 			name:           "values can be colored by its type",
 			darkBackground: true,
+			tablePrinter:   nil,
 			input: testutil.NewHereDoc(`
 				Name:         nginx-lpv5x
 				Namespace:    default
@@ -41,6 +43,7 @@ func Test_DescribePrinter_Print(t *testing.T) {
 		{
 			name:           "key color changes based on its indentation",
 			darkBackground: true,
+			tablePrinter:   nil,
 			input: testutil.NewHereDoc(`
 				IP:           172.18.0.7
 				IPs:
@@ -61,6 +64,78 @@ func Test_DescribePrinter_Print(t *testing.T) {
 				      [37mStarted[0m:      [36mSat, 10 Oct 2020 14:07:44 +0900[0m
 			`),
 		},
+		{
+			name:           "table format in kubectl describe can be colored by describe",
+			darkBackground: true,
+			tablePrinter:   NewTablePrinter(false, true, nil),
+			input: testutil.NewHereDoc(`
+				Conditions:
+				  Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+				  ----             ------  -----------------                 ------------------                ------                       -------
+				  MemoryPressure   False   Sun, 18 Oct 2020 12:00:54 +0900   Wed, 14 Oct 2020 09:28:18 +0900   KubeletHasSufficientMemory   kubelet has sufficient memory available
+				  DiskPressure     False   Sun, 18 Oct 2020 12:00:54 +0900   Wed, 14 Oct 2020 09:28:18 +0900   KubeletHasNoDiskPressure     kubelet has no disk pressure
+				Addresses:
+				  InternalIP:  172.17.0.3
+				  Hostname:    minikube
+				Capacity:
+				  cpu:                6
+				  memory:             2036900Ki
+				  pods:               110
+				Allocatable:
+				  cpu:                6
+				  memory:             2036900Ki
+				  pods:               110
+				System Info:
+				  Machine ID:                 55d2ccaefc9847c9a69356e7f3bd23f4
+				  System UUID:                fe312784-2364-4bba-a55e-f56051539c21
+				Non-terminated Pods:          (14 in total)
+				  Namespace                   Name                                CPU Requests  CPU Limits  Memory Requests  Memory Limits  AGE
+				  ---------                   ----                                ------------  ----------  ---------------  -------------  ---
+				  default                     nginx-6799fc88d8-dnmv5              0 (0%)        0 (0%)      0 (0%)           0 (0%)         7d21h
+				  default                     nginx-6799fc88d8-m8pbc              0 (0%)        0 (0%)      0 (0%)           0 (0%)         7d21h
+				  default                     nginx-6799fc88d8-qdf9b              0 (0%)        0 (0%)      0 (0%)           0 (0%)         7d21h
+				Allocated resources:
+				  (Total limits may be over 100 percent, i.e., overcommitted.)
+				  Resource           Requests    Limits
+				  --------           --------    ------
+				  cpu                650m (10%)  0 (0%)
+				  memory             70Mi (3%)   170Mi (8%)
+				Events:              <none>`),
+			expected: testutil.NewHereDoc(`
+				[33mConditions[0m:
+				[36m[0m  [32mType[0m             [35mStatus[0m  [37mLastHeartbeatTime[0m                 [33mLastTransitionTime[0m                [36mReason[0m                       [32mMessage[0m
+				[36m[0m  [32m----[0m             [35m------[0m  [37m-----------------[0m                 [33m------------------[0m                [36m------[0m                       [32m-------[0m
+				[36m[0m  [32mMemoryPressure[0m   [35mFalse[0m   [37mSun, 18 Oct 2020 12:00:54 +0900[0m   [33mWed, 14 Oct 2020 09:28:18 +0900[0m   [36mKubeletHasSufficientMemory[0m   [32mkubelet has sufficient memory available[0m
+				[36m[0m  [32mDiskPressure[0m     [35mFalse[0m   [37mSun, 18 Oct 2020 12:00:54 +0900[0m   [33mWed, 14 Oct 2020 09:28:18 +0900[0m   [36mKubeletHasNoDiskPressure[0m     [32mkubelet has no disk pressure[0m
+				[33mAddresses[0m:
+				  [37mInternalIP[0m:  [36m172.17.0.3[0m
+				  [37mHostname[0m:    [36mminikube[0m
+				[33mCapacity[0m:
+				  [37mcpu[0m:                [35m6[0m
+				  [37mmemory[0m:             [36m2036900Ki[0m
+				  [37mpods[0m:               [35m110[0m
+				[33mAllocatable[0m:
+				  [37mcpu[0m:                [35m6[0m
+				  [37mmemory[0m:             [36m2036900Ki[0m
+				  [37mpods[0m:               [35m110[0m
+				[33mSystem Info[0m:
+				  [37mMachine ID[0m:                 [36m55d2ccaefc9847c9a69356e7f3bd23f4[0m
+				  [37mSystem UUID[0m:                [36mfe312784-2364-4bba-a55e-f56051539c21[0m
+				[33mNon-terminated Pods[0m:          [36m(14 in total)[0m
+				[36m[0m  [32mNamespace[0m                   [35mName[0m                                [37mCPU Requests[0m  [33mCPU Limits[0m  [36mMemory Requests[0m  [32mMemory Limits[0m  [32mAGE[0m
+				[36m[0m  [32m---------[0m                   [35m----[0m                                [37m------------[0m  [33m----------[0m  [36m---------------[0m  [32m-------------[0m  [32m---[0m
+				[36m[0m  [32mdefault[0m                     [35mnginx-6799fc88d8-dnmv5[0m              [37m0 (0%)[0m        [33m0 (0%)[0m      [36m0 (0%)[0m           [32m0 (0%)[0m         [32m7d21h[0m
+				[36m[0m  [32mdefault[0m                     [35mnginx-6799fc88d8-m8pbc[0m              [37m0 (0%)[0m        [33m0 (0%)[0m      [36m0 (0%)[0m           [32m0 (0%)[0m         [32m7d21h[0m
+				[36m[0m  [32mdefault[0m                     [35mnginx-6799fc88d8-qdf9b[0m              [37m0 (0%)[0m        [33m0 (0%)[0m      [36m0 (0%)[0m           [32m0 (0%)[0m         [32m7d21h[0m
+				[33mAllocated resources[0m:
+				  [36m(Total limits may be over 100 percent, i.e., overcommitted.)[0m
+				[36m[0m  [32mResource[0m           [35mRequests[0m    [37mLimits[0m
+				[36m[0m  [32m--------[0m           [35m--------[0m    [37m------[0m
+				[36m[0m  [32mcpu[0m                [35m650m (10%)[0m  [37m0 (0%)[0m
+				[36m[0m  [32mmemory[0m             [35m70Mi (3%)[0m   [37m170Mi (8%)[0m
+				[33mEvents[0m:              [33m<none>[0m
+			`),
+		},
 	}
 	for _, tt := range tests {
 		tt := tt
@@ -68,7 +143,7 @@ func Test_DescribePrinter_Print(t *testing.T) {
 			t.Parallel()
 			r := strings.NewReader(tt.input)
 			var w bytes.Buffer
-			printer := DescribePrinter{DarkBackground: tt.darkBackground}
+			printer := DescribePrinter{DarkBackground: tt.darkBackground, TablePrinter: tt.tablePrinter}
 			printer.Print(r, &w)
 			testutil.MustEqual(t, tt.expected, w.String())
 		})

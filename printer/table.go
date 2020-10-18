@@ -39,7 +39,7 @@ func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
 			continue
 		}
 
-		tp.printLineAsTableFormat(w, line, getColorsByBackground(tp.DarkBackground), tp.ColorDeciderFn)
+		tp.printLineAsTableFormat(w, line, getColorsByBackground(tp.DarkBackground))
 	}
 }
 
@@ -68,7 +68,7 @@ func (tp *TablePrinter) isHeader() bool {
 // If the function returned ok=true, then returned color will be used for the column.
 // If it returned ok=false, then default configurated color will be used.
 // If deciderFn is null, then this function uses the default configurated color.
-func (tp *TablePrinter) printLineAsTableFormat(w io.Writer, line string, colorsPreset []color.Color, deciderFn func(index int, column string) (color.Color, bool)) {
+func (tp *TablePrinter) printLineAsTableFormat(w io.Writer, line string, colorsPreset []color.Color) {
 	columns := spaces.Split(line, -1)
 	spacesIndices := spaces.FindAllStringIndex(line, -1)
 
@@ -84,8 +84,8 @@ func (tp *TablePrinter) printLineAsTableFormat(w io.Writer, line string, colorsP
 		}
 
 		c := tp.decideColorForTable(index, colorsPreset)
-		if deciderFn != nil {
-			if cc, ok := deciderFn(i, column); ok {
+		if tp.ColorDeciderFn != nil {
+			if cc, ok := tp.ColorDeciderFn(i, column); ok {
 				c = cc // prior injected deciderFn result
 			}
 		}
