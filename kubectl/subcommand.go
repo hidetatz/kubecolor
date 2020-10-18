@@ -10,6 +10,7 @@ type SubcommandInfo struct {
 	NoHeader     bool
 	Watch        bool
 	Help         bool
+	Recursive    bool
 }
 
 type FormatOption int
@@ -163,6 +164,8 @@ func CollectCommandlineOptions(args []string, info *SubcommandInfo) {
 			info.NoHeader = true
 		} else if args[i] == "-w" || args[i] == "--watch" {
 			info.Watch = true
+		} else if args[i] == "--recursive=true" {
+			info.Recursive = true
 		} else if args[i] == "-h" || args[i] == "--help" {
 			info.Help = true
 		}

@@ -14,6 +14,7 @@ import (
 type KubectlOutputColoredPrinter struct {
 	SubcommandInfo *kubectl.SubcommandInfo
 	DarkBackground bool
+	Recursive      bool
 }
 
 // Print reads r then write it to w, its format is based on kubectl subcommand.
@@ -66,6 +67,11 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 		printer = &DescribePrinter{
 			DarkBackground: kp.DarkBackground,
 			TablePrinter:   NewTablePrinter(false, kp.DarkBackground, nil),
+		}
+	case kubectl.Explain:
+		printer = &ExplainPrinter{
+			DarkBackground: kp.DarkBackground,
+			Recursive:      kp.Recursive,
 		}
 	}
 
