@@ -4,7 +4,7 @@ testshort:
 
 .PHONY: coverage
 coverage:
-	go test -timeout 30s -count=1 ./... -test.short -cover
+	go test -timeout 30s -count=1 ./... -test.short -coverprofile=coverage.txt
 
 .PHONY: e2etest
 e2etest:
