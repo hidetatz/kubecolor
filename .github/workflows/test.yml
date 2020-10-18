@@ -20,4 +20,8 @@ jobs:
     - name: setup go
       uses: actions/setup-go@v2
     - name: test
-      run: make testshort
+      run: make coverage
+    - name: upload coverage
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
