@@ -135,6 +135,11 @@ Not in the list: Won't be supported because it's not READ operation
 - [ ] specifying multiple resources at once (e.g. `kubectl get pod,replicaset`)
   - This will actually work, but if you don't specify "--no-headers" it might look a bit strange.
 
+## Supported kubectl version
+
+Because kubecolor internally calls `kubectl` command, if you are using unsupported kubectl version, it's also not supported by kubecolor.
+Kubernetes version support policy can be found in [official doc](https://kubernetes.io/docs/setup/release/version-skew-policy/).
+
 ## Contributions
 
 Always welcome. Just opening an issue should be also greatful.
