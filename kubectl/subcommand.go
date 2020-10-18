@@ -120,18 +120,27 @@ func InspectSubcommand(command string) (Subcommand, bool) {
 
 func CollectCommandlineOptions(args []string, info *SubcommandInfo) {
 	for i := range args {
-		if args[i] == "--output" {
-			if len(args)-1 > i {
-				formatOption := args[i+1]
-				switch formatOption {
-				case "json":
-					info.FormatOption = Json
-				case "yaml":
-					info.FormatOption = Yaml
-				case "wide":
-					info.FormatOption = Wide
-				default:
-					// custom-columns, go-template, etc are currently not supported
+		if strings.HasPrefix(args[i], "--output") {
+			switch args[i] {
+			case "--output=json":
+				info.FormatOption = Json
+			case "--output=yaml":
+				info.FormatOption = Yaml
+			case "--output=wide":
+				info.FormatOption = Wide
+			default:
+				if len(args)-1 > i {
+					formatOption := args[i+1]
+					switch formatOption {
+					case "json":
+						info.FormatOption = Json
+					case "yaml":
+						info.FormatOption = Yaml
+					case "wide":
+						info.FormatOption = Wide
+					default:
+						// custom-columns, go-template, etc are currently not supported
+					}
 				}
 			}
 		} else if strings.HasPrefix(args[i], "-o") {

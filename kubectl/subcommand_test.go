@@ -30,6 +30,13 @@ func TestInspectSubcommandInfo(t *testing.T) {
 		{"get pod -o=yaml", &SubcommandInfo{Subcommand: Get, FormatOption: Yaml}, true},
 		{"get pod -oyaml", &SubcommandInfo{Subcommand: Get, FormatOption: Yaml}, true},
 
+		{"get pod --output json", &SubcommandInfo{Subcommand: Get, FormatOption: Json}, true},
+		{"get pod --output=json", &SubcommandInfo{Subcommand: Get, FormatOption: Json}, true},
+		{"get pod --output yaml", &SubcommandInfo{Subcommand: Get, FormatOption: Yaml}, true},
+		{"get pod --output=yaml", &SubcommandInfo{Subcommand: Get, FormatOption: Yaml}, true},
+		{"get pod --output wide", &SubcommandInfo{Subcommand: Get, FormatOption: Wide}, true},
+		{"get pod --output=wide", &SubcommandInfo{Subcommand: Get, FormatOption: Wide}, true},
+
 		{"get pod --no-headers", &SubcommandInfo{Subcommand: Get, NoHeader: true}, true},
 		{"get pod -w", &SubcommandInfo{Subcommand: Get, Watch: true}, true},
 		{"get pod --watch", &SubcommandInfo{Subcommand: Get, Watch: true}, true},
