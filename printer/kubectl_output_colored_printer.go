@@ -73,6 +73,21 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 			DarkBackground: kp.DarkBackground,
 			Recursive:      kp.Recursive,
 		}
+	case kubectl.Version:
+		switch {
+		case kp.SubcommandInfo.FormatOption == kubectl.Json:
+			printer = &JsonPrinter{DarkBackground: kp.DarkBackground}
+		case kp.SubcommandInfo.FormatOption == kubectl.Yaml:
+			printer = &YamlPrinter{DarkBackground: kp.DarkBackground}
+		case kp.SubcommandInfo.Short:
+			printer = &VersionShortPrinter{
+				DarkBackground: kp.DarkBackground,
+			}
+		default:
+			printer = &VersionPrinter{
+				DarkBackground: kp.DarkBackground,
+			}
+		}
 	}
 
 	printer.Print(r, w)

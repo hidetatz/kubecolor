@@ -11,6 +11,7 @@ type SubcommandInfo struct {
 	Watch        bool
 	Help         bool
 	Recursive    bool
+	Short        bool
 }
 
 type FormatOption int
@@ -168,6 +169,15 @@ func CollectCommandlineOptions(args []string, info *SubcommandInfo) {
 					}
 				}
 
+			}
+		} else if strings.HasPrefix(args[i], "--short") {
+			switch args[i] {
+			case "--short=true":
+				info.Short = true
+			case "--short=false":
+				info.Short = false
+			default:
+				info.Short = true
 			}
 		} else if args[i] == "--no-headers" {
 			info.NoHeader = true
