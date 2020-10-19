@@ -54,6 +54,12 @@ func TestInspectSubcommandInfo(t *testing.T) {
 		// "--recursive true" is not acceptable by kubectl explain
 		{"explain pod --recursive true", &SubcommandInfo{Subcommand: Explain}, true},
 
+		{"version", &SubcommandInfo{Subcommand: Version}, true},
+		{"version --client", &SubcommandInfo{Subcommand: Version}, true},
+		{"version --short", &SubcommandInfo{Subcommand: Version, Short: true}, true},
+		{"version -o json", &SubcommandInfo{Subcommand: Version, FormatOption: Json}, true},
+		{"version -o yaml", &SubcommandInfo{Subcommand: Version, FormatOption: Yaml}, true},
+
 		{"apply", &SubcommandInfo{Subcommand: Apply}, true},
 
 		{"", &SubcommandInfo{}, false},

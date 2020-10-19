@@ -121,7 +121,7 @@ Not in the list: Won't be supported because it's not READ operation
 - [ ] kubectl logs
 - [x] kubectl api-rsources
 - [x] kubectl api-versions
-- [ ] kubectl version
+- [x] kubectl version
 
 ### format options
 
