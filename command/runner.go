@@ -63,6 +63,11 @@ func Run(args []string) error {
 		shouldColorize = true
 	}
 
+	if !subcommandFound {
+		subcommandInfo.Help = true
+		shouldColorize = true
+	}
+
 	kubectlCmd := "kubectl"
 	if kc := os.Getenv("KUBECTL_COMMAND"); kc != "" {
 		kubectlCmd = kc
