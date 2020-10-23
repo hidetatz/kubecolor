@@ -13,7 +13,7 @@ gather every participants' opinions widely.
 
 On Aug 2018, an issue [Add ANSI colors to kubectl describe and other outputs](https://github.com/kubernetes/kubectl/issues/524) is opened in kubernetes/kubectl repository.
 The issue author wished to colorize `kubectl describe` result to make it easier to read.
-Because 20+ comments and 100+ :+1: reaction was left on the issue, we can expect coloring output will make kubectl better and users happier.
+Because 20+ comments and 100+ :+1:  reactions was left on the issue, we can expect coloring output will make kubectl better and users happier.
 
 Even after 2 years since the issue is opened there were no actions about this, I wrote a tool, called [kubecolor](https://github.com/dty1er/kubecolor), which colorizes
 kubectl output. I shared the tool in the issue.
