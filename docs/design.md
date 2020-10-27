@@ -72,7 +72,35 @@ Because we don't want colored output default behavior of kubectl, we introduce a
 
 ## How --pretty should work
 
-TODOOO
+`--pretty` option can be used with every kubectl subcommand. It means `--pretty` should appear in the result of `kubectl options` .
+When `--pretty` is specified, the behavior will be like below.
+
+### 1. For WRITE command
+
+If the subcommand is for WRITE operation, and it was successfully finished, it shows its result in green. It indicates that
+the operation is finished successfully.
+If it results any errors, the output should be in red. It indicates there were errors.
+
+WRITE commands: apply, scale, patch etc.
+
+### 2. For READ
+
+If the subcommand is for READ operation, and it was successfully finished, it shows its result in various colors. What colors are chosen depends on
+the subcommand. Because kubectl outputs the result in various format, we should support all of them.
+
+Example (this is how current kubecolor outputs the result):
+
+If it results any errors, the output should be in red. It indicates there were errors.
+
+READ commands: get, describe, top, version etc.
+
+### 3. For interactive operation
+
+### 4. For --help
+
+If the command is asking to show help, it shows its result in yellow. This indicates the output is for help.
+
+###
 
 ## Implementation overview
 
