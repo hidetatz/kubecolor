@@ -67,6 +67,7 @@ const (
 	Config
 	Plugin
 	Version
+	Options
 )
 
 var strToSubcommand = map[string]Subcommand{
@@ -111,6 +112,7 @@ var strToSubcommand = map[string]Subcommand{
 	"config":        Config,
 	"plugin":        Plugin,
 	"version":       Version,
+	"options":       Options,
 }
 
 func InspectSubcommand(command string) (Subcommand, bool) {
