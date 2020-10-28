@@ -70,7 +70,7 @@ Because we don't want colored output default behavior of kubectl, we introduce a
   -p, --pretty=false: If true, the output will be colored
 ```
 
-## How --pretty should work
+## --pretty specification
 
 `--pretty` option can be used with every kubectl subcommand. It means `--pretty` should appear in the result of `kubectl options` .
 When `--pretty` is specified, the behavior will be like below.
@@ -96,11 +96,13 @@ READ commands: get, describe, top, version etc.
 
 ### 3. For interactive operation
 
+If the subcommand is for interactive operation, it does no colorizing.
+
+Interactive operations: edit, attach, exec -it etc.
+
 ### 4. For --help
 
 If the command is asking to show help, it shows its result in yellow. This indicates the output is for help.
-
-###
 
 ## Implementation overview
 
