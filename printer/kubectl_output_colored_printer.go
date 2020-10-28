@@ -88,6 +88,10 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 				DarkBackground: kp.DarkBackground,
 			}
 		}
+	case kubectl.Options:
+		printer = &OptionsPrinter{
+			DarkBackground: kp.DarkBackground,
+		}
 	}
 
 	printer.Print(r, w)
