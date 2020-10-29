@@ -37,6 +37,32 @@ func Test_TablePrinter_Print(t *testing.T) {
 			`),
 		},
 		{
+			name:           "multiple headers",
+			colorDeciderFn: nil,
+			withHeader:     true,
+			darkBackground: true,
+			input: testutil.NewHereDoc(`
+				NAME                         READY   STATUS    RESTARTS   AGE
+				pod/nginx-8spn9              1/1     Running   1          19d
+				pod/nginx-dplns              1/1     Running   1          19d
+				pod/nginx-lpv5x              1/1     Running   1          19d
+				
+				NAME                               DESIRED   CURRENT   READY   AGE
+				replicaset.apps/nginx              3         3         3       19d
+				replicaset.apps/nginx-6799fc88d8   3         3         3       19d
+			`),
+			expected: testutil.NewHereDoc(`
+				[37mNAME                         READY   STATUS    RESTARTS   AGE[0m
+				[36mpod/nginx-8spn9[0m              [32m1/1[0m     [35mRunning[0m   [37m1[0m          [33m19d[0m
+				[36mpod/nginx-dplns[0m              [32m1/1[0m     [35mRunning[0m   [37m1[0m          [33m19d[0m
+				[36mpod/nginx-lpv5x[0m              [32m1/1[0m     [35mRunning[0m   [37m1[0m          [33m19d[0m
+				[37m[0m
+				[37mNAME                               DESIRED   CURRENT   READY   AGE[0m
+				[36mreplicaset.apps/nginx[0m              [36m3[0m         [32m3[0m         [35m3[0m       [37m19d[0m
+				[36mreplicaset.apps/nginx-6799fc88d8[0m   [36m3[0m         [32m3[0m         [35m3[0m       [37m19d[0m
+			`),
+		},
+		{
 			name:           "withheader=false, 1st line is not colored in header color but colored as a content of table",
 			colorDeciderFn: nil,
 			withHeader:     false,
