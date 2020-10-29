@@ -90,6 +90,22 @@ the subcommand. Because kubectl outputs the result in various format, we should 
 
 Example (this is how current kubecolor outputs the result):
 
+* kubectl get
+
+![image](https://user-images.githubusercontent.com/60682957/97545993-26a34d00-1a0f-11eb-8836-09ff764b6ead.png)
+
+* kubectl describe
+
+![image](https://user-images.githubusercontent.com/60682957/97545997-286d1080-1a0f-11eb-9a9b-8f04c3431c7c.png)
+
+* kubectl get -o=json
+
+![image](https://user-images.githubusercontent.com/60682957/97546004-2a36d400-1a0f-11eb-9ff4-7bf745aa1643.png)
+
+* kubectl version --short
+
+![image](https://user-images.githubusercontent.com/60682957/97546126-57838200-1a0f-11eb-8872-2efa39c48c5e.png)
+
 If it results any errors, the output should be in red. It indicates there were errors.
 
 READ commands: get, describe, top, version etc.
