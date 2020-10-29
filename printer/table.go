@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/dty1er/kubecolor/color"
 )
@@ -33,7 +34,7 @@ func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		line := scanner.Text()
-		if tp.isHeader() {
+		if tp.isHeader(line) {
 			fmt.Fprintf(w, "%s\n", color.Apply(line, getHeaderColorByBackground(tp.DarkBackground)))
 			tp.isFirstLine = false
 			continue
@@ -43,8 +44,20 @@ func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
 	}
 }
 
-func (tp *TablePrinter) isHeader() bool {
-	return tp.WithHeader && tp.isFirstLine
+func (tp *TablePrinter) isHeader(line string) bool {
+	// If every character is upper case, probably it's a header line.
+	// e.g.
+	// kubecolor get pod,rs
+	// NAME                         READY   STATUS    RESTARTS   AGE
+	// pod/nginx-8spn9              1/1     Running   1          19d
+	// pod/nginx-dplns              1/1     Running   1          19d
+	// pod/nginx-lpv5x              1/1     Running   1          19d
+
+	// NAME                               DESIRED   CURRENT   READY   AGE <- this
+	// replicaset.apps/nginx              3         3         3       19d
+	// replicaset.apps/nginx-6799fc88d8   3         3         3       19d
+	isEveryCharacterUpper := strings.ToUpper(line) == line
+	return (tp.WithHeader && tp.isFirstLine) || isEveryCharacterUpper
 }
 
 // printTableFormat prints a line to w in kubectl "table" Format.
