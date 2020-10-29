@@ -13,11 +13,12 @@ gather every participants' opinions widely.
 
 On Aug 2018, an issue [Add ANSI colors to kubectl describe and other outputs](https://github.com/kubernetes/kubectl/issues/524) is opened in kubernetes/kubectl repository.
 The issue author wished to colorize `kubectl describe` result to make it easier to read.
-Because 20+ comments and 100+ :+1:  reactions was left on the issue, we can expect coloring output will make kubectl better and users happier.
+Because 20+ comments and 100+ :+1: reactions were left on the issue, we can expect coloring output will make kubectl better and users happier.
 
-Even after 2 years since the issue is opened there were no actions about this, I wrote a tool, called [kubecolor](https://github.com/dty1er/kubecolor), which colorizes
-kubectl output. I shared the tool in the issue.
-[Thanks to @eddiezane](https://github.com/kubernetes/kubectl/issues/524#issuecomment-708606102) I found sig-cli meeting is actively held and started wondering if kubecolor can appear
+Because even after 2 years since the issue is opened there were no actions about this, I wrote a tool, called [kubecolor](https://github.com/dty1er/kubecolor), which colorizes
+kubectl output.
+I [shared the tool in the issue](https://github.com/kubernetes/kubectl/issues/524#issuecomment-706549793).
+Then, [thanks to @eddiezane](https://github.com/kubernetes/kubectl/issues/524#issuecomment-708606102), I found sig-cli meeting is actively held. I started wondering if kubecolor can appear
 in original kubectl implementation.
 
 In this design doc, I will consider if we should introduce it and how we implement it.
@@ -25,8 +26,8 @@ In this design doc, I will consider if we should introduce it and how we impleme
 ## Do we really want kubectl result colored?
 
 In this section, I will talk about why and why not we introduce colored output in kubectl.
-While I'm an author of kubecolor, I tried to be fair as much as possible, and 
-I tried to write down all the things I came up with. However I must be missing some parts so
+While I'm an author of kubecolor and I'm happy if we can introduce it in kubectl,
+I tried to be fair as much as possible, and I tried to write down all the things I came up with. However, I will be missing some parts so
 the readers giving some feedback to me would be appreciated a lot.
 
 ### Why we should introduce colored output
@@ -54,7 +55,7 @@ it won't make a breaking changes.
 
 ### Goal
 
-* Users can "specify" if they want kubectl to show the result in colors.
+* Users can "indicate" if they want kubectl to show the result in colors.
 * Applying color never changes the original result.
 
 ### Non-goal
@@ -120,9 +121,7 @@ Interactive operations: edit, attach, exec -it etc.
 
 If the command is asking to show help, it shows its result in yellow. This indicates the output is for help.
 
-## Implementation overview
-
-TODOOOOOOO
+## --pretty implementaton
 
 * Introduce new io.Writer "colorWriter"
 * Introduce a middleware which colorizes output
