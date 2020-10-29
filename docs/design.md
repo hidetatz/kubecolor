@@ -30,14 +30,7 @@ While I'm an author of kubecolor and I'm happy if we can introduce it in kubectl
 I tried to be fair as much as possible, and I tried to write down all the things I came up with. However, I will be missing some parts so
 the readers giving some feedback to me would be appreciated a lot.
 
-### Why we should introduce colored output
-
-Because it can make it easier to read.
-According to [the issue](https://github.com/kubernetes/kubectl/issues/524) I mentioned above, apparently some people are feeling current kubectl output
-sometimes is not easier to read, because of its lack of color.
-I have written [an article in medium](https://medium.com/@dty1er/colorize-kubectl-output-by-kubecolor-2c222af3163a) to compare the results.
-
-Some kubernetes tools like [kubectx and kubens](https://github.com/ahmetb/kubectx#kubectx--kubens-power-tools-for-kubectl) shows colored output as well.
+As my consideration result, I am positive to push this feature into kubectl. I will describe why below.
 
 ### Why we should not introduce colored output
 
@@ -50,6 +43,19 @@ $ kubectl get pod | grep CrashLoopBackOff | awk '{print $1}' | send_to_slack
 
 However, this appears as a problem when we introduced colored output as **default behavior**. In other words, if we make it "opt-in" feature,
 it won't make a breaking changes.
+
+### Why we should introduce colored output
+
+Because it can make it easier to read.
+According to [the issue](https://github.com/kubernetes/kubectl/issues/524) I mentioned above, apparently some people are feeling current kubectl output
+sometimes is not easier to read, because of its lack of color.
+I have written [an article in medium](https://medium.com/@dty1er/colorize-kubectl-output-by-kubecolor-2c222af3163a) to compare the results.
+
+Some kubernetes tools like [kubectx and kubens](https://github.com/ahmetb/kubectx#kubectx--kubens-power-tools-for-kubectl) shows colored output as well.
+
+Also, some very traditional tools like `ls` or `grep` supports colors.
+
+Consequently, I propose we should introduce colorizing feature into kubectl.
 
 ## Goal and non-goal
 
@@ -123,5 +129,6 @@ If the command is asking to show help, it shows its result in yellow. This indic
 
 ## --pretty implementaton
 
+TODO
 * Introduce new io.Writer "colorWriter"
 * Introduce a middleware which colorizes output
