@@ -119,7 +119,7 @@ READ commands: get, describe, top, version etc.
 
 ### 3. For interactive operation
 
-If the subcommand is for interactive operation, it does no colorizing.
+If the subcommand is for interactive operation, it does not colorize.
 
 Interactive operations: edit, attach, exec -it etc.
 
