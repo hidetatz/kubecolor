@@ -1,7 +1,6 @@
 package command
 
 import (
-	"io"
 	"os"
 	"os/exec"
 	"strings"
@@ -19,7 +18,6 @@ var (
 )
 
 type Printers struct {
-	HelpPrinter        printer.Printer
 	FullColoredPrinter printer.Printer
 	ErrorPrinter       printer.Printer
 }
@@ -27,9 +25,6 @@ type Printers struct {
 // This is defined here to be replaced in test
 var getPrinters = func(subcommandInfo *kubectl.SubcommandInfo, darkBackground bool) *Printers {
 	return &Printers{
-		HelpPrinter: &printer.SingleColoredPrinter{
-			Color: color.Yellow,
-		},
 		FullColoredPrinter: &printer.KubectlOutputColoredPrinter{
 			SubcommandInfo: subcommandInfo,
 			DarkBackground: darkBackground,

@@ -94,5 +94,9 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 		}
 	}
 
+	if kp.SubcommandInfo.Help {
+		printer = &SingleColoredPrinter{Color: color.Yellow}
+	}
+
 	printer.Print(r, w)
 }
