@@ -43,136 +43,57 @@ var getPrinters = func(subcommandInfo *kubectl.SubcommandInfo, darkBackground bo
 }
 
 func Run(args []string) error {
-	args, plainFlagFound := removePlainFlagIfExists(args)
-	args, lightBackgroundFlagFound := removeLightBackgroundFlagIfExists(args)
-	darkBackground := !lightBackgroundFlagFound
+	args, config := ResolveConfig(args)
+	shouldColorize, subcommandInfo := ResolveSubcommand(args, config)
 
-	// subcommandFound becomes false when subcommand is not found; e.g. "kubecolor --help"
-	subcommandInfo, subcommandFound := kubectl.InspectSubcommandInfo(args)
-
-	// when the given subcommand is supported AND --plain is NOT specified, then we colorize it
-	shouldColorize := subcommandFound && isColoringSupported(subcommandInfo.Subcommand) && !plainFlagFound
-
-	// when it is for Help, we exceptionally colorize it in Help color
-	if subcommandInfo.Help {
-		shouldColorize = true
-	}
-
-	if !subcommandFound {
-		subcommandInfo.Help = true
-		shouldColorize = true
-	}
-
-	kubectlCmd := "kubectl"
-	if kc := os.Getenv("KUBECTL_COMMAND"); kc != "" {
-		kubectlCmd = kc
-	}
-	cmd := exec.Command(kubectlCmd, args...)
+	cmd := exec.Command(config.KubectlCmd, args...)
 	cmd.Stdin = os.Stdin
 
-	var outReader, errReader io.Reader
-	var err error
-
-	if shouldColorize {
-		outReader, err = cmd.StdoutPipe()
-		if err != nil {
-			return err
-		}
-
-		errReader, err = cmd.StderrPipe()
-		if err != nil {
-			return err
-		}
-	} else {
-		// when we don't colorize the output,
-		// we don't need to capthre it so just set stdout/err here
+	// when should not colorize, just run command and return
+	if !shouldColorize {
 		cmd.Stdout = Stdout
 		cmd.Stderr = Stderr
-	}
+		if err := cmd.Start(); err != nil {
+			return err
+		}
 
-	if err = cmd.Start(); err != nil {
-		return err
-	}
-
-	if !shouldColorize {
 		cmd.Wait()
 		return nil
 	}
 
-	printers := getPrinters(subcommandInfo, darkBackground)
+	// when colorize, capture stdout and err then colorize it
+	outReader, err := cmd.StdoutPipe()
+	if err != nil {
+		return err
+	}
+
+	errReader, err := cmd.StderrPipe()
+	if err != nil {
+		return err
+	}
+
+	if err := cmd.Start(); err != nil {
+		return err
+	}
+
+	printers := getPrinters(subcommandInfo, config.DarkBackground)
 
 	wg := &sync.WaitGroup{}
 
-	if subcommandInfo.Help {
-		runAsync(wg, []func(){
-			func() { printers.HelpPrinter.Print(outReader, Stdout) },
-			func() { printers.ErrorPrinter.Print(errReader, Stderr) },
-		})
+	wg.Add(1)
+	go func() {
+		printers.FullColoredPrinter.Print(outReader, Stdout)
+		wg.Done()
+	}()
 
-	} else {
-		runAsync(wg, []func(){
-			func() { printers.FullColoredPrinter.Print(outReader, Stdout) },
-			func() { printers.ErrorPrinter.Print(errReader, Stderr) },
-		})
-	}
+	wg.Add(1)
+	go func() {
+		printers.ErrorPrinter.Print(errReader, Stderr)
+		wg.Done()
+	}()
 
 	wg.Wait()
 	cmd.Wait()
 
 	return nil
-}
-
-func runAsync(wg *sync.WaitGroup, tasks []func()) {
-	wg.Add(len(tasks))
-	for _, task := range tasks {
-		task := task
-		go func() {
-			task()
-			wg.Done()
-		}()
-	}
-}
-
-func removePlainFlagIfExists(args []string) ([]string, bool) {
-	for i, arg := range args {
-		if arg == "--plain" {
-			return append(args[:i], args[i+1:]...), true
-		}
-	}
-
-	return args, false
-}
-
-func removeLightBackgroundFlagIfExists(args []string) ([]string, bool) {
-	for i, arg := range args {
-		if arg == "--light-background" {
-			return append(args[:i], args[i+1:]...), true
-		}
-	}
-
-	return args, false
-}
-
-func isColoringSupported(sc kubectl.Subcommand) bool {
-	// when you add something here, it won't be colorized
-	unsupported := []kubectl.Subcommand{
-		kubectl.Create,
-		kubectl.Delete,
-		kubectl.Edit,
-		kubectl.Attach,
-		kubectl.Replace,
-		kubectl.Completion,
-		kubectl.Exec,
-		kubectl.Proxy,
-		kubectl.Plugin,
-		kubectl.Wait,
-	}
-
-	for _, u := range unsupported {
-		if sc == u {
-			return false
-		}
-	}
-
-	return true
 }
