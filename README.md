@@ -118,10 +118,10 @@ Not in the list: Won't be supported because it's not READ operation
 - [x] kubectl top
 - [x] kubectl describe
 - [x] kubectl explain
-- [ ] kubectl logs
 - [x] kubectl api-rsources
 - [x] kubectl api-versions
 - [x] kubectl version
+- [x] kubectl options
 
 ### format options
 

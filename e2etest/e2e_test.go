@@ -38,6 +38,12 @@ var testArguments = []string{
 	"top node",
 	"describe pod",
 	"describe rs",
+	"version",
+	"version --short",
+	"version --client",
+	"api-versions",
+	"api-resources",
+	"options",
 }
 
 // TestVisual is a test for human. This test never fails but it's intended to
