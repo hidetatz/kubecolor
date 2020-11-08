@@ -75,6 +75,12 @@ This option will help you when you want to save the output onto a file and edit 
 When your terminal's background color is something light (e.g white), default color preset might look too bright and not readable.
 If so, specify `--light-background` as a command line argument. kubecolor will use a color preset for light-backgrounded environment.
 
+* `--force-colors`
+
+By default, kubecolor never output the result in colors when the tty is not a terminal.
+If you want to force kubecolor to show the result in colors for non-terminal tty, you can specify this flag.
+For example, when you want to pass kubecolor result to grep (`kubecolor get pods | grep pod_name`), this option is useful.
+
 ### Autocompletion
 
 kubectl provides [autocompletion feature](https://kubernetes.io/docs/tasks/tools/install-kubectl/#enable-kubectl-autocompletion). If you are
