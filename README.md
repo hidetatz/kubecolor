@@ -43,6 +43,14 @@ Additionally, if `kubectl` resulted an error, kubecolor just shows the error mes
 
 ## Installation
 
+### Mac and Linux users via Homebrew
+
+```sh
+brew install dty1er/tap/kubecolor
+```
+
+### Manually via go get
+
 ```sh
 go get -u github.com/dty1er/kubecolor/cmd/kubecolor
 ```
