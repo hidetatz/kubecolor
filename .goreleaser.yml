@@ -32,9 +32,9 @@ archives:
 brews:
 - name: kubecolor
   tap:
-    owner: rothgar
+    owner: dty1er
     name: homebrew-tap
-  homepage: "https://github.com/rothgar/kubecolor"
+  homepage: "https://github.com/dty1er/kubecolor"
   description: "Colorize your kubectl output"
   folder: Formula
   install: |
