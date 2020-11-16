@@ -15,12 +15,6 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.13.x
-      - name: Docker login
-        uses: azure/docker-login@v1
-        with:
-          login-server: docker.pkg.github.com
-          username: dty1er
-          password: ${{ secrets.GO_RELEASER }}
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1
         with:
