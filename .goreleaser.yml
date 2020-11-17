@@ -1,0 +1,51 @@
+release:
+
+before:
+  hooks:
+    - go mod tidy
+    - make testshort
+
+builds:
+- id: kubecolor
+  main: ./cmd/kubecolor/main.go
+  binary: kubecolor
+  goos:
+    - windows
+    - darwin
+    - linux
+  goarch:
+    - amd64
+
+archives:
+- builds:
+  - kubecolor
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    amd64: x86_64
+  format: tar.gz
+  format_overrides:
+    - goos: windows
+      format: zip
+
+brews:
+- name: kubecolor
+  tap:
+    owner: dty1er
+    name: homebrew-tap
+  homepage: "https://github.com/dty1er/kubecolor"
+  description: "Colorize your kubectl output"
+  folder: Formula
+  install: |
+    bin.install "kubecolor"
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
