@@ -455,6 +455,107 @@ func Test_KubectlOutputColoredPrinter_Print(t *testing.T) {
 				      [33m--insecure-skip-tls-verify=false[0m: [36mIf true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure[0m
 			`),
 		},
+		{
+			name:           "kubectl apply -o json",
+			darkBackground: true,
+			subcommandInfo: &kubectl.SubcommandInfo{
+				Subcommand:   kubectl.Apply,
+				FormatOption: kubectl.Json,
+			},
+			input: testutil.NewHereDoc(`
+				{
+				    "apiVersion": "apps/v1",
+				    "kind": "Deployment",
+				    "metadata": {
+				        "annotations": {
+				            "deployment.kubernetes.io/revision": "1",
+				            "test": "false"
+				        },
+				        "creationTimestamp": "2020-11-04T13:14:07Z",
+				        "generation": 3
+				    }
+				}`),
+			expected: testutil.NewHereDoc(`
+				{
+				    "[37mapiVersion[0m": "[36mapps/v1[0m",
+				    "[37mkind[0m": "[36mDeployment[0m",
+				    "[37mmetadata[0m": {
+				        "[33mannotations[0m": {
+				            "[37mdeployment.kubernetes.io/revision[0m": "[36m1[0m",
+				            "[37mtest[0m": "[36mfalse[0m"
+				        },
+				        "[33mcreationTimestamp[0m": "[36m2020-11-04T13:14:07Z[0m",
+				        "[33mgeneration[0m": [35m3[0m
+				    }
+				}
+			`),
+		},
+		{
+			name:           "kubectl apply -o yaml",
+			darkBackground: true,
+			subcommandInfo: &kubectl.SubcommandInfo{
+				Subcommand:   kubectl.Apply,
+				FormatOption: kubectl.Yaml,
+			},
+			input: testutil.NewHereDoc(`
+				apiVersion: apps/v1
+				kind: Deployment
+				metadata:
+				  annotations:
+				    deployment.kubernetes.io/revision: "1"
+				    test: "false"
+				  creationTimestamp: "2020-11-04T13:14:07Z"
+				  generation: 3
+				status:
+				  availableReplicas: 3
+				  conditions:
+				  - lastTransitionTime: "2020-11-04T13:14:07Z"
+				    lastUpdateTime: "2020-11-04T13:14:27Z"
+				    message: ReplicaSet "nginx-f89759699" has successfully progressed.
+				    reason: NewReplicaSetAvailable
+				    status: "True"
+				    type: Progressing
+				  - lastTransitionTime: "2020-12-27T04:41:49Z"
+				    lastUpdateTime: "2020-12-27T04:41:49Z"
+				    message: Deployment has minimum availability.
+				    reason: MinimumReplicasAvailable
+				    status: "True"
+				    type: Available
+				  observedGeneration: 3
+				  readyReplicas: 3
+				  replicas: 3
+				  updatedReplicas: 3
+				`),
+			expected: testutil.NewHereDoc(`
+				[33mapiVersion[0m: [36mapps/v1[0m
+				[33mkind[0m: [36mDeployment[0m
+				[33mmetadata[0m:
+				  [37mannotations[0m:
+				    [33mdeployment.kubernetes.io/revision[0m: "[36m1[0m"
+				    [33mtest[0m: "[36mfalse[0m"
+				  [37mcreationTimestamp[0m: "[36m2020-11-04T13:14:07Z[0m"
+				  [37mgeneration[0m: [35m3[0m
+				[33mstatus[0m:
+				  [37mavailableReplicas[0m: [35m3[0m
+				  [37mconditions[0m:
+				  - [33mlastTransitionTime[0m: "[36m2020-11-04T13:14:07Z[0m"
+				    [33mlastUpdateTime[0m: "[36m2020-11-04T13:14:27Z[0m"
+				    [33mmessage[0m: [36mReplicaSet "nginx-f89759699" has successfully progressed.[0m
+				    [33mreason[0m: [36mNewReplicaSetAvailable[0m
+				    [33mstatus[0m: "[36mTrue[0m"
+				    [33mtype[0m: [36mProgressing[0m
+				  - [33mlastTransitionTime[0m: "[36m2020-12-27T04:41:49Z[0m"
+				    [33mlastUpdateTime[0m: "[36m2020-12-27T04:41:49Z[0m"
+				    [33mmessage[0m: [36mDeployment has minimum availability.[0m
+				    [33mreason[0m: [36mMinimumReplicasAvailable[0m
+				    [33mstatus[0m: "[36mTrue[0m"
+				    [33mtype[0m: [36mAvailable[0m
+				  [37mobservedGeneration[0m: [35m3[0m
+				  [37mreadyReplicas[0m: [35m3[0m
+				  [37mreplicas[0m: [35m3[0m
+				  [37mupdatedReplicas[0m: [35m3[0m
+			`),
+		},
 	}
 	for _, tt := range tests {
 		tt := tt
