@@ -92,6 +92,14 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 		printer = &OptionsPrinter{
 			DarkBackground: kp.DarkBackground,
 		}
+	case kubectl.Apply:
+		switch {
+		case kp.SubcommandInfo.FormatOption == kubectl.Json:
+			printer = &JsonPrinter{DarkBackground: kp.DarkBackground}
+		case kp.SubcommandInfo.FormatOption == kubectl.Yaml:
+			printer = &YamlPrinter{DarkBackground: kp.DarkBackground}
+		default:
+		}
 	}
 
 	if kp.SubcommandInfo.Help {
