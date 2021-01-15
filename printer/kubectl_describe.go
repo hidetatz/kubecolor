@@ -55,8 +55,19 @@ func (dp *DescribePrinter) Print(r io.Reader, w io.Writer) {
 		indentCnt := findIndent(line)
 		indent := toSpaces(indentCnt)
 		if indentCnt > 0 {
-			// when an indent exists, removes it because it's already captured by "indent" var
-			spacesIndices = spacesIndices[1:]
+			// TODO: Remove this condition for workaround
+			// Basically, kubectl describe output has its indentation level
+			// with **2** spaces, but "Resource Quota" section in
+			// `kubectl describe ns` output has only 1 space at the head.
+			// Because of it, indentCnt is still 1, but the indent space is not in `spacesIndices` (see regex definition of `spaces`)
+			// So it must be checked here
+			// https://github.com/dty1er/kubecolor/issues/36
+			// When https://github.com/kubernetes/kubectl/issues/1005#issuecomment-758385759 is fixed
+			// this is not needed anymore.
+			if indentCnt > 1 {
+				// when an indent exists, removes it because it's already captured by "indent" var
+				spacesIndices = spacesIndices[1:]
+			}
 		}
 
 		// when there are multiple columns, treat is as table format
@@ -68,6 +79,20 @@ func (dp *DescribePrinter) Print(r io.Reader, w io.Writer) {
 		// First, write the first value assuming it's a key
 		keyColor := getColorByKeyIndent(indentCnt, basicIndentWidth, dp.DarkBackground)
 		valColor := getColorByValueType(columns[0], dp.DarkBackground)
+
+		// TODO: Remove this if statement for workaround
+		// Basically, kubectl describe output has its indentation level
+		// with **2** spaces, but "Resource Quota" section in
+		// `kubectl describe ns` output has only 1 space at the head.
+		// Because of it, `spaces.Split` doesn't trim the head space (see the regex definition of `spaces`)
+		// So it must be trimmed here
+		// https://github.com/dty1er/kubecolor/issues/36
+		// When https://github.com/kubernetes/kubectl/issues/1005#issuecomment-758385759 is fixed
+		// this is not needed anymore.
+		if strings.HasPrefix(columns[0], " ") {
+			columns[0] = strings.TrimLeft(columns[0], " ")
+		}
+
 		if strings.HasSuffix(columns[0], ":") {
 			// trailing ":" should not be colorized
 			fmt.Fprintf(w, "%s%s:", indent, color.Apply(strings.TrimRight(columns[0], ":"), keyColor))
