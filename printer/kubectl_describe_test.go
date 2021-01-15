@@ -136,6 +136,51 @@ func Test_DescribePrinter_Print(t *testing.T) {
 				[33mEvents[0m:              [33m<none>[0m
 			`),
 		},
+		{
+			// This test input is invalid because contents in `Resource Quotas` have only 1 space as its indentation.
+			// This is the bug of kubectl 1.19.3, and because of this
+			// kubecolor was crashing.
+			// A workaround PR is created for this and this test is making sure if it works.
+			// So, this test should be removed after the kubectl fix
+			// https://github.com/kubernetes/kubectl/issues/1005
+			// For more details, see the PR description on GitHub.
+			name:           "invalid test for the workaround",
+			darkBackground: true,
+			tablePrinter:   NewTablePrinter(false, true, nil),
+			input: testutil.NewHereDoc(`
+				Name:         default
+				Labels:       <none>
+				Annotations:  <none>
+				Status:       Active
+				
+				Resource Quotas
+				 Name:            mem-cpu-quota
+				 Resource         Used  Hard
+				 --------         ---   ---
+				 limits.cpu       0     2
+				 limits.memory    0     2Gi
+				 requests.cpu     0     1
+				 requests.memory  0     1Gi
+				
+				No LimitRange resource.`),
+			expected: testutil.NewHereDoc(`
+				[33mName[0m:         [36mdefault[0m
+				[33mLabels[0m:       [33m<none>[0m
+				[33mAnnotations[0m:  [33m<none>[0m
+				[33mStatus[0m:       [36mActive[0m
+				
+				[36mResource Quotas[0m
+				 [33mName[0m:            [36mmem-cpu-quota[0m
+				[36m Resource[0m         [32mUsed[0m  [35mHard[0m
+				[36m --------[0m         [32m---[0m   [35m---[0m
+				[36m limits.cpu[0m       [32m0[0m     [35m2[0m
+				[36m limits.memory[0m    [32m0[0m     [35m2Gi[0m
+				[36m requests.cpu[0m     [32m0[0m     [35m1[0m
+				[36m requests.memory[0m  [32m0[0m     [35m1Gi[0m
+				
+				[36mNo LimitRange resource.[0m
+			`),
+		},
 	}
 	for _, tt := range tests {
 		tt := tt
