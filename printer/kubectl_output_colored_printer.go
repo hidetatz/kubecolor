@@ -17,6 +17,104 @@ type KubectlOutputColoredPrinter struct {
 	Recursive      bool
 }
 
+func ColorStatus(status string) (color.Color, bool) {
+	switch status {
+	case
+		// from https://github.com/kubernetes/kubernetes/blob/master/pkg/kubelet/events/event.go
+		// Container event reason list
+		"Failed",
+		"BackOff",
+		"ExceededGracePeriod",
+		// Pod event reason list
+		"FailedKillPod",
+		"FailedCreatePodContainer",
+		// "Failed",
+		"NetworkNotReady",
+		// Image event reason list
+		// "Failed",
+		"InspectFailed",
+		"ErrImageNeverPull",
+		// "BackOff",
+		// kubelet event reason list
+		"NodeNotSchedulable",
+		"KubeletSetupFailed",
+		"FailedAttachVolume",
+		"FailedMount",
+		"VolumeResizeFailed",
+		"FileSystemResizeFailed",
+		"FailedMapVolume",
+		"ContainerGCFailed",
+		"ImageGCFailed",
+		"FailedNodeAllocatableEnforcement",
+		"FailedCreatePodSandBox",
+		"FailedPodSandBoxStatus",
+		"FailedMountOnFilesystemMismatch",
+		// Image manager event reason list
+		"InvalidDiskCapacity",
+		"FreeDiskSpaceFailed",
+		// Probe event reason list
+		"Unhealthy",
+		// Pod worker event reason list
+		"FailedSync",
+		// Config event reason list
+		"FailedValidation",
+		// Lifecycle hooks
+		"FailedPostStartHook",
+		"FailedPreStopHook",
+
+		// some other status
+		"ContainerStatusUnknown",
+		"CrashLoopBackOff",
+		"ImagePullBackOff",
+		"Evicted",
+		"FailedScheduling",
+		"Error",
+		"ErrImagePull":
+		return color.Red, true
+	case
+		// from https://github.com/kubernetes/kubernetes/blob/master/pkg/kubelet/events/event.go
+		// Container event reason list
+		"Killing",
+		"Preempting",
+		// Pod event reason list
+		// Image event reason list
+		"Pulling",
+		// kubelet event reason list
+		"NodeNotReady",
+		"NodeSchedulable",
+		"Starting",
+		"AlreadyMountedVolume",
+		"SuccessfulAttachVolume",
+		"SuccessfulMountVolume",
+		"NodeAllocatableEnforced",
+		// Image manager event reason list
+		// Probe event reason list
+		"ProbeWarning",
+		// Pod worker event reason list
+		// Config event reason list
+		// Lifecycle hooks
+
+		// some other status
+		"Pending",
+		"ContainerCreating",
+		"PodInitializing",
+		"Terminating",
+		"Warning":
+		return color.Yellow, true
+	}
+	// some ok status, not colored:
+	// "Pulled",
+	// "Created",
+	// "Rebooted",
+	// "SandboxChanged",
+	// "VolumeResizeSuccessful",
+	// "FileSystemResizeSuccessful",
+	// "NodeReady",
+	// "Started",
+	// "Normal",
+	return 0, false
+}
+
 // Print reads r then write it to w, its format is based on kubectl subcommand.
 // If given subcommand is not supported by the printer, it prints data in Green.
 func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
@@ -38,8 +136,10 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 				withHeader,
 				kp.DarkBackground,
 				func(_ int, column string) (color.Color, bool) {
-					if column == "CrashLoopBackOff" {
-						return color.Red, true
+					// first try to match a status
+					col, matched := ColorStatus(column)
+					if matched {
+						return col, true
 					}
 
 					// When Readiness is "n/m" then yellow
@@ -66,7 +166,10 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 	case kubectl.Describe:
 		printer = &DescribePrinter{
 			DarkBackground: kp.DarkBackground,
-			TablePrinter:   NewTablePrinter(false, kp.DarkBackground, nil),
+			TablePrinter: NewTablePrinter(false, kp.DarkBackground, func(_ int, column string) (color.Color, bool) {
+				return ColorStatus(column)
+			},
+			),
 		}
 	case kubectl.Explain:
 		printer = &ExplainPrinter{
