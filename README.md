@@ -111,7 +111,7 @@ complete -o default -F __start_kubectl k
 
 #### Zsh
 
-For zsh make sure these lines are present in your .zshrc file:
+For zsh make sure these lines are present in your zsh config file:
 ```shell
 # get zsh complete kubectl
 source <(kubectl completion zsh)
