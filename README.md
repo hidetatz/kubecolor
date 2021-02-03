@@ -94,7 +94,7 @@ For example, when you want to pass kubecolor result to grep (`kubecolor get pods
 kubectl provides [autocompletion feature](https://kubernetes.io/docs/tasks/tools/install-kubectl/#enable-kubectl-autocompletion). If you are
 already using it, you might have to configure it for kubecolor.
 
-#### Bash / Fish
+#### Bash
 
 Basically, configuring autocompletion for `kubecolor` requires adding following line in your shell config file.
 
@@ -111,7 +111,7 @@ complete -o default -F __start_kubectl k
 
 #### Zsh
 
-For zsh make sure this lines are present in your .zshrc file:
+For zsh make sure these lines are present in your .zshrc file:
 ```shell
 # get zsh complete kubectl
 source <(kubectl completion zsh)
