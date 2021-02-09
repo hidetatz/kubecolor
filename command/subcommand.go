@@ -53,6 +53,7 @@ func isColoringSupported(sc kubectl.Subcommand) bool {
 		kubectl.Proxy,
 		kubectl.Plugin,
 		kubectl.Wait,
+		kubectl.Run,
 	}
 
 	for _, u := range unsupported {
