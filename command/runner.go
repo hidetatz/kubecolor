@@ -58,7 +58,10 @@ func Run(args []string) error {
 			return err
 		}
 
-		cmd.Wait()
+		// inherit the kubectl exit code
+		if err := cmd.Wait(); err != nil {
+			return fmt.Errorf("%w", &KubectlError{ExitCode: cmd.ProcessState.ExitCode()})
+		}
 		return nil
 	}
 
