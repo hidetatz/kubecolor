@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"errors"
 	"os"
 
 	"github.com/dty1er/kubecolor/command"
@@ -10,7 +10,10 @@ import (
 func main() {
 	err := command.Run(os.Args[1:])
 	if err != nil {
-		fmt.Fprintf(os.Stderr, err.Error())
+		var ke *command.KubectlError
+		if errors.As(err, &ke) {
+			os.Exit(ke.ExitCode)
+		}
 		os.Exit(1)
 	}
 }
