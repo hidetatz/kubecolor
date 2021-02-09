@@ -15,6 +15,7 @@ builds:
     - linux
   goarch:
     - amd64
+    - ppc64le
 
 archives:
 - builds:
