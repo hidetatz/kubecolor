@@ -49,7 +49,13 @@ Additionally, if `kubectl` resulted an error, kubecolor just shows the error mes
 brew install dty1er/tap/kubecolor
 ```
 
-### Manually via go get
+### Manually via go command
+
+```sh
+go install github.com/dty1er/kubecolor/cmd/kubecolor@latest
+```
+
+If you are not using module mode (or if just above doesn't work), try below:
 
 ```sh
 go get -u github.com/dty1er/kubecolor/cmd/kubecolor
@@ -132,34 +138,6 @@ KUBECTL_COMMAND="kubectl.1.17" kubecolor get po
 ```
 
 When you don't set `KUBECTL_COMMAND`, then `kubectl` is used by default.
-
-## Supported commands
-
-Checked: Supported and works in current latest version  
-Unchecked: Will be supported but it's still under development  
-Not in the list: Won't be supported because it's not READ operation
-
-### kubectl commands
-
-- [x] kubectl get
-- [x] kubectl top
-- [x] kubectl describe
-- [x] kubectl explain
-- [x] kubectl api-rsources
-- [x] kubectl api-versions
-- [x] kubectl version
-- [x] kubectl options
-
-### format options
-
-- [x] json
-- [x] wide
-- [x] yaml
-- [x] custom-columns
-
-## Other features which currently unsupported but will be done in the future
-
-- [ ] Configuring custom colors
 
 ## Supported kubectl version
 
