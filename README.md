@@ -99,10 +99,11 @@ For example, when you want to pass kubecolor result to grep (`kubecolor get pods
 
 kubectl provides [autocompletion feature](https://kubernetes.io/docs/tasks/tools/install-kubectl/#enable-kubectl-autocompletion). If you are
 already using it, you might have to configure it for kubecolor.
+Please also refer to [kubectl official doc for kubectl autorcomplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete).
 
 #### Bash
 
-Basically, configuring autocompletion for `kubecolor` requires adding following line in your shell config file.
+For Bash, configuring autocompletion requires adding following line in your shell config file.
 
 ```shell
 # autocomplete for kubecolor
@@ -126,15 +127,16 @@ alias kubectl=kubecolor
 compdef kubecolor=kubectl
 ```
 
-Please also refer to [kubectl official doc](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete).
+#### fish
+
+Fish completion is unsupported because fish completion is officially not supported by kubectl.
 
 ### Specify what command to execute as kubectl
 
-Sometimes, you may want to specify what to command to use as `kubectl`. For example,
-when you want to use a versioned-kubectl `kubectl.1.17`, you can do that by an environment variable:
+Sometimes, you may want to specify which command to use as `kubectl` internally in kubecolor. For example, when you want to use a versioned-kubectl `kubectl.1.19`, you can do that by an environment variable:
 
 ```shell
-KUBECTL_COMMAND="kubectl.1.17" kubecolor get po
+KUBECTL_COMMAND="kubectl.1.19" kubecolor get po
 ```
 
 When you don't set `KUBECTL_COMMAND`, then `kubectl` is used by default.
