@@ -129,24 +129,23 @@ compdef kubecolor=kubectl
 
 #### fish
 
-Fish completion for `kubectl` is not officially not supported.
+For fish, you can achieve completions for `kubecolor` in two steps:
 
-For a workaround, you can use an unofficial completion set (**WARNING: long-term support not guaranteed**):
+1. Install `kubectl` completions (https://github.com/evanlucas/fish-kubectl-completions)
 
-```shell
-fisher install awinecki/fish-kubecolor-completions
-```
+   ```shell
+   fisher install evanlucas/fish-kubectl-completions
+   ```
 
-or
+2. Add the following function to your `config.fish` file:
 
-```shell
-mkdir -p ~/.config/fish/completions
-cd ~/.config/fish
-git clone https://github.com/awinecki/fish-kubecolor-completions
-ln -s ../fish-kubecolor-completions/completions/kubecolor.fish completions/
-```
+   ```shell
+   function kubectl
+     kubecolor $argv
+   end
+   ```
 
-For an alias, add `alias kc=kubecolor` to your `config.fish` file.
+**NOTE:** This will override `kubectl` command. If you wish to preserve both `kubectl` and `kubecolor` with completions, you need to copy completions for `kubecolor` command (e.g. https://github.com/awinecki/fish-kubecolor-completions).
 
 ### Specify what command to execute as kubectl
 
