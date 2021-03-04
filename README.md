@@ -133,7 +133,7 @@ Fish completion is officially unsupported by `kubectl`, so it is unsupported by 
 
 However, there are 2 ways we can make them work. Please keep in mind these are a kind of "hack" and not officially supported.
 
-- Use [evanlucas/fish-kubectl-completions](https://github.com/evanlucas/fish-kubectl-completions) with kubecolor:
+1. Use [evanlucas/fish-kubectl-completions](https://github.com/evanlucas/fish-kubectl-completions) with `kubecolor`
 
   1. Install `kubectl` completions (https://github.com/evanlucas/fish-kubectl-completions):
 
@@ -149,7 +149,12 @@ However, there are 2 ways we can make them work. Please keep in mind these are a
     end
     ```
 
-- Duplicate `kubectl` fish completions and rename to `kubecolor` (example repo: https://github.com/awinecki/fish-kubecolor-completions). As the first method overrides your `kubectl`, this is a way to have both on your system, including completions.
+2. Use [awinecki/fish-kubecolor-completions](https://github.com/awinecki/fish-kubecolor-completions)
+
+  The first way will override `kubectl` command. If you wish to preserve both `kubectl` and `kubecolor` with completions, you need to copy [evanlucas/fish-kubectl-completions](https://github.com/evanlucas/fish-kubectl-completions) for the `kubecolor` command.
+
+  For this purpose, you can use [awinecki/fish-kubecolor-completions](https://github.com/awinecki/fish-kubecolor-completions).
+
 
 ### Specify what command to execute as kubectl
 
