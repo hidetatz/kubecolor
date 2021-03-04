@@ -31,6 +31,12 @@ you can use kubecolor as a complete alternative of kubectl. It means you can wri
 ```sh
 alias kubectl="kubecolor"
 ```
+If you use your .bash_profile on more than one computer (e.g. synced via git) that might not all have `kubecolor` 
+installed, you can avoid breaking `kubectl` like so: 
+
+```sh
+command -v kubecolor >/dev/null 2>&1 && alias kubectl="kubecolor"
+```
 
 kubecolor is developed to colorize the output of only READ commands (get, describe...). 
 So if the given subcommand was for WRITE operations (apply, edit...), it doesn't give great decorations on it.
