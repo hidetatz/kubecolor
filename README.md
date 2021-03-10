@@ -140,21 +140,16 @@ Fish completion is officially unsupported by `kubectl`, so it is unsupported by 
 However, there are 2 ways we can make them work. Please keep in mind these are a kind of "hack" and not officially supported.
 
 1. Use [evanlucas/fish-kubectl-completions](https://github.com/evanlucas/fish-kubectl-completions) with `kubecolor`
-
-  1. Install `kubectl` completions (https://github.com/evanlucas/fish-kubectl-completions):
-
-    ```shell
-    fisher install evanlucas/fish-kubectl-completions
-    ```
-
-  2. Add the following function to your `config.fish` file:
-
-    ```shell
-    function kubectl
-      kubecolor $argv
-    end
-    ```
-
+   1. Install `kubectl` completions (https://github.com/evanlucas/fish-kubectl-completions):
+     ```
+     fisher install evanlucas/fish-kubectl-completions
+     ```
+   2. Add the following function to your `config.fish` file:
+     ```
+     function kubectl
+       kubecolor $argv
+     end
+     ```
 2. Use [awinecki/fish-kubecolor-completions](https://github.com/awinecki/fish-kubecolor-completions)
 
   The first way will override `kubectl` command. If you wish to preserve both `kubectl` and `kubecolor` with completions, you need to copy [evanlucas/fish-kubectl-completions](https://github.com/evanlucas/fish-kubectl-completions) for the `kubecolor` command.
