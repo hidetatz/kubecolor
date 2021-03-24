@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: nginx
+  namespace: kubecolor
 spec:
   replicas: 3
   selector:

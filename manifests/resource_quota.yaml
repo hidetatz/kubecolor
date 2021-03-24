@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: mem-cpu-quota
+  namespace: kubecolor
 spec:
   hard:
     requests.cpu: "1"
