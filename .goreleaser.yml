@@ -9,6 +9,9 @@ builds:
 - id: kubecolor
   main: ./cmd/kubecolor/main.go
   binary: kubecolor
+  ldflags:
+    - -s -w -trimpath
+    - -X main.Version={{.Version}}
   goos:
     - windows
     - darwin

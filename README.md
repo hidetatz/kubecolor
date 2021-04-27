@@ -84,6 +84,10 @@ alias kubectl="kubecolor"
 
 ### Flags
 
+* `--kubecolor-version`
+
+Prints the version of kubecolor (not kubectl one).
+
 * `--plain`
 
 When you don't want to colorize output, you can specify `--plain`. Kubecolor understands this option and

@@ -43,9 +43,14 @@ var getPrinters = func(subcommandInfo *kubectl.SubcommandInfo, darkBackground bo
 	}
 }
 
-func Run(args []string) error {
+func Run(args []string, version string) error {
 	args, config := ResolveConfig(args)
 	shouldColorize, subcommandInfo := ResolveSubcommand(args, config)
+
+	if config.ShowKubecolorVersion {
+		fmt.Fprintf(os.Stdout, "%s\n", version)
+		return nil
+	}
 
 	cmd := exec.Command(config.KubectlCmd, args...)
 	cmd.Stdin = os.Stdin
