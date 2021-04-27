@@ -7,8 +7,11 @@ import (
 	"github.com/dty1er/kubecolor/command"
 )
 
+// this is overridden on build time by GoReleaser
+var Version string = "unset"
+
 func main() {
-	err := command.Run(os.Args[1:])
+	err := command.Run(os.Args[1:], Version)
 	if err != nil {
 		var ke *command.KubectlError
 		if errors.As(err, &ke) {
