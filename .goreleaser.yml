@@ -10,7 +10,7 @@ builds:
   main: ./cmd/kubecolor/main.go
   binary: kubecolor
   ldflags:
-    - -s -w -trimpath
+    - -s -w
     - -X main.Version={{.Version}}
   goos:
     - windows
