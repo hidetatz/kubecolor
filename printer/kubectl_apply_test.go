@@ -44,6 +44,15 @@ func Test_ApplyPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
+			name:           "dry run",
+			darkBackground: true,
+			input: testutil.NewHereDoc(`
+				deployment.apps/foo unchanged (dry run)`),
+			expected: testutil.NewHereDoc(`
+				deployment.apps/foo [35munchanged[0m [36m(dry run)[0m
+			`),
+		},
+		{
 			name:           "something else. This likely won't happen but fallbacks here just in case.",
 			darkBackground: true,
 			input: testutil.NewHereDoc(`
