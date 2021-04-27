@@ -79,6 +79,29 @@ func Test_YamlPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
+			name:           "a value contains dash",
+			darkBackground: true,
+			input: testutil.NewHereDoc(`
+				apiVersion: v1
+				items:
+				- apiVersion: v1
+				  key:
+				  - key2: 415
+				    key3: true
+				  key4:
+				    key: -val`),
+			expected: testutil.NewHereDoc(`
+				[33mapiVersion[0m: [36mv1[0m
+				[33mitems[0m:
+				- [37mapiVersion[0m: [36mv1[0m
+				  [37mkey[0m:
+				  - [33mkey2[0m: [35m415[0m
+				    [33mkey3[0m: [32mtrue[0m
+				  [37mkey4[0m:
+				    [33mkey[0m: [36m-val[0m
+			`),
+		},
+		{
 			name:           "a long string which is broken into several lines can be colored",
 			darkBackground: true,
 			input: testutil.NewHereDoc(`

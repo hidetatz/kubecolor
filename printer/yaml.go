@@ -29,7 +29,6 @@ func (yp *YamlPrinter) printLineAsYamlFormat(line string, w io.Writer, dark bool
 	trimmedLine := strings.TrimLeft(line, " ")
 
 	if yp.inString {
-		// fmt.Println(trimmedLine)
 		// if inString is true, the line must be a part of a string which is broken into several lines
 		fmt.Fprintf(w, "%s%s\n", indent, yp.toColorizedStringValue(trimmedLine, dark))
 		yp.inString = !yp.isStringClosed(trimmedLine)
@@ -59,8 +58,8 @@ func (yp *YamlPrinter) printLineAsYamlFormat(line string, w io.Writer, dark bool
 func (yp *YamlPrinter) toColorizedYamlKey(key string, indentCnt, basicWidth int, dark bool) string {
 	hasColon := strings.HasSuffix(key, ":")
 	hasLeadingDash := strings.HasPrefix(key, "- ")
-	key = strings.TrimRight(key, ":")
-	key = strings.TrimLeft(key, "- ")
+	key = strings.TrimSuffix(key, ":")
+	key = strings.TrimPrefix(key, "- ")
 
 	format := "%s"
 	if hasColon {
@@ -81,10 +80,10 @@ func (yp *YamlPrinter) toColorizedYamlValue(value string, dark bool) string {
 	}
 
 	hasLeadingDash := strings.HasPrefix(value, "- ")
-	value = strings.TrimLeft(value, "- ")
+	value = strings.TrimPrefix(value, "- ")
 
 	isDoubleQuoted := strings.HasPrefix(value, `"`) && strings.HasSuffix(value, `"`)
-	trimmedValue := strings.TrimRight(strings.TrimLeft(value, `"`), `"`)
+	trimmedValue := strings.TrimSuffix(strings.TrimPrefix(value, `"`), `"`)
 
 	var format string
 	switch {
