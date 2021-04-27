@@ -49,6 +49,10 @@ Additionally, if `kubectl` resulted an error, kubecolor just shows the error mes
 
 ## Installation
 
+### Download binary via GitHub release
+
+Go to [Release page](https://github.com/dty1er/kubecolor/releases) then download the binary which fits your environment.
+
 ### Mac and Linux users via Homebrew
 
 ```sh
@@ -56,6 +60,8 @@ brew install dty1er/tap/kubecolor
 ```
 
 ### Manually via go command
+
+*Note: if you install kubecolor via go command, --kubecolor-version command might not work*
 
 ```sh
 go install github.com/dty1er/kubecolor/cmd/kubecolor@latest
