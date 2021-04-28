@@ -99,6 +99,7 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 		case kp.SubcommandInfo.FormatOption == kubectl.Yaml:
 			printer = &YamlPrinter{DarkBackground: kp.DarkBackground}
 		default:
+			printer = &ApplyPrinter{DarkBackground: kp.DarkBackground}
 		}
 	}
 
