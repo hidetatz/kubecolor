@@ -17,6 +17,7 @@ builds:
     - darwin
     - linux
   goarch:
+    - arm64
     - amd64
     - ppc64le
 
