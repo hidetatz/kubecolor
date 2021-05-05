@@ -183,6 +183,10 @@ When you don't set `KUBECTL_COMMAND`, then `kubectl` is used by default.
 Because kubecolor internally calls `kubectl` command, if you are using unsupported kubectl version, it's also not supported by kubecolor.
 Kubernetes version support policy can be found in [official doc](https://kubernetes.io/docs/setup/release/version-skew-policy/).
 
+## Krew
+
+[Krew](https://krew.sigs.k8s.io/) is unsupported for now.
+
 ## Contributions
 
 Always welcome. Just opening an issue should be also greatful.
