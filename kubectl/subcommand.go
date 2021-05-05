@@ -12,6 +12,8 @@ type SubcommandInfo struct {
 	Help         bool
 	Recursive    bool
 	Short        bool
+
+	IsKrew bool
 }
 
 type FormatOption int
@@ -194,7 +196,21 @@ func CollectCommandlineOptions(args []string, info *SubcommandInfo) {
 }
 
 func InspectSubcommandInfo(args []string) (*SubcommandInfo, bool) {
+	// TODO: support krew
+	contains := func(s []string, e string) bool {
+		for _, a := range s {
+			if a == e {
+				return true
+			}
+		}
+		return false
+	}
 	ret := &SubcommandInfo{}
+
+	if contains(args, "krew") {
+		return &SubcommandInfo{IsKrew: true}, false
+	}
+
 	CollectCommandlineOptions(args, ret)
 
 	for i := range args {

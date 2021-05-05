@@ -56,7 +56,8 @@ func Run(args []string, version string) error {
 	cmd.Stdin = os.Stdin
 
 	// when should not colorize, just run command and return
-	if !shouldColorize {
+	// TODO: right now, krew is unsupported by kubecolor but it should be.
+	if !shouldColorize || subcommandInfo.IsKrew {
 		cmd.Stdout = Stdout
 		cmd.Stderr = Stderr
 		if err := cmd.Start(); err != nil {
