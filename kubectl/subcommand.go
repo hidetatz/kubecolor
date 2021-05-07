@@ -195,21 +195,9 @@ func CollectCommandlineOptions(args []string, info *SubcommandInfo) {
 	}
 }
 
+// TODO: return shouldColorize = false when the given args is for plugin
 func InspectSubcommandInfo(args []string) (*SubcommandInfo, bool) {
-	// TODO: support krew
-	contains := func(s []string, e string) bool {
-		for _, a := range s {
-			if a == e {
-				return true
-			}
-		}
-		return false
-	}
 	ret := &SubcommandInfo{}
-
-	if contains(args, "krew") {
-		return &SubcommandInfo{IsKrew: true}, false
-	}
 
 	CollectCommandlineOptions(args, ret)
 
