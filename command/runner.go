@@ -1,7 +1,9 @@
 package command
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"strings"
@@ -57,7 +59,7 @@ func Run(args []string, version string) error {
 
 	// when should not colorize, just run command and return
 	// TODO: right now, krew is unsupported by kubecolor but it should be.
-	if !shouldColorize || subcommandInfo.IsKrew {
+	if !shouldColorize {
 		cmd.Stdout = Stdout
 		cmd.Stderr = Stderr
 		if err := cmd.Start(); err != nil {
@@ -72,15 +74,20 @@ func Run(args []string, version string) error {
 	}
 
 	// when colorize, capture stdout and err then colorize it
-	outReader, err := cmd.StdoutPipe()
+	cmdOut, err := cmd.StdoutPipe()
 	if err != nil {
 		return err
 	}
 
-	errReader, err := cmd.StderrPipe()
+	cmdErr, err := cmd.StderrPipe()
 	if err != nil {
 		return err
 	}
+
+	// make buffer to be used in defer recover()
+	buff := new(bytes.Buffer)
+	outReader := io.TeeReader(cmdOut, buff)
+	errReader := io.TeeReader(cmdErr, buff)
 
 	if err := cmd.Start(); err != nil {
 		return err
@@ -92,14 +99,22 @@ func Run(args []string, version string) error {
 
 	wg.Add(1)
 	go func() {
+		defer wg.Done()
+		defer func() {
+			if r := recover(); r != nil {
+				fmt.Fprintf(os.Stdout, buff.String())
+			}
+		}()
+
+		// This can panic when kubecolor has bug, so recover in defer
 		printers.FullColoredPrinter.Print(outReader, Stdout)
-		wg.Done()
 	}()
 
 	wg.Add(1)
 	go func() {
+		defer wg.Done()
+		// This will unlikely panic
 		printers.ErrorPrinter.Print(errReader, Stderr)
-		wg.Done()
 	}()
 
 	wg.Wait()

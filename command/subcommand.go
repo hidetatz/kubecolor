@@ -16,10 +16,6 @@ func ResolveSubcommand(args []string, config *KubecolorConfig) (bool, *kubectl.S
 	// subcommandFound becomes false when subcommand is not found; e.g. "kubecolor --help"
 	subcommandInfo, subcommandFound := kubectl.InspectSubcommandInfo(args)
 
-	if subcommandInfo.IsKrew {
-		return false, subcommandInfo
-	}
-
 	// if --plain found, it does not colorize
 	if config.Plain {
 		return false, subcommandInfo
