@@ -47,6 +47,8 @@ so you don't need to switch kubecolor and kubectl but you always can use kubecol
 
 Additionally, if `kubectl` resulted an error, kubecolor just shows the error message in red or yellow.
 
+**Please keep in mind that kubecolor has runtime overhead compared to kubectl because it runs kubectl internally and parses the output, then colorizes it.**
+
 ## Installation
 
 ### Download binary via GitHub release
