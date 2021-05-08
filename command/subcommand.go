@@ -28,7 +28,7 @@ func ResolveSubcommand(args []string, config *KubecolorConfig) (bool, *kubectl.S
 		return true, subcommandInfo
 	}
 
-	// when the command output is not tty, shouldColorize depends on --force-colors flag.
+	// when the command output tty is not standard output, shouldColorize depends on --force-colors flag.
 	// For example, if the command is run in a shellscript, it should not colorize. (e.g. in "kubectl completion bash")
 	// However, if user wants colored output even if the out is not tty (e.g. kubecolor get xx | grep yy)
 	// it colorizes the output based on --force-colors.
