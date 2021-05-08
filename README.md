@@ -38,11 +38,8 @@ installed, you can avoid breaking `kubectl` like so:
 command -v kubecolor >/dev/null 2>&1 && alias kubectl="kubecolor"
 ```
 
-kubecolor is developed to colorize the output of only READ commands (get, describe...). 
-So if the given subcommand was for WRITE operations (apply, edit...), it doesn't give great decorations on it.
-
-For now, not all subcommands are supported and will be done in the future. What is supported can be found below.
-Even if what you want to do is not supported by kubecolor now, kubecolor still can just show `kubectl` output without any decorations,
+For now, not all subcommands are supported and some of them might be in the future. If you want something to be supported by kubecolor, you can open an issue in this GitHub repo.
+Even if what you want to do is not supported by kubecolor right now, kubecolor still can just show `kubectl` output without any decorations,
 so you don't need to switch kubecolor and kubectl but you always can use kubecolor.
 
 Additionally, if `kubectl` resulted an error, kubecolor just shows the error message in red or yellow.
@@ -63,7 +60,7 @@ brew install dty1er/tap/kubecolor
 
 ### Manually via go command
 
-*Note: if you install kubecolor via go command, --kubecolor-version command might not work*
+*Note: if you install kubecolor via go command, --kubecolor-version  might not work*
 
 ```sh
 go install github.com/dty1er/kubecolor/cmd/kubecolor@latest
@@ -90,17 +87,19 @@ If you want to make the colorized kubectl default on your shell, just add this l
 alias kubectl="kubecolor"
 ```
 
+### Dynamic tty support
+
+When the kubecolor output tty is not standard output, it automatically disables the colorization.
+For example, if you are running `kubecolor get pods > result.txt` or `kubecolor get pods | grep xxx`, the output will be passed through to file or another command, so colorization is not applied.
+You can force kubecolor do colorization at such cases by passing `--force-colors` flag. See the upcoming section for more details.
+
 ### Flags
+
+Available flags for kubecolor. When you pass them, kubecolor will understand them but these flags won't be passed to kubectl.
 
 * `--kubecolor-version`
 
 Prints the version of kubecolor (not kubectl one).
-
-* `--plain`
-
-When you don't want to colorize output, you can specify `--plain`. Kubecolor understands this option and
-outputs the result without colorizing. Of course, given `--plain` will never be passed to `kubectl`.
-This option will help you when you want to save the output onto a file and edit them by editors.
 
 * `--light-background`
 
@@ -109,9 +108,13 @@ If so, specify `--light-background` as a command line argument. kubecolor will u
 
 * `--force-colors`
 
-By default, kubecolor never output the result in colors when the tty is not a terminal.
+By default, kubecolor never output the result in colors when the tty is not a terminal standard output.
 If you want to force kubecolor to show the result in colors for non-terminal tty, you can specify this flag.
 For example, when you want to pass kubecolor result to grep (`kubecolor get pods | grep pod_name`), this option is useful.
+
+* `--plain`
+
+When you don't want to colorize output, you can specify `--plain`. Kubecolor understands this option and outputs the result without colorizing.
 
 ### Autocompletion
 
@@ -185,9 +188,10 @@ When you don't set `KUBECTL_COMMAND`, then `kubectl` is used by default.
 Because kubecolor internally calls `kubectl` command, if you are using unsupported kubectl version, it's also not supported by kubecolor.
 Kubernetes version support policy can be found in [official doc](https://kubernetes.io/docs/setup/release/version-skew-policy/).
 
-## Krew
+## kubectl plugins
 
-[Krew](https://krew.sigs.k8s.io/) is unsupported for now.
+Even if kubectl supports [plugin](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/) feature, it is not supported by kubecolor, including [Krew](https://krew.sigs.k8s.io/).
+It means you can use plugins from kubecolor (e.g. you can do `kubecolor plugin_name xxx`), but the result won't be colorized.
 
 ## Contributions
 
@@ -196,3 +200,7 @@ Always welcome. Just opening an issue should be also greatful.
 ## LICENSE
 
 MIT
+
+## Author
+
+[@dty1er](https://github.com/dty1er)
