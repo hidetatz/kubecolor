@@ -120,7 +120,7 @@ When you don't want to colorize output, you can specify `--plain`. Kubecolor und
 
 kubectl provides [autocompletion feature](https://kubernetes.io/docs/tasks/tools/install-kubectl/#enable-kubectl-autocompletion). If you are
 already using it, you might have to configure it for kubecolor.
-Please also refer to [kubectl official doc for kubectl autorcomplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete).
+Please also refer to [kubectl official doc for kubectl autocomplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete).
 
 #### Bash
 
