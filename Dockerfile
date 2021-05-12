@@ -1,0 +1,10 @@
+FROM golang:1.16 as build
+
+WORKDIR /go/src/kubecolor
+ADD . /go/src/kubecolor/
+
+RUN go build -o /go/bin/kubecolor cmd/kubecolor/main.go
+
+FROM gcr.io/distroless/base
+COPY --from=build /go/bin/kubecolor /
+CMD ["/kubecolor"]
