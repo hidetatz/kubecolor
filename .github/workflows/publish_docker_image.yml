@@ -6,9 +6,6 @@ jobs:
   push_to_registry:
     name: Push docker image to GitHub Container Registry
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -18,7 +15,13 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: dty1er
           password: ${{ secrets.GH_CONTAINER_REGISTRY_PUSHER }}
       - name: Build and push
         uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${GITHUB_REPOSITORY}:${{ github.event.release.tag_name }}
+            ghcr.io/${GITHUB_REPOSITORY}:latest
