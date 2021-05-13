@@ -1,9 +1,10 @@
 name: Publish docker image on release
 on:
+  # TODO: fix to run on release
   - pull_request
 jobs:
   push_to_registry:
-    name: Push docker image to GitHub Packages
+    name: Push docker image to GitHub Container Registry
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -11,18 +12,13 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Build image
-        run: docker build . --file Dockerfile --tag kubecolor
-      - name: Log into GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
-      - name: Push image to GitHub Container Registry
-        run: |
-          # <GitHubアカウント>が自動で選択される
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/kubecolor
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          [ "$VERSION" == "master" ] && VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag kubecolor $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION 
+      - name: Push to GitHub Container Registry
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_CONTAINER_REGISTRY_PUSHER }}
+          registry: ghcr.io
+          repository: ${{ github.repository }}
+          tag_with_ref: true
+        env:
+          DOCKER_BUILDKIT: 1
