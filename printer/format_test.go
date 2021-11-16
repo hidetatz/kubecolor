@@ -3,7 +3,7 @@ package printer
 import (
 	"testing"
 
-	"github.com/hidetatz/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp"
 	"github.com/hidetatz/kubecolor/color"
 )
 
