@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/dty1er/kubecolor/color"
-	"github.com/dty1er/kubecolor/kubectl"
+	"github.com/hidetatz/kubecolor/color"
+	"github.com/hidetatz/kubecolor/kubectl"
 )
 
 // KubectlOutputColoredPrinter is a printer to print data depending on

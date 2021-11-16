@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dty1er/kubecolor/kubectl"
-	"github.com/dty1er/kubecolor/testutil"
+	"github.com/hidetatz/kubecolor/kubectl"
+	"github.com/hidetatz/kubecolor/testutil"
 )
 
 func Test_KubectlOutputColoredPrinter_Print(t *testing.T) {

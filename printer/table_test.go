@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dty1er/kubecolor/color"
-	"github.com/dty1er/kubecolor/testutil"
+	"github.com/hidetatz/kubecolor/color"
+	"github.com/hidetatz/kubecolor/testutil"
 )
 
 func Test_TablePrinter_Print(t *testing.T) {

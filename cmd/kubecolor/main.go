@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/dty1er/kubecolor/command"
+	"github.com/hidetatz/kubecolor/command"
 )
 
 // this is overridden on build time by GoReleaser
