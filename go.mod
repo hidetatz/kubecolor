@@ -1,4 +1,4 @@
-module github.com/dty1er/kubecolor
+module github.com/hidetatz/kubecolor
 
 go 1.14
 

@@ -3,8 +3,8 @@ package printer
 import (
 	"testing"
 
-	"github.com/dty1er/kubecolor/color"
-	"github.com/google/go-cmp/cmp"
+	"github.com/hidetatz/go-cmp/cmp"
+	"github.com/hidetatz/kubecolor/color"
 )
 
 func Test_toSpaces(t *testing.T) {

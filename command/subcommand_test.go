@@ -3,8 +3,8 @@ package command
 import (
 	"testing"
 
-	"github.com/dty1er/kubecolor/kubectl"
-	"github.com/dty1er/kubecolor/testutil"
+	"github.com/hidetatz/kubecolor/kubectl"
+	"github.com/hidetatz/kubecolor/testutil"
 )
 
 func Test_ResolveSubcommand(t *testing.T) {

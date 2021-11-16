@@ -1,6 +1,6 @@
 package printer
 
-import "github.com/dty1er/kubecolor/color"
+import "github.com/hidetatz/kubecolor/color"
 
 var (
 	// Preset of colors for background

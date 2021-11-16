@@ -3,7 +3,7 @@ package command
 import (
 	"os"
 
-	"github.com/dty1er/kubecolor/kubectl"
+	"github.com/hidetatz/kubecolor/kubectl"
 	"github.com/mattn/go-isatty"
 )
 

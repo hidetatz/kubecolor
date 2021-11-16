@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dty1er/kubecolor/testutil"
+	"github.com/hidetatz/kubecolor/testutil"
 )
 
 func Test_YamlPrinter_Print(t *testing.T) {
