@@ -39,7 +39,7 @@ brews:
   tap:
     owner: dty1er
     name: homebrew-tap
-  homepage: "https://github.com/dty1er/kubecolor"
+  homepage: "https://github.com/hidetatz/kubecolor"
   description: "Colorize your kubectl output"
   folder: Formula
   install: |
