@@ -4,6 +4,7 @@ import "os"
 
 type KubecolorConfig struct {
 	Plain                bool
+	PlainHierarchy       bool
 	DarkBackground       bool
 	ForceColor           bool
 	ShowKubecolorVersion bool
@@ -12,6 +13,7 @@ type KubecolorConfig struct {
 
 func ResolveConfig(args []string) ([]string, *KubecolorConfig) {
 	args, plainFlagFound := findAndRemoveBoolFlagIfExists(args, "--plain")
+	args, noPlainHierarchyFlagFound := findAndRemoveBoolFlagIfExists(args, "--no-plain-hierarchy")
 	args, lightBackgroundFlagFound := findAndRemoveBoolFlagIfExists(args, "--light-background")
 	args, forceColorFlagFound := findAndRemoveBoolFlagIfExists(args, "--force-colors")
 	args, kubecolorVersionFlagFound := findAndRemoveBoolFlagIfExists(args, "--kubecolor-version")
@@ -25,6 +27,7 @@ func ResolveConfig(args []string) ([]string, *KubecolorConfig) {
 
 	return args, &KubecolorConfig{
 		Plain:                plainFlagFound,
+		PlainHierarchy:       !noPlainHierarchyFlagFound,
 		DarkBackground:       darkBackground,
 		ForceColor:           forceColorFlagFound,
 		ShowKubecolorVersion: kubecolorVersionFlagFound,

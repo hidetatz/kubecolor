@@ -58,9 +58,15 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 				},
 			)
 		case kp.SubcommandInfo.FormatOption == kubectl.Json:
-			printer = &JsonPrinter{DarkBackground: kp.DarkBackground}
+			printer = &JsonPrinter{
+				DarkBackground: kp.DarkBackground,
+				PlainHierarchy: kp.SubcommandInfo.PlainHierarchy,
+			}
 		case kp.SubcommandInfo.FormatOption == kubectl.Yaml:
-			printer = &YamlPrinter{DarkBackground: kp.DarkBackground}
+			printer = &YamlPrinter{
+				DarkBackground: kp.DarkBackground,
+				PlainHierarchy: kp.SubcommandInfo.PlainHierarchy,
+			}
 		}
 
 	case kubectl.Describe:
@@ -72,6 +78,7 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 		printer = &ExplainPrinter{
 			DarkBackground: kp.DarkBackground,
 			Recursive:      kp.Recursive,
+			PlainHierarchy: kp.SubcommandInfo.PlainHierarchy,
 		}
 	case kubectl.Version:
 		switch {

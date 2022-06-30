@@ -77,7 +77,7 @@ func (dp *DescribePrinter) Print(r io.Reader, w io.Writer) {
 		}
 
 		// First, write the first value assuming it's a key
-		keyColor := getColorByKeyIndent(indentCnt, basicIndentWidth, dp.DarkBackground)
+		keyColor := getColorByKeyIndent(indentCnt, basicIndentWidth, dp.DarkBackground, false)
 		valColor := getColorByValueType(columns[0], dp.DarkBackground)
 
 		// TODO: Remove this if statement for workaround

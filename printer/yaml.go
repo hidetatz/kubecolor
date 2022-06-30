@@ -11,6 +11,7 @@ import (
 
 type YamlPrinter struct {
 	DarkBackground bool
+	PlainHierarchy bool
 
 	inString bool
 }
@@ -71,7 +72,7 @@ func (yp *YamlPrinter) toColorizedYamlKey(key string, indentCnt, basicWidth int,
 		indentCnt += 2
 	}
 
-	return fmt.Sprintf(format, color.Apply(key, getColorByKeyIndent(indentCnt, basicWidth, dark)))
+	return fmt.Sprintf(format, color.Apply(key, getColorByKeyIndent(indentCnt, basicWidth, dark, yp.PlainHierarchy)))
 }
 
 func (yp *YamlPrinter) toColorizedYamlValue(value string, dark bool) string {

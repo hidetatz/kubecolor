@@ -13,6 +13,7 @@ import (
 type ExplainPrinter struct {
 	DarkBackground bool
 	Recursive      bool
+	PlainHierarchy bool
 
 	renderingFields bool
 }
@@ -60,7 +61,7 @@ func (ep *ExplainPrinter) printKeyVal(line string, w io.Writer) {
 
 	key = strings.TrimRight(key, ":")
 
-	key = color.Apply(key, getColorByKeyIndent(0, 2, ep.DarkBackground))
+	key = color.Apply(key, getColorByKeyIndent(0, 2, ep.DarkBackground, false))
 	if val != "" {
 		val = color.Apply(val, getColorByValueType(val, ep.DarkBackground))
 	}
@@ -102,7 +103,7 @@ func (ep *ExplainPrinter) printKeyAndType(line string, w io.Writer) {
 	key, val := keyAndVal[0], keyAndVal[1]
 
 	val = strings.TrimLeft(strings.TrimRight(val, ">"), "<")
-	key = color.Apply(key, getColorByKeyIndent(indentCnt, 2, ep.DarkBackground))
+	key = color.Apply(key, getColorByKeyIndent(indentCnt, 2, ep.DarkBackground, ep.PlainHierarchy))
 	val = color.Apply(val, getColorByValueType(line, ep.DarkBackground))
 
 	// I don't know why but kubectl explain uses \t as delimiter

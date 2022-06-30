@@ -14,6 +14,8 @@ type SubcommandInfo struct {
 	Short        bool
 
 	IsKrew bool
+
+	PlainHierarchy bool
 }
 
 type FormatOption int

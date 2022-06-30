@@ -20,17 +20,20 @@ func Test_getColorByKeyIndent(t *testing.T) {
 		indent           int
 		basicIndentWidth int
 		expected         color.Color
+		plain            bool
 	}{
-		{"dark depth: 1", true, 2, 2, color.White},
-		{"light depth: 1", false, 2, 2, color.Black},
-		{"dark depth: 2", true, 4, 2, color.Yellow},
-		{"light depth: 2", false, 4, 2, color.Yellow},
+		{"dark depth: 1", true, 2, 2, color.White, false},
+		{"light depth: 1", false, 2, 2, color.Black, false},
+		{"dark depth: 2", true, 4, 2, color.Yellow, false},
+		{"light depth: 2", false, 4, 2, color.Yellow, false},
+		{"dark depth: 3", true, 3, 2, color.White, true},
+		{"light depth: 3", false, 3, 2, color.Black, true},
 	}
 	for _, tt := range tests {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got := getColorByKeyIndent(tt.indent, tt.basicIndentWidth, tt.dark)
+			got := getColorByKeyIndent(tt.indent, tt.basicIndentWidth, tt.dark, tt.plain)
 			if got != tt.expected {
 				t.Errorf("fail: got: %v, expected: %v", got, tt.expected)
 			}

@@ -21,6 +21,11 @@ func ResolveSubcommand(args []string, config *KubecolorConfig) (bool, *kubectl.S
 		return false, subcommandInfo
 	}
 
+	// if --plain-hierachy found, add it into the subcommandInfo
+	if config.PlainHierarchy {
+		subcommandInfo.PlainHierarchy = true
+	}
+
 	// if subcommand is not found (e.g. kubecolor --help or just "kubecolor"),
 	// it is treated as help because kubectl shows help for such input
 	if !subcommandFound {
