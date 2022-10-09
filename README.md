@@ -55,7 +55,7 @@ Go to [Release page](https://github.com/hidetatz/kubecolor/releases) then downlo
 ### Mac and Linux users via Homebrew
 
 ```sh
-brew install hidetatz/tap/kubecolor
+brew install kubecolor/tap/kubecolor
 ```
 
 ### Manually via go command
