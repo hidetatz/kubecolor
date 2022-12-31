@@ -70,6 +70,8 @@ const (
 	Plugin
 	Version
 	Options
+	Ctx
+	Ns
 )
 
 var strToSubcommand = map[string]Subcommand{
@@ -115,6 +117,8 @@ var strToSubcommand = map[string]Subcommand{
 	"plugin":        Plugin,
 	"version":       Version,
 	"options":       Options,
+	"ctx":           Ctx,
+	"ns":            Ns,
 }
 
 func InspectSubcommand(command string) (Subcommand, bool) {
