@@ -1,6 +1,6 @@
 # kubecolor
 
-<img width="701" alt="image" src="https://user-images.githubusercontent.com/78741582/194959205-5e11d177-1975-4d2c-bdfa-f1bc33234d91.png">
+<img width="140" alt="image" src="https://user-images.githubusercontent.com/78741582/194959205-5e11d177-1975-4d2c-bdfa-f1bc33234d91.png">
 
 
 ![test](https://github.com/hidetatz/kubecolor/workflows/test/badge.svg?branch=main)
