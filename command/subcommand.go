@@ -2,6 +2,7 @@ package command
 
 import (
 	"os"
+	"strings"
 
 	"github.com/hidetatz/kubecolor/kubectl"
 	"github.com/mattn/go-isatty"
@@ -19,6 +20,15 @@ func ResolveSubcommand(args []string, config *KubecolorConfig) (bool, *kubectl.S
 	// if --plain found, it does not colorize
 	if config.Plain {
 		return false, subcommandInfo
+	}
+
+	// if there is an argument starting with __,
+	// the subcommand is probably an internal subcommand (like __completeNoDesc)
+	// and should probably not be colorized
+	for i := range args {
+		if strings.HasPrefix(args[i], "__") {
+			return false, subcommandInfo
+		}
 	}
 
 	// if subcommand is not found (e.g. kubecolor --help or just "kubecolor"),
