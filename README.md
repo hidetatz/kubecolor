@@ -1,5 +1,8 @@
 # kubecolor
 
+<img width="140" alt="image" src="https://user-images.githubusercontent.com/78741582/194959205-5e11d177-1975-4d2c-bdfa-f1bc33234d91.png">
+
+
 ![test](https://github.com/hidetatz/kubecolor/workflows/test/badge.svg?branch=main)
 [![Go Report Card](https://goreportcard.com/badge/github.com/hidetatz/kubecolor)](https://goreportcard.com/report/github.com/hidetatz/kubecolor)
 [![codecov](https://codecov.io/gh/hidetatz/kubecolor/branch/main/graph/badge.svg?token=k6ysAa5ghD)](https://codecov.io/gh/hidetatz/kubecolor/)
