@@ -82,6 +82,19 @@ func Test_ResolveSubcommand(t *testing.T) {
 			expectedInfo:           &kubectl.SubcommandInfo{Help: true},
 		},
 		{
+			name:             "when the internal argument is found, it won't colorize",
+			args:             []string{"__completeNoDesc", "get", "pods"},
+			isOutputTerminal: func() bool { return true },
+			conf: &KubecolorConfig{
+				Plain:          false,
+				DarkBackground: true,
+				ForceColor:     false,
+				KubectlCmd:     "kubectl",
+			},
+			expectedShouldColorize: false,
+			expectedInfo:           &kubectl.SubcommandInfo{Subcommand: kubectl.Get},
+		},
+		{
 			name:             "when not tty, it won't colorize",
 			args:             []string{"get", "pods"},
 			isOutputTerminal: func() bool { return false },
