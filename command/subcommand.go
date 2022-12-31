@@ -54,6 +54,7 @@ func isColoringSupported(sc kubectl.Subcommand) bool {
 	// when you add something here, it won't be colorized
 	unsupported := []kubectl.Subcommand{
 		kubectl.Create,
+		kubectl.Debug,
 		kubectl.Delete,
 		kubectl.Edit,
 		kubectl.Attach,
