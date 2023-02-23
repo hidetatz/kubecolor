@@ -151,6 +151,8 @@ alias kubectl=kubecolor
 compdef kubecolor=kubectl
 ```
 
+For powerlevel10k themes need add kubecolor on `POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND` in $HOME/.p10k.zsh when enable show on [see](https://github.com/romkatv/powerlevel10k#show-on-command)
+
 #### fish
 
 Fish completion is officially unsupported by `kubectl`, so it is unsupported by `kubecolor` as well.
