@@ -41,6 +41,11 @@ installed, you can avoid breaking `kubectl` like so:
 command -v kubecolor >/dev/null 2>&1 && alias kubectl="kubecolor"
 ```
 
+For an alias in PowerShell, put this in your $PROFILE
+```sh
+New-Alias -Name kubectl -Value kubecolor;
+```
+
 For now, not all subcommands are supported and some of them might be in the future. If you want something to be supported by kubecolor, you can open an issue in this GitHub repo.
 Even if what you want to do is not supported by kubecolor right now, kubecolor still can just show `kubectl` output without any decorations,
 so you don't need to switch kubecolor and kubectl but you always can use kubecolor.
